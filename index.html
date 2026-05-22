@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mahjong for White People</title>
+    
+    <style>
+        /* Base Reset & App Formatting */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            user-select: none; 
+        }
+
+        body {
+            background-color: #f4f4f9;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+        }
+
+        main {
+            flex: 1;
+            overflow-y: auto; 
+            padding: 20px;
+            padding-bottom: 80px; 
+        }
+
+        /* Page Display Logic */
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px; 
+            background-color: #ffffff;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        /* Sliding Background Highlight */
+        .nav-highlight-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 20%; 
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 0; 
+            opacity: 0; 
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
+        }
+
+        .nav-highlight {
+            width: 85%;
+            height: 85%;
+            background-color: #c8e6c9; 
+            border-radius: 10px; 
+        }
+
+        .nav-item {
+            position: relative;
+            z-index: 1; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 20%;
+            height: 100%;
+            cursor: pointer;
+            color: #888;
+            transition: color 0.2s ease, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            transform-origin: bottom center; 
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .nav-item.active {
+            color: #1b5e20; 
+            transform: translateY(6px); 
+        }
+
+        .nav-item.active .nav-icon {
+            transform: scale(1.5); 
+        }
+        
+        /* Content Styling */
+        h1 { font-size: 24px; margin-bottom: 16px; color: #111; }
+        h2 { font-size: 20px; margin-top: 24px; margin-bottom: 12px; color: #222; border-bottom: 2px solid #e0e0e0; padding-bottom: 4px;}
+        h3 { font-size: 17px; margin-top: 20px; margin-bottom: 8px; color: #333; }
+        p { font-size: 15px; line-height: 1.5; color: #444; margin-bottom: 12px; }
+        
+        /* Table Styling */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto; /* Allows swiping left/right on mobile */
+            margin-bottom: 16px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            background: #fff;
+        }
+        
+        table {
+            width: auto;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 280px;
+        }
+        
+        th, td {
+            padding: 10px 4px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        td {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .char-cell {
+            font-size: 18px; /* Make Chinese characters slightly larger */
+            font-weight: bold;
+        }
+
+        /* Tile Displays */
+        .tile-row {
+            display: flex;
+            gap: 2px; /* Exact 2px gap requested */
+            margin-bottom: 8px;
+            width: 100%;
+        }
+
+        .tile-row img {
+            flex: 1; /* Distributes the 9 tiles evenly */
+            width: 10%; /* Fallback for flex */
+            max-width: 40px; /* Prevents them from getting too huge on tablets */
+            height: auto;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .inline-tile {
+            height: 24px; /* Matches line height of text */
+            vertical-align: middle;
+            margin: 0 4px;
+            border-radius: 2px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .suit-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <main>
+        <section id="intro" class="page active-page">
+            <h1>Mahjong for White People</h1>
+            <p>Welcome! This app will teach you the traditional rules of Chinese Mahjong. Tap any of the icons below to get started.</p>
+        </section>
+
+        <!-- UPDATED TERMS TAB -->
+        <section id="terms" class="page">
+            <h1>Terms & Basics</h1>
+            
+            <h2>Numbers 1-9</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Char</th>
+                            <th>Pinyin</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="char-cell">一</td><td>yī</td><td>“ee” in “bee”</td></tr>
+                        <tr><td>2</td><td class="char-cell">二</td><td>èr</td><td>“er” in “nerd”</td></tr>
+                        <tr><td>3</td><td class="char-cell">三</td><td>sān</td><td>“san” in “sand”</td></tr>
+                        <tr><td>4</td><td class="char-cell">四</td><td>sì</td><td>“s” in “supper”</td></tr>
+                        <tr><td>5</td><td class="char-cell">五</td><td>wǔ</td><td>“oo” in “oops”</td></tr>
+                        <tr><td>6</td><td class="char-cell">六</td><td>liù</td><td>like “leo”</td></tr>
+                        <tr><td>7</td><td class="char-cell">七</td><td>qī</td><td>“chee” in “cheese”</td></tr>
+                        <tr><td>8</td><td class="char-cell">八</td><td>bā</td><td>“ba” in “bar”</td></tr>
+                        <tr><td>9</td><td class="char-cell">九</td><td>jiǔ</td><td>like “Joe”</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>These numbers are the best to learn first since you will use them to refer to any tile in one of the three suits.</p>
+
+            <h2>The Suits</h2>
+
+            <h3>Characters Suit</h3>
+            <div class="tile-row">
+                <!-- Javascript placeholder used in onerror to show grey boxes if images are missing -->
+                <script>
+                    const placeholder = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSI0MCIgZmlsbD0iI2RkZCI+PHJlY3Qgd2lkdGg9IjMwIiBoZWlnaHQ9IjQwIiByeD0iNCIgcnk9IjQiLz48L3N2Zz4=";
+                    for(let i=1; i<=9; i++) {
+                        document.write(`<img src="tiles/wan${i}.png" alt="${i} Character" onerror="this.src='${placeholder}'">`);
+                    }
+                </script>
+            </div>
+            <p class="suit-title">萬 (wàn: sounds like “Juan”)</p>
+            <p>In the characters suit, the character 萬 (wàn, meaning ten thousand) appears on the tile below each number. To read the tile, read the number character followed by the suit name.</p>
+            <p><strong>Example:</strong> <img src="tiles/wan7.png" alt="7 Character" class="inline-tile" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSI0MCIgZmlsbD0iI2RkZCI+PHJlY3Qgd2lkdGg9IjMwIiBoZWlnaHQ9IjQwIiByeD0iNCIgcnk9IjQiLz48L3N2Zz4='"> read qī wàn (“chee Juan”)</p>
+
+            <h3>Bamboos Suit</h3>
+            <div class="tile-row">
+                <script>
+                    for(let i=1; i<=9; i++) {
+                        document.write(`<img src="tiles/suo${i}.png" alt="${i} Bamboo" onerror="this.src='${placeholder}'">`);
+                    }
+                </script>
+            </div>
+            <p class="suit-title">索 (suǒ: sounds like “tsea-ow”)</p>
+            <p>In the bamboos suit, the first tile usually depicts a bird rather than a single bamboo stick. The other tiles can be distinguished by the number of bamboo sticks.</p>
+            <p><strong>Example:</strong> <img src="tiles/suo2.png" alt="2 Bamboo" class="inline-tile" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSI0MCIgZmlsbD0iI2RkZCI+PHJlY3Qgd2lkdGg9IjMwIiBoZWlnaHQ9IjQwIiByeD0iNCIgcnk9IjQiLz48L3N2Zz4='"> read èr suǒ (“er tsea-ow”)</p>
+
+            <h3>Circles Suit</h3>
+            <div class="tile-row">
+                <script>
+                    for(let i=1; i<=9; i++) {
+                        document.write(`<img src="tiles/tong${i}.png" alt="${i} Circle" onerror="this.src='${placeholder}'">`);
+                    }
+                </script>
+            </div>
+            <p class="suit-title">筒 (tǒng: sounds like “tong”)</p>
+            <p>In the circles suit, all tiles can be distinguished by the number of circles and are read in the same way as the other two suits.</p>
+            <p><strong>Example:</strong> <img src="tiles/tong5.png" alt="5 Circle" class="inline-tile" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSI0MCIgZmlsbD0iI2RkZCI+PHJlY3Qgd2lkdGg9IjMwIiBoZWlnaHQ9IjQwIiByeD0iNCIgcnk9IjQiLz48L3N2Zz4='"> read wǔ tǒng (“oo tong”)</p>
+        </section>
+        <!-- END TERMS TAB -->
+
+        <section id="setup" class="page">
+            <h1>Setup</h1>
+            <p>Learn how to build the wall, roll the dice, and deal the tiles to the four winds.</p>
+        </section>
+        <section id="gameplay" class="page">
+            <h1>Gameplay</h1>
+            <p>Understand the turn order, drawing, discarding, and how to claim tiles from other players.</p>
+        </section>
+        <section id="scoring" class="page">
+            <h1>Scoring</h1>
+            <p>Calculate points based on winning hands, specific melds, and special conditions.</p>
+        </section>
+        <section id="record" class="page">
+            <h1>Record</h1>
+            <p>Keep track of your game scores and player winds across multiple rounds.</p>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <!-- The Sliding Highlight -->
+        <div class="nav-highlight-wrapper" id="highlight-wrapper">
+            <div class="nav-highlight"></div>
+        </div>
+
+        <div class="nav-item" data-tab="terms">
+            <img src="icons/terms.png" alt="Terms" class="nav-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2NjYyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'">
+            <span class="nav-label">Terms</span>
+        </div>
+        <div class="nav-item" data-tab="setup">
+            <img src="icons/setup.png" alt="Setup" class="nav-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2NjYyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'">
+            <span class="nav-label">Setup</span>
+        </div>
+        <div class="nav-item" data-tab="gameplay">
+            <img src="icons/gameplay.png" alt="Gameplay" class="nav-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2NjYyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'">
+            <span class="nav-label">Gameplay</span>
+        </div>
+        <div class="nav-item" data-tab="scoring">
+            <img src="icons/scoring.png" alt="Scoring" class="nav-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2NjYyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'">
+            <span class="nav-label">Scoring</span>
+        </div>
+        <div class="nav-item" data-tab="record">
+            <img src="icons/record.png" alt="Record" class="nav-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2NjYyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'">
+            <span class="nav-label">Record</span>
+        </div>
+    </nav>
+
+    <script>
+        const navItems = document.querySelectorAll('.nav-item');
+        const pages = document.querySelectorAll('.page');
+        const highlightWrapper = document.getElementById('highlight-wrapper');
+
+        navItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const targetTab = item.getAttribute('data-tab');
+
+                highlightWrapper.style.opacity = '1';
+                highlightWrapper.style.transform = `translateX(${index * 100}%)`;
+
+                navItems.forEach(nav => {
+                    nav.classList.remove('active');
+                    const img = nav.querySelector('img');
+                    const tabName = nav.getAttribute('data-tab');
+                    img.src = `icons/${tabName}.png`; 
+                });
+
+                pages.forEach(page => {
+                    page.classList.remove('active-page');
+                });
+
+                item.classList.add('active');
+                const activeImg = item.querySelector('img');
+                activeImg.src = `icons/${targetTab}2.png`;
+
+                // Scroll the main content area back to the top when switching tabs
+                document.querySelector('main').scrollTop = 0;
+
+                document.getElementById(targetTab).classList.add('active-page');
+            });
+        });
+    </script>
+
+</body>
+</html>
