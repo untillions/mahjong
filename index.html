@@ -27,11 +27,54 @@
             overflow: hidden; 
         }
 
+        /* Sticky Top Header */
+        .top-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 65px; /* Slightly taller to frame the lockup nicely */
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* Space between the big text and the stacked text */
+            color: #111;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        .top-header:active {
+            color: #1b5e20;
+        }
+
+        /* Large text on the left */
+        .header-left {
+            font-size: 26px; 
+            font-weight: 700;
+            line-height: 1; /* Keeps the invisible box around the text very tight */
+        }
+
+        /* Stacked text on the right */
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Spreads the 3 lines out evenly */
+            height: 26px; /* Exactly matches the 26px font-size of the left text */
+            font-size: 9px; /* Small enough to fit the 3 lines cleanly */
+            font-weight: 700;
+            line-height: 0.9;
+            color: inherit; /* Ensures it turns green when the header is tapped */
+            text-transform: uppercase; /* Makes tiny stacked text much more readable */
+            letter-spacing: 0.5px;
+        }
+        
         main {
             flex: 1;
             overflow-y: auto; 
-            padding: 20px;
-            padding-bottom: 80px; 
+            padding: 80px 20px 80px 20px;
         }
 
         /* Page Display Logic */
@@ -131,7 +174,8 @@
         
         /* Table Styling */
         .table-wrapper {
-            width: 100%;
+            width: fit-content;
+            max-width: 100%;
             overflow-x: auto; /* Allows swiping left/right on mobile */
             margin-bottom: 16px;
             border-radius: 8px;
@@ -186,7 +230,7 @@
         }
 
         .inline-tile {
-            height: 24px; /* Matches line height of text */
+            height: 40px; /* Matches line height of text */
             vertical-align: middle;
             margin: 0 4px;
             border-radius: 2px;
@@ -208,7 +252,15 @@
     </style>
 </head>
 <body>
-
+	<header class="top-header" id="home-btn">
+        <div class="header-left">Mahjong&nbsp;<span class="zh-char">麻将</span></div>
+        <div class="header-right">
+            <span>for</span>
+            <span>White</span>
+            <span>People</span>
+        </div>
+    </header>
+    
     <main>
         <section id="intro" class="page active-page">
             <h1>Traditional Chinese Mahjong for White People</h1>
@@ -219,9 +271,10 @@
         
         <section id="terms" class="page">
             <h1>Terms to Know</h1>
-			<p>The game is Mahjong <span class="zh-char">麻将</span> (má jiāng: sounds like "maw-zhong").</p>
+			<p>Let's begin with the game itself: Mahjong <span class="zh-char">麻将</span> (má jiāng: sounds like "maw-zhong").</p>
 			<h2>Pronunciation</h2>
-			<p>On this page you will see Chinese characters, Pinyin 拼音 (sounds like "pin-yin"), and "sounds like" english pronunciations. Pinyin (literally meaning "spelled sounds") uses the roman alphabet to spell out Chinese sounds. There are 4 different accents which represent the tone to be taken by the syllable. See below.</p>
+			<p>On this page you will see Chinese characters, "sounds like" english pronunciations, and Pinyin <span class="zh-char">拼音</span> (sounds like "pin-yin").</p>
+			<p>Pinyin (literally meaning "spelled sounds") uses the roman alphabet to spell out Chinese sounds. There are 4 different accents which represent the tone to be taken by the syllable. See below.</p>
 			<div class="table-wrapper">
 				<table>
 					<thead>
@@ -244,69 +297,69 @@
 			<p>Now let's look at the words you should learn to play Mahjong.</p>
 			
             <h2>Numbers 1-9</h2>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Num.</th>
-                            <th>Char.</th>
-                            <th>Pinyin</th>
-                            <th>Sounds like</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td style="text-align: center;">1</td><td class="char-cell">一</td><td>yī</td><td>"ee" in "bee"</td></tr>
-                        <tr><td style="text-align: center;">2</td><td class="char-cell">二</td><td>èr</td><td>"er" in "nerd"</td></tr>
-                        <tr><td style="text-align: center;">3</td><td class="char-cell">三</td><td>sān</td><td>"sawn"</td></tr>
-                        <tr><td style="text-align: center;">4</td><td class="char-cell">四</td><td>sì</td><td>"s" in "supper"</td></tr>
-                        <tr><td style="text-align: center;">5</td><td class="char-cell">五</td><td>wǔ</td><td>"oo" in "oops"</td></tr>
-                        <tr><td style="text-align: center;">6</td><td class="char-cell">六</td><td>liù</td><td>"lay-o"</td></tr>
-                        <tr><td style="text-align: center;">7</td><td class="char-cell">七</td><td>qī</td><td>"chee" in "cheese"</td></tr>
-                        <tr><td style="text-align: center;">8</td><td class="char-cell">八</td><td>bā</td><td>"ba" in "bar"</td></tr>
-                        <tr><td style="text-align: center;">9</td><td class="char-cell">九</td><td>jiǔ</td><td>"Joe"</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <p>All suited tiles represent a number from 1-9 so learning how to say these numbers is essential.</p>
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr>
+								<th>Num.</th>
+								<th>Char.</th>
+								<th>Pinyin</th>
+								<th>Sounds like</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr><td style="text-align: center;">1</td><td class="char-cell">一</td><td>yī</td><td>"ee" in "bee"</td></tr>
+							<tr><td style="text-align: center;">2</td><td class="char-cell">二</td><td>èr</td><td>"er" in "nerd"</td></tr>
+							<tr><td style="text-align: center;">3</td><td class="char-cell">三</td><td>sān</td><td>"sawn"</td></tr>
+							<tr><td style="text-align: center;">4</td><td class="char-cell">四</td><td>sì</td><td>"s" in "supper"</td></tr>
+							<tr><td style="text-align: center;">5</td><td class="char-cell">五</td><td>wǔ</td><td>"oo" in "oops"</td></tr>
+							<tr><td style="text-align: center;">6</td><td class="char-cell">六</td><td>liù</td><td>"lay-o"</td></tr>
+							<tr><td style="text-align: center;">7</td><td class="char-cell">七</td><td>qī</td><td>"chee" in "cheese"</td></tr>
+							<tr><td style="text-align: center;">8</td><td class="char-cell">八</td><td>bā</td><td>"ba" in "bar"</td></tr>
+							<tr><td style="text-align: center;">9</td><td class="char-cell">九</td><td>jiǔ</td><td>"Joe"</td></tr>
+						</tbody>
+					</table>
+				</div>
+				<p>All suited tiles represent a number from 1-9 so learning how to say these numbers is essential.</p>
 
             <h2>The Suits</h2>
-			<p>There are three suits (Characters, Bamboos, and Circles). Reading a tile in any of these suits is as simple as saying the number + the suit name together. Examples are shown below.</p>
-			
-            <h3>Characters Suit</h3>
-			<p><span class="zh-char">萬</span> (wàn: sounds like "Juan")</p>
-            <div class="tile-row">
-                <script>
-                    for(let i=1; i<=9; i++) {
-                        document.write(`<img src="tiles/wan${i}.png" alt="${i} Character">`);
-                    }
-                </script>
-            </div>
-            <p>In the characters suit, the character 萬 (wàn, meaning ten thousand) appears on the tile below each number.</p>
-            <p><strong>Example:</strong> <img src="tiles/wan7.png" alt="7 Character" class="inline-tile"> qī wàn ("chee Juan")</p>
-
-            <h3>Bamboos Suit</h3>
-			<p><span class="zh-char">索</span> (tiáo: sounds like "tsea-ow")</p>
-            <div class="tile-row">
-                <script>
-                    for(let i=1; i<=9; i++) {
-                        document.write(`<img src="tiles/suo${i}.png" alt="${i} Bamboo">`);
-                    }
-                </script>
-            </div>
-            <p>In the bamboos suit, the yī tile usually depicts a bird rather than a single bamboo stick and the bā tile usually is formed like a diamond, rectangle, or set of 'M's. The tiles can be distinguished by the number of bamboo sticks.</p>
-            <p><strong>Example:</strong> <img src="tiles/suo2.png" alt="2 Bamboo" class="inline-tile"> èr tiáo ("er tsea-ow")</p>
-
-            <h3>Circles Suit</h3>
-			<p><span class="zh-char">筒子</span> (tǒng: sounds like "tong")</p>
-            <div class="tile-row">
-                <script>
-                    for(let i=1; i<=9; i++) {
-                        document.write(`<img src="tiles/tong${i}.png" alt="${i} Circle">`);
-                    }
-                </script>
-            </div>
-            <p>In the circles suit, all tiles can be distinguished by the number of circles.</p>
-            <p><strong>Example:</strong> <img src="tiles/tong5.png" alt="5 Circle" class="inline-tile"> wǔ tǒng ("oo tong")</p>
+				<p>There are three suits (Characters, Bamboos, and Circles). Reading a tile in any of these suits is as simple as saying the number + the suit name together. Examples are shown below.</p>
+				
+				<h3>Characters Suit</h3>
+				<p><span class="zh-char">萬</span> (wàn: sounds like "Juan")</p>
+				<div class="tile-row">
+					<script>
+						for(let i=1; i<=9; i++) {
+							document.write(`<img src="tiles/wan${i}.png" alt="${i} Character">`);
+						}
+					</script>
+				</div>
+				<p>In the characters suit, the character 萬 (wàn, meaning ten thousand) appears on the tile below each number.</p>
+				<p><strong>Example:</strong> <img src="tiles/wan7.png" alt="7 Character" class="inline-tile"> qī wàn ("chee Juan")</p>
+	
+				<h3>Bamboos Suit</h3>
+				<p><span class="zh-char">索</span> (tiáo: sounds like "tsea-ow")</p>
+				<div class="tile-row">
+					<script>
+						for(let i=1; i<=9; i++) {
+							document.write(`<img src="tiles/suo${i}.png" alt="${i} Bamboo">`);
+						}
+					</script>
+				</div>
+				<p>In the bamboos suit, the yī tile usually depicts a bird rather than a single bamboo stick and the bā tile usually is formed like a diamond, rectangle, or set of 'M's. The tiles can be distinguished by the number of bamboo sticks.</p>
+				<p><strong>Example:</strong> <img src="tiles/suo2.png" alt="2 Bamboo" class="inline-tile"> èr tiáo ("er tsea-ow")</p>
+	
+				<h3>Circles Suit</h3>
+				<p><span class="zh-char">筒子</span> (tǒng: sounds like "tong")</p>
+				<div class="tile-row">
+					<script>
+						for(let i=1; i<=9; i++) {
+							document.write(`<img src="tiles/tong${i}.png" alt="${i} Circle">`);
+						}
+					</script>
+				</div>
+				<p>In the circles suit, all tiles can be distinguished by the number of circles.</p>
+				<p><strong>Example:</strong> <img src="tiles/tong5.png" alt="5 Circle" class="inline-tile"> wǔ tǒng ("oo tong")</p>
 			
 			<h2>The Honors</h2>
 				<p>There are two types of honor tiles: winds and dragons.</p>
@@ -370,7 +423,7 @@
 				<p>The red and green dragons have distinctive characters to mark the tile. The white dragon could be depicted as a blank tile, a black rectangle, or the character <span class="zh-char">白</span> (meaning "white"). To name a dragon tile, say its name.</p>
 				<p><strong>Example:</strong> <img src="tiles/dragon1.png" alt="Red Dragon" class="inline-tile">hóng zhōng ("hong zhong")</p>
 	
-				<h2>Bonus Tiles</h2>
+			<h2>Bonus Tiles</h2>
 				<p>There are two types of bonus tiles that operate in an identical way: flowers and seasons.</p>
 	
 				<h3>Flower Tiles</h3>
@@ -429,6 +482,32 @@
 				</div>
 				<p>Season tiles represent the four winds in the same order: dōng, nán, xī, běi. Season tiles are also numbered for easy reference.</p>
         
+			<h2>Gameplay Words</h2>
+				<p>Let’s look at a few other words you will need to know when playing the game.</p>
+				
+				<h3>Common Phrases</h3>
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr>
+								<th>Phrase</th>
+								<th>Char.</th>
+								<th>Pinyin</th>
+								<th>Sounds like</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr><td>Shuffle tiles</td><td class="char-cell">洗牌</td><td>xǐpái</td><td>“she pie”</td></tr>
+							<tr><td>Play a tile</td><td class="char-cell">出牌</td><td>chūpái</td><td>“choo pie”</td></tr>
+							<tr><td>Draw a tile</td><td class="char-cell">摸牌</td><td>mōpái</td><td>“mo pie”</td></tr>
+							<tr><td>“Eat” – take tile for a straight</td><td class="char-cell">吃</td><td>chī</td><td>“chur” in "church"</td></tr>
+							<tr><td>“Touch” – take tile for set of 3</td><td class="char-cell">碰</td><td>pèng</td><td>“p-ohng”</td></tr>
+							<tr><td>“Bar” – take tile for set of 4</td><td class="char-cell">槓</td><td>gàng</td><td>“gahng”</td></tr>
+							<tr><td>Win by drawing</td><td class="char-cell">自摸</td><td>zìmō</td><td>“dz-uh mo”</td></tr>
+							<tr><td>Win</td><td class="char-cell">和</td><td>hú</td><td>“hoo”</td></tr>
+						</tbody>
+					</table>
+				</div>
         </section>
         <!-- END TERMS TAB -->
 
@@ -510,6 +589,31 @@
 
                 document.getElementById(targetTab).classList.add('active-page');
             });
+        });
+        
+        // Home Button Logic
+        const homeBtn = document.getElementById('home-btn');
+        
+        homeBtn.addEventListener('click', () => {
+            // 1. Hide the green highlight pill
+            highlightWrapper.style.opacity = '0';
+            
+            // 2. Reset all nav items to inactive
+            navItems.forEach(nav => {
+                nav.classList.remove('active');
+                const img = nav.querySelector('img');
+                const tabName = nav.getAttribute('data-tab');
+                img.src = `${tabName}.png`; 
+            });
+
+            // 3. Hide all pages
+            pages.forEach(page => {
+                page.classList.remove('active-page');
+            });
+
+            // 4. Show intro page and scroll to top
+            document.getElementById('intro').classList.add('active-page');
+            document.querySelector('main').scrollTop = 0;
         });
     </script>
 
