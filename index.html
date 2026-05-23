@@ -9,7 +9,12 @@
 	<link rel="icon" type="image/png" href="icons/mahjong.png">
 
     <style>
-        /* Base Reset & App Formatting */
+		:root {
+            --mahjong-green: #3B9C61;
+            --mahjong-blue: #3B699B; /* Swap with #2B6BA6 if you prefer */
+            --mahjong-red: #9B3B44;  /* Swap with #C73E47 if you prefer */
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -168,8 +173,8 @@
         
         /* Content Styling */
         h1 { font-size: 24px; margin-bottom: 16px; color: #111; }
-        h2 { font-size: 20px; margin-top: 24px; margin-bottom: 12px; color: #222; border-bottom: 2px solid #e0e0e0; padding-bottom: 4px;}
-        h3 { font-size: 17px; margin-top: 20px; margin-bottom: 8px; color: #3B9C61; }
+        h2 { font-size: 20px; margin-top: 24px; margin-bottom: 12px; color: var(--mahjong-blue); border-bottom: 2px solid #e0e0e0; padding-bottom: 4px;}
+        h3 { font-size: 17px; margin-top: 20px; margin-bottom: 8px; color: var(--mahjong-green); }
         p { font-size: 15px; line-height: 1.5; color: #444; margin-bottom: 12px; }
         
         /* Table Styling */
@@ -253,7 +258,7 @@
 </head>
 <body>
 	<header class="top-header" id="home-btn">
-        <div class="header-left">Mahjong&nbsp;<span class="zh-char">麻将</span></div>
+        <div class="header-left"><span style="color: var(--mahjong-red);">Mahjong</span>&nbsp;<span class="zh-char">麻将</span></div>
         <div class="header-right">
             <span>for</span>
             <span>White</span>
@@ -342,12 +347,12 @@
 				<div class="tile-row">
 					<script>
 						for(let i=1; i<=9; i++) {
-							document.write(`<img src="tiles/suo${i}.png" alt="${i} Bamboo">`);
+							document.write(`<img src="tiles/tiao${i}.png" alt="${i} Bamboo">`);
 						}
 					</script>
 				</div>
 				<p>In the bamboos suit, the yī tile usually depicts a bird rather than a single bamboo stick and the bā tile usually is formed like a diamond, rectangle, or set of 'M's. The tiles can be distinguished by the number of bamboo sticks.</p>
-				<p><strong>Example:</strong> <img src="tiles/suo2.png" alt="2 Bamboo" class="inline-tile"> èr tiáo ("er tsea-ow")</p>
+				<p><strong>Example:</strong> <img src="tiles/tiao2.png" alt="2 Bamboo" class="inline-tile"> èr tiáo ("er tsea-ow")</p>
 	
 				<h3>Circles Suit</h3>
 				<p><span class="zh-char">筒子</span> (tǒng: sounds like "tong")</p>
