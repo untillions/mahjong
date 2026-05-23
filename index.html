@@ -253,6 +253,16 @@
 			vertical-align: middle;
 			font-weight: 500;
 		}
+		
+        .note-highlight {
+            background-color: #fff9c4;
+            padding: 6px 10px;
+            border-radius: 4px;
+            color: #444;
+            font-size: 14px;
+            display: inline-block;
+            margin: 4px 0 8px 0;
+        }
 
     </style>
 </head>
@@ -272,7 +282,7 @@
             <p>Welcome! This app will teach you the traditional rules of Chinese Mahjong. Tap any of the icons below to get started.</p>
         </section>
 
-        <!-- TERMS TAB -->
+<!------------------------------------------TERMS TAB------------------------------------------>
         
         <section id="terms" class="page">
             <h1>Terms to Know</h1>
@@ -283,12 +293,7 @@
 			<div class="table-wrapper">
 				<table>
 					<thead>
-						<tr>
-							<th>Char.</th>
-							<th>Pinyin</th>
-							<th>Tone</th>
-							<th>Description</th>
-						</tr>
+						<tr><th>Char.</th><th>Pinyin</th><th>Tone</th><th>Description</th></tr>
 					</thead>
 					<tbody>
 						<tr><td class="char-cell">妈</td><td>mā</td><td>flat</td><td>flat, high-pitched</td></tr>
@@ -305,12 +310,7 @@
 				<div class="table-wrapper">
 					<table>
 						<thead>
-							<tr>
-								<th>Num.</th>
-								<th>Char.</th>
-								<th>Pinyin</th>
-								<th>Sounds like</th>
-							</tr>
+							<tr><th>Num.</th><th>Char.</th><th>Pinyin</th><th>Sounds like</th></tr>
 						</thead>
 						<tbody>
 							<tr><td style="text-align: center;">1</td><td class="char-cell">一</td><td>yī</td><td>"ee" in "bee"</td></tr>
@@ -330,7 +330,7 @@
             <h2>The Suits</h2>
 				<p>There are three suits (Characters, Bamboos, and Circles). Reading a tile in any of these suits is as simple as saying the number + the suit name together. Examples are shown below.</p>
 				
-				<h3>Characters Suit</h3>
+			<h3>Characters Suit</h3>
 				<p><span class="zh-char">萬</span> (wàn: sounds like "Juan")</p>
 				<div class="tile-row">
 					<script>
@@ -342,7 +342,7 @@
 				<p>In the characters suit, the character 萬 (wàn, meaning ten thousand) appears on the tile below each number.</p>
 				<p><strong>Example:</strong> <img src="tiles/wan7.png" alt="7 Character" class="inline-tile"> qī wàn ("chee Juan")</p>
 	
-				<h3>Bamboos Suit</h3>
+			<h3>Bamboos Suit</h3>
 				<p><span class="zh-char">索</span> (tiáo: sounds like "tsea-ow")</p>
 				<div class="tile-row">
 					<script>
@@ -354,7 +354,7 @@
 				<p>In the bamboos suit, the yī tile usually depicts a bird rather than a single bamboo stick and the bā tile usually is formed like a diamond, rectangle, or set of 'M's. The tiles can be distinguished by the number of bamboo sticks.</p>
 				<p><strong>Example:</strong> <img src="tiles/tiao2.png" alt="2 Bamboo" class="inline-tile"> èr tiáo ("er tsea-ow")</p>
 	
-				<h3>Circles Suit</h3>
+			<h3>Circles Suit</h3>
 				<p><span class="zh-char">筒子</span> (tǒng: sounds like "tong")</p>
 				<div class="tile-row">
 					<script>
@@ -381,12 +381,7 @@
 				<div class="table-wrapper">
 					<table>
 						<thead>
-							<tr>
-								<th>Wind</th>
-								<th>Char.</th>
-								<th>Pinyin</th>
-								<th>Sounds like</th>
-							</tr>
+							<tr><th>Wind</th><th>Char.</th><th>Pinyin</th><th>Sounds like</th></tr>
 						</thead>
 						<tbody>
 							<tr><td>East</td><td class="char-cell">東</td><td>dōng</td><td>"dong"</td></tr>
@@ -399,7 +394,7 @@
 				<p>To name a wind tile, say the name of the wind and then the word for wind <span class="zh-char">風</span> (fēng: sounds like "fung").</p>
 				<p><strong>Example:</strong> <img src="tiles/wind2.png" alt="South Wind" class="inline-tile">nán fēng ("naan fung")</p>
 	
-				<h3>Dragon Tiles</h3>
+			<h3>Dragon Tiles</h3>
 				<p><span class="zh-char">三元牌</span> (sānyuán pái: sounds like "sahn ywan pie")</p>
 				<div class="tile-row">
 					<script>
@@ -411,12 +406,7 @@
 				<div class="table-wrapper">
 					<table>
 						<thead>
-							<tr>
-								<th>Dragon</th>
-								<th>Char.</th>
-								<th>Pinyin</th>
-								<th>Sounds like</th>
-							</tr>
+							<tr><th>Dragon</th><th>Char.</th><th>Pinyin</th><th>Sounds like</th></tr>
 						</thead>
 						<tbody>
 							<tr><td>Red</td><td class="char-cell">紅中</td><td>hóngzhōng</td><td>"hong zhong"</td></tr>
@@ -431,7 +421,7 @@
 			<h2>Bonus Tiles</h2>
 				<p>There are two types of bonus tiles that operate in an identical way: flowers and seasons.</p>
 	
-				<h3>Flower Tiles</h3>
+			<h3>Flower Tiles</h3>
 				<div class="tile-row">
 					<script>
 						for(let i=1; i<=4; i++) {
@@ -442,12 +432,7 @@
 				<div class="table-wrapper">
 					<table>
 						<thead>
-							<tr>
-								<th>Flower</th>
-								<th>Char.</th>
-								<th>Pinyin</th>
-								<th>Sounds like</th>
-							</tr>
+							<tr><th>Flower</th><th>Char.</th><th>Pinyin</th><th>Sounds like</th></tr>
 						</thead>
 						<tbody>
 							<tr><td>Plum</td><td class="char-cell">梅</td><td>méi</td><td>"may"</td></tr>
@@ -459,7 +444,7 @@
 				</div>
 				<p>Flower tiles represent the four winds in the same order: dōng, nán, xī, běi. Flower tiles are also numbered for easy reference.</p>
 	
-				<h3>Season Tiles</h3>
+			<h3>Season Tiles</h3>
 				<div class="tile-row">
 					<script>
 						for(let i=1; i<=4; i++) {
@@ -470,12 +455,7 @@
 				<div class="table-wrapper">
 					<table>
 						<thead>
-							<tr>
-								<th>Season</th>
-								<th>Char.</th>
-								<th>Pinyin</th>
-								<th>Sounds like</th>
-							</tr>
+							<tr><th>Season</th><th>Char.</th><th>Pinyin</th><th>Sounds like</th></tr>
 						</thead>
 						<tbody>
 							<tr><td>Spring</td><td class="char-cell">春</td><td>chūn</td><td>"choon"</td></tr>
@@ -490,22 +470,17 @@
 			<h2>Gameplay Words</h2>
 				<p>Let’s look at a few other words you will need to know when playing the game.</p>
 				
-				<h3>Common Phrases</h3>
+			<h3>Common Phrases</h3>
 				<div class="table-wrapper">
 					<table>
 						<thead>
-							<tr>
-								<th>Phrase</th>
-								<th>Char.</th>
-								<th>Pinyin</th>
-								<th>Sounds like</th>
-							</tr>
+							<tr><th>Phrase</th><th>Char.</th><th>Pinyin</th><th>Sounds like</th></tr>
 						</thead>
 						<tbody>
 							<tr><td>Shuffle tiles</td><td class="char-cell">洗牌</td><td>xǐpái</td><td>“she pie”</td></tr>
 							<tr><td>Play a tile</td><td class="char-cell">出牌</td><td>chūpái</td><td>“choo pie”</td></tr>
 							<tr><td>Draw a tile</td><td class="char-cell">摸牌</td><td>mōpái</td><td>“mo pie”</td></tr>
-							<tr><td>“Eat” – take tile for a straight</td><td class="char-cell">吃</td><td>chī</td><td>“chur” in "church"</td></tr>
+							<tr><td>“Eat” – take tile for a sequence</td><td class="char-cell">吃</td><td>chī</td><td>“chur” in "church"</td></tr>
 							<tr><td>“Touch” – take tile for set of 3</td><td class="char-cell">碰</td><td>pèng</td><td>“p-ohng”</td></tr>
 							<tr><td>“Bar” – take tile for set of 4</td><td class="char-cell">槓</td><td>gàng</td><td>“gahng”</td></tr>
 							<tr><td>Win by drawing</td><td class="char-cell">自摸</td><td>zìmō</td><td>“dz-uh mo”</td></tr>
@@ -514,12 +489,152 @@
 					</table>
 				</div>
         </section>
-        <!-- END TERMS TAB -->
+
+<!------------------------------------------SETUP TAB------------------------------------------>
 
         <section id="setup" class="page">
-            <h1>Setup</h1>
-            <p>Learn how to build the wall, roll the dice, and deal the tiles to the four winds.</p>
+            <h1>Game Setup</h1>
+            
+            <h2>Understanding the Tiles</h2>
+				<p>The 144 Mahjong tiles are organized into 3 main groups:</p>
+				<ul style="margin-left: 24px; margin-bottom: 12px; color: #444; font-size: 15px; line-height: 1.5;">
+					<li>The suits</li>
+					<li>The honors</li>
+					<li>The bonus tiles</li>
+				</ul>
+            
+            <h2>The Suits</h2>
+				<p>There are 3 suits of tiles representing the numbers 1 through 9. Each tile appears 4 times in the deck.</p>
+            
+            <h3>Characters (wàn)</h3>
+				<div class="tile-row">
+					<script>
+						for(let i=1; i<=9; i++) {
+							document.write(`<img src="tiles/wan${i}.png" alt="${i} Character">`);
+						}
+					</script>
+				</div>
+            
+            <h3>Bamboos (tiáo)</h3>
+				<div class="tile-row">
+					<script>
+						for(let i=1; i<=9; i++) {
+							document.write(`<img src="tiles/tiao${i}.png" alt="${i} Bamboo">`);
+						}
+					</script>
+				</div>
+            
+            <h3>Circles (tǒng)</h3>
+				<div class="tile-row">
+					<script>
+						for(let i=1; i<=9; i++) {
+							document.write(`<img src="tiles/tong${i}.png" alt="${i} Circle">`);
+						}
+					</script>
+				</div>
+            
+            <h2>The Honors</h2>
+				<p>There are 4 winds and 3 dragons. Each wind or dragon appears 4 times in the deck.</p>
+            
+            <h3>Winds (fēng)</h3>
+				<div class="tile-row">
+					<script>
+						for(let i=1; i<=4; i++) {
+							document.write(`<img src="tiles/wind${i}.png" alt="Wind ${i}">`);
+						}
+					</script>
+				</div>
+				<p><strong>East</strong> (dōng fēng), <strong>South</strong> (nán fēng),<br>
+				<strong>West</strong> (xī fēng), <strong>North</strong> (běi fēng)</p>
+            
+            <h3>Dragons (sānyuán)</h3>
+				<div class="tile-row">
+					<script>
+						for(let i=1; i<=3; i++) {
+							document.write(`<img src="tiles/dragon${i}.png" alt="Dragon ${i}">`);
+						}
+					</script>
+				</div>
+				<p><strong>Red Dragon</strong> (hóngzhōng),<br>
+				<strong>Green Dragon</strong> (fācái),<br>
+				<strong>White Dragon</strong> (báibǎn)</p>
+            
+            <h2>The Bonus Tiles</h2>
+            
+            <h3>Flowers</h3>
+				<div class="tile-row">
+					<script>
+						for(let i=1; i<=4; i++) {
+							document.write(`<img src="tiles/flower${i}.png" alt="Flower ${i}">`);
+						}
+					</script>
+				</div>
+				<p><strong>Plum</strong> (méi), <strong>Orchid</strong> (lán),<br>
+				<strong>Chrysanthemum</strong> (jú), <strong>Bamboo</strong> (zhú)</p>
+            
+            <h3>Seasons</h3>
+				<div class="tile-row">
+					<script>
+						for(let i=1; i<=4; i++) {
+							document.write(`<img src="tiles/season${i}.png" alt="Season ${i}">`);
+						}
+					</script>
+				</div>
+				<p><strong>Spring</strong> (chūn), <strong>Summer</strong> (xià),<br>
+				<strong>Autumn</strong> (qiū), <strong>Winter</strong> (dōng)</p>
+            
+            <h2>Setting up the Hand</h2>
+            
+            <h3>Order of Play</h3>
+				<p>To begin, players draw one of the 4 winds and arrange themselves around the table accordingly.</p>
+            
+            <h3>Making the Wall</h3>
+				<p>All 144 tiles are placed face down and shuffled. Each player takes out 36 tiles and stacks them face down in a row of tiles 18 long and 2 high. The rows are then arranged in the pattern below to form the wall.</p>
+				<img src="tiles/setup1.png" alt="Wall Setup Pattern" style="max-width: 100%; margin: 8px;">
+       
+		   <h2>Setting up the Hand</h2>
+				
+			<h3>Game Organization</h3>
+				<p>A traditional game of Mahjong is 4 rounds of 4 hands in each round. Rounds follow the order of the winds (as does gameplay) in the following sequence:</p>
+				<p style="text-align: center; font-weight: bold; color: var(--mahjong-red); margin-top: 8px;">East &rarr; South &rarr; West &rarr; North</p>
+				
+			<h3>Order of Play</h3>
+				<p>To begin, players draw one of the 4 winds and arrange themselves around the table accordingly. This redrawing of winds and reseating around the table happens at the beginning of each round.</p>
+				<p><span class="note-highlight"><strong>Note:</strong> Some variations/regions of the game do not redraw winds at the beginning of each round. The person who initially drew East, remains East in all 4 rounds.</span></p>
+				
+			<h3>Making the Wall</h3>
+				<p>All 144 tiles are placed face down and shuffled (called &ldquo;washing&rdquo;). Each player takes out 36 tiles and stacks them face down in a row of tiles 18 long and 2 high. The rows are then arranged in the pattern below to form the wall.</p>
+				<img src="tiles/setup1.png" alt="Making the Wall" style="max-width: 100%; border-radius: 4px; margin-top: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+				
+			<h3>Breaking the Wall</h3>
+				<p>For the first hand of the first round, the player in the East position becomes the &ldquo;banker&rdquo;. This player rolls two dice and finds the sum. Starting with their own east wall as &ldquo;1&rdquo;, the player counts upward in a counterclockwise direction around the circle until they reach the section of wall that corresponds to the sum of the dice. The player on that section of the wall then counts tiles from right to left on their wall until reaching the sum of the dice rolled. That player then &ldquo;breaks&rdquo; the wall to the left of this point.</p>
+				<img src="tiles/setup2.png" alt="Breaking the Wall" style="max-width: 100%; border-radius: 4px; margin-top: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+				<p><span class="note-highlight"><strong>Note:</strong> Some variations/regions of the game require the person who will break the wall to reroll a sum rather than using the East player&rsquo;s sum of dice.</span></p>
+				
+			<h3>Dealing the Tiles</h3>
+				<p><span class="note-highlight"><strong>Note:</strong> Some variations/regions of the game deal the tiles differently or end up with a different sum of tiles.</span></p>
+				<p>The player who broke the wall takes the next two stacks (four tiles) to the left of the break and adds them to their hand. Moving around the table counterclockwise, each player continues taking the next two stacks (four tiles) until all players have 16 tiles in their hand.</p>
+				<img src="tiles/setup3.png" alt="Dealing the Tiles" style="max-width: 100%; border-radius: 4px; margin-top: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+				<p>Once tiles have been drawn the wall is now a noticeable shape (this is representative of the ??? character). The wall now has a head (where players will continue drawing tiles as the game goes on) and a tail (where a player originally broke the wall).</p>
+				<img src="tiles/setup4.png" alt="Wall Head and Tail" style="max-width: 100%; border-radius: 4px; margin-top: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+				
+			<h3>Replacements</h3>
+				<p>If any flower or season tiles have been drawn these are played face up on the table in front of the player&rsquo;s hand, and players take one replacement tile at a time from the tail of the wall (in turn counterclockwise) until all players have 16 non-flower, non-season tiles in their hand. If any flower or season tiles are drawn from the tail, this player will still have a replacement to draw (still in turn with the other players).</p>
+				<p>In the example below, the East, West, and North players are showing flowers and seasons. These players will draw replacement tiles from the tail in this order: East player, West Player, North Player, West Player, North Player.</p>
+				<img src="tiles/setup5.png" alt="Replacements Example" style="max-width: 100%; border-radius: 4px; margin-top: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+				
+			<h3>Arrange Your Hand</h3>
+				<p>Once flower and season tiles have been replaced, players arrange their hands with the tiles stood up facing them. Players can resort the tiles by suit in order 1-9 and put the honors together. Players should take time before the round begins to identify their strategy by analyzing whether they already have tiles for sequences of 3 (suited tiles only), or sets of 3 (any suited or honors tile).</p>
+				
+			<h3>Setting Up Later Hands</h3>
+				<p>After each hand, if the &ldquo;banker&rdquo; did not h&uacute;, the starting position in the next hand passes to the next direction counterclockwise (East &rarr; South &rarr; West &rarr; North). This player then rolls the dice, indicates which wall will be broken and the player on that side of the wall will break again and begin the dealing of the tiles.</p>
+				<p>For any hand that the &ldquo;banker&rdquo; declares h&uacute;, the starting position does not move. This player rolls the dice again for their second, third, or more times as &ldquo;banker&rdquo;.</p>
+				<p>After each round, seating is chosen again (game variation dependent) and the East player becomes &ldquo;banker&rdquo; again for the first hand of that round (even though it may be the South, West, or North round).</p>       
+       
         </section>
+        
+<!------------------------------------------GAMEPLAY TAB------------------------------------------>
+        
         <section id="gameplay" class="page">
             <h1>Gameplay</h1>
             <p>Understand the turn order, drawing, discarding, and how to claim tiles from other players.</p>
