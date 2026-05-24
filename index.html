@@ -583,45 +583,51 @@
 				<p><strong>Spring</strong> (chūn), <strong>Summer</strong> (xià),<br>
 				<strong>Autumn</strong> (qiū), <strong>Winter</strong> (dōng)</p>
             
-            <h2>Setting up the Hand</h2>
-            
-            <h3>Order of Play</h3>
-				<p>To begin, players draw one of the 4 winds and arrange themselves around the table accordingly.</p>
-            
-            <h3>Making the Wall</h3>
-				<p>All 144 tiles are placed face down and shuffled. Each player takes out 36 tiles and stacks them face down in a row of tiles 18 long and 2 high. The rows are then arranged in the pattern below to form the wall.</p>
-				<img src="tiles/setup1.png" alt="Wall Setup Pattern" style="max-width: 100%; margin: 8px;">
-       
 		   <h2>Setting up the Hand</h2>
 				
 			<h3>Game Organization</h3>
-				<p>A traditional game of Mahjong is 4 rounds of 4 hands in each round. Rounds follow the order of the winds (as does gameplay) in the following sequence:</p>
+				<p>A traditional game of Mahjong is 4 <strong>rounds</strong> with 4 <strong>hands</strong> in each round. Rounds follow the order of the winds (as does gameplay) in the following sequence:</p>
 				<p style="text-align: center; font-weight: bold; color: var(--mahjong-red); margin-top: 8px;">East &rarr; South &rarr; West &rarr; North</p>
+				<div class="tile-row" style="align-items: center; justify-content: center; gap: 20px;">
+					<script>
+						for(let i=1; i<=4; i++) {
+							document.write(`<img src="tiles/wind${i}.png" alt="Wind ${i}">`);
+						}
+					</script>
+				</div>
 				
 			<h3>Order of Play</h3>
-				<p>To begin, players draw one of the 4 winds and arrange themselves around the table accordingly. This redrawing of winds and reseating around the table happens at the beginning of each round.</p>
-				<p><span class="note-highlight"><strong>Note:</strong> Some variations/regions of the game do not redraw winds at the beginning of each round. The person who initially drew East, remains East in all 4 rounds.</span></p>
+				<p>To begin, choose a side of the table to be "East". Players draw one of the 4 wind tiles and arrange themselves around the table based on the <strong>counterclockwise order</strong> of winds.</p>
+				<p><span class="note-highlight"><strong>Note:</strong> This arrangement is different than the arrangement of cardinal directions on a compass.
+				<img src="images/setup1.png" alt="Compass vs. Mahjong" style="max-width: 100%;"></span></p>
+				<p>This drawing of winds and reseating around the table happens at the beginning of each round.</p>
+				<p><span class="note-highlight"><strong>Note:</strong> Some variations of the game do not redraw winds at the beginning of each round. The person who initially drew East, remains East in all 4 rounds.</span></p>
 				
 			<h3>Making the Wall</h3>
-				<p>All 144 tiles are placed face down and shuffled (called &ldquo;washing&rdquo;). Each player takes out 36 tiles and stacks them face down in a row of tiles 18 long and 2 high. The rows are then arranged in the pattern below to form the wall.</p>
-				<img src="tiles/setup1.png" alt="Making the Wall" style="max-width: 100%; border-radius: 4px; margin-top: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+				<p>All 144 tiles are placed face down and <strong>washed</strong> (shuffled). Each player takes out 36 tiles and stacks them face down in a row of tiles 18 long and 2 high. The rows are then arranged in the pattern below to form the <strong>wall</strong>.</p>
+				<img src="images/setup2.png" alt="Making the Wall" style="max-width: 100%;">
 				
 			<h3>Breaking the Wall</h3>
-				<p>For the first hand of the first round, the player in the East position becomes the &ldquo;banker&rdquo;. This player rolls two dice and finds the sum. Starting with their own east wall as &ldquo;1&rdquo;, the player counts upward in a counterclockwise direction around the circle until they reach the section of wall that corresponds to the sum of the dice. The player on that section of the wall then counts tiles from right to left on their wall until reaching the sum of the dice rolled. That player then &ldquo;breaks&rdquo; the wall to the left of this point.</p>
-				<img src="tiles/setup2.png" alt="Breaking the Wall" style="max-width: 100%; border-radius: 4px; margin-top: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-				<p><span class="note-highlight"><strong>Note:</strong> Some variations/regions of the game require the person who will break the wall to reroll a sum rather than using the East player&rsquo;s sum of dice.</span></p>
+				<p>For the first hand of the first round, the player in the East position becomes the <strong>banker</strong>. This player rolls two dice and finds the sum. Starting with their own east wall as &ldquo;1&rdquo;, the player counts upward in a counterclockwise direction around the circle until they reach the section of wall that corresponds to the sum of the dice.</p>
+				<p><strong>Example:</strong> The East player rolls a sum of 6 which results in the South wall being broken.</p>
+				<img src="images/setup3.png" alt="Dice roll" style="max-width: 100%;">
+				<p>The player on that section of the wall counts tiles from right to left on their wall until reaching the sum of the dice rolled. That player then <strong>breaks</strong> the wall to the left of this point (making a visible separation).</p>
+				<p><strong>Example:</strong> The South player (from their point of view) breaks the wall after the 6th tile from the right counting left.</p>
+				<img src="images/setup4.png" alt="Breaking the Wall" style="max-width: 100%;">
+				<p><span class="note-highlight"><strong>Note:</strong> Some variations of the game require the person who will break the wall to reroll a sum rather than using the East player&rsquo;s sum of dice.</span></p>
 				
 			<h3>Dealing the Tiles</h3>
-				<p><span class="note-highlight"><strong>Note:</strong> Some variations/regions of the game deal the tiles differently or end up with a different sum of tiles.</span></p>
 				<p>The player who broke the wall takes the next two stacks (four tiles) to the left of the break and adds them to their hand. Moving around the table counterclockwise, each player continues taking the next two stacks (four tiles) until all players have 16 tiles in their hand.</p>
-				<img src="tiles/setup3.png" alt="Dealing the Tiles" style="max-width: 100%; border-radius: 4px; margin-top: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-				<p>Once tiles have been drawn the wall is now a noticeable shape (this is representative of the ??? character). The wall now has a head (where players will continue drawing tiles as the game goes on) and a tail (where a player originally broke the wall).</p>
-				<img src="tiles/setup4.png" alt="Wall Head and Tail" style="max-width: 100%; border-radius: 4px; margin-top: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+				<img src="images/setup5.png" alt="Dealing the Tiles" style="max-width: 100%;">
+				<p><span class="note-highlight"><strong>Note:</strong> Some variations of the game deal the tiles differently or end up with a different sum of tiles initially.</span></p>
+				<p>Once tiles have been drawn, the wall has been opened. The remaining tiles form a shape that is representative of <span class="zh-char">门</span> mén (meaning "gate").</p>
+				<p>The wall now has a <strong>head</strong> (the starting point of the first stroke to draw the character) where players will continue drawing tiles as the game goes on, and a <strong>tail</strong> (the ending point of the final stroke to draw the character) where players will draw replacements for a flower tile, season tile, or gàng.</p>
+				<img src="images/setup6.png" alt="Wall Head and Tail" style="max-width: 100%;">
 				
 			<h3>Replacements</h3>
-				<p>If any flower or season tiles have been drawn these are played face up on the table in front of the player&rsquo;s hand, and players take one replacement tile at a time from the tail of the wall (in turn counterclockwise) until all players have 16 non-flower, non-season tiles in their hand. If any flower or season tiles are drawn from the tail, this player will still have a replacement to draw (still in turn with the other players).</p>
-				<p>In the example below, the East, West, and North players are showing flowers and seasons. These players will draw replacement tiles from the tail in this order: East player, West Player, North Player, West Player, North Player.</p>
-				<img src="tiles/setup5.png" alt="Replacements Example" style="max-width: 100%; border-radius: 4px; margin-top: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+				<p>If any flower or season tiles have been drawn, these are played face up on the table in front of the player&rsquo;s hand, and players take one replacement tile at a time from the tail of the wall (in turn counterclockwise) until all players have 16 non-flower, non-season tiles in their hand. If a player draws a flower or season tile from the tail, this player will still have a replacement to draw (in turn with the other players).</p>
+				<p><strong>Example:</strong> The East, West, and North players are showing flowers and seasons. These players will draw replacement tiles from the tail to match the number of flowers or seasons removed from their hand in this order: East player, West Player, North Player, West Player, North Player.</p>
+				<img src="tiles/setup7.png" alt="Replacements Example" style="max-width: 100%;">
 				
 			<h3>Arrange Your Hand</h3>
 				<p>Once flower and season tiles have been replaced, players arrange their hands with the tiles stood up facing them. Players can resort the tiles by suit in order 1-9 and put the honors together. Players should take time before the round begins to identify their strategy by analyzing whether they already have tiles for sequences of 3 (suited tiles only), or sets of 3 (any suited or honors tile).</p>
