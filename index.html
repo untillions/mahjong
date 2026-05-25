@@ -97,6 +97,51 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+		/* Home Screen 2x2 Grid Layout */
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
+        .grid-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        /* Subtle responsive shrink-press style matching an app-like navigation flow */
+        .grid-card:active {
+            transform: scale(0.96);
+            background-color: #f1f8e9; /* Light green tint when pressed */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .grid-icon {
+            width: 44px;
+            height: 44px;
+            margin-bottom: 10px;
+            object-fit: contain;
+        }
+
+        .grid-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
         /* Footer Navigation Bar */
         .bottom-nav {
             position: fixed;
@@ -263,6 +308,23 @@
             display: inline-block;
             margin: 4px 0 8px 0;
         }
+        
+        .inline-home-btn {
+			background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            margin: auto;
+            border-radius: 12px;
+            padding: 5px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+			color: #444;
+			font-size: 9pt;
+			line-height: 1;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+		}
 
     </style>
 </head>
@@ -277,9 +339,31 @@
     </header>
     
     <main>
+        
         <section id="intro" class="page active-page">
-            <h1>Traditional Chinese Mahjong for White People</h1>
-            <p>Welcome! This app will teach you the traditional rules of Chinese Mahjong. Tap any of the icons below to get started.</p>
+            <h1>Welcome!</h1>
+            <p>This app explains the traditional rules of Chinese Mahjong. Tap any of the icons below to get started. Click the header at the top to return to this page at any time.</p>
+			
+            <div class="home-grid">
+                <div class="grid-card" data-target="cheatsheet">
+                    <img src="icons/cheatsheet2.png" alt="Cheat Sheet" class="grid-icon">
+                    <span class="grid-label">Cheat Sheet</span>
+                </div>
+                <div class="grid-card" data-target="setup">
+                    <img src="icons/setup2.png" alt="Setup" class="grid-icon">
+                    <span class="grid-label">Setup Guide</span>
+                </div>
+                <div class="grid-card" data-target="gameplay">
+                    <img src="icons/gameplay2.png" alt="Gameplay" class="grid-icon">
+                    <span class="grid-label">Gameplay Rules</span>
+                </div>
+                <div class="grid-card" data-target="scoring">
+                    <img src="icons/scoring2.png" alt="Scoring" class="grid-icon">
+                    <span class="grid-label">Scoring Rules</span>
+                </div>
+            </div>
+
+            <p style="margin-top: 24px; font-size: 12px; color: #777;">Icons were created by <em>Freepik</em> on <a href="https://www.flaticon.com/authors/freepik" title="Flaticon" style="color: #777;">Flaticon</a></p>
         </section>
 
 <!------------------------------------------TERMS TAB------------------------------------------>
@@ -293,14 +377,13 @@
 			<div class="table-wrapper">
 				<table>
 					<thead>
-						<tr><th>Char.</th><th>Pinyin</th><th>Tone</th><th>Description</th></tr>
+						<tr><th>Pinyin</th><th>Sounds like</th><th>Tone</th><th>Description</th></tr>
 					</thead>
 					<tbody>
-						<tr><td class="char-cell">妈</td><td>mā</td><td>flat</td><td>flat, high-pitched</td></tr>
-						<tr><td class="char-cell">麻</td><td>má</td><td>rising</td><td>like ending a question</td></tr>
-						<tr><td class="char-cell">马</td><td>mǎ</td><td>dipping</td><td>falling and then rising</td></tr>
-						<tr><td class="char-cell">骂</td><td>mà</td><td>falling</td><td>start high and fall abruptly</td></tr>
-						<tr><td class="char-cell">吗</td><td>ma</td><td>neutral</td><td>light or no emphasis</td></tr>
+						<tr><td>bā</td><td>"bah"</td><td>flat</td><td>flat, high-pitched</td></tr>
+						<tr><td>zhú</td><td>"zhoo"</td><td>rising</td><td>like ending a question</td></tr>
+						<tr><td>běi</td><td>"beh-ee"</td><td>dipping</td><td>falling and then rising</td></tr>
+						<tr><td>sì</td><td>"suh"</td><td>falling</td><td>start high and fall abruptly</td></tr>
 					</tbody>
 				</table>
 			</div>
@@ -316,8 +399,8 @@
 							<tr><td style="text-align: center;">1</td><td class="char-cell">一</td><td>yī</td><td>"ee" in "bee"</td></tr>
 							<tr><td style="text-align: center;">2</td><td class="char-cell">二</td><td>èr</td><td>"er" in "nerd"</td></tr>
 							<tr><td style="text-align: center;">3</td><td class="char-cell">三</td><td>sān</td><td>"sawn"</td></tr>
-							<tr><td style="text-align: center;">4</td><td class="char-cell">四</td><td>sì</td><td>"s" in "supper"</td></tr>
-							<tr><td style="text-align: center;">5</td><td class="char-cell">五</td><td>wǔ</td><td>"oo" in "oops"</td></tr>
+							<tr><td style="text-align: center;">4</td><td class="char-cell">四</td><td>sì</td><td>"suh" in "supper"</td></tr>
+							<tr><td style="text-align: center;">5</td><td class="char-cell">五</td><td>wǔ</td><td>"wuh-oo"</td></tr>
 							<tr><td style="text-align: center;">6</td><td class="char-cell">六</td><td>liù</td><td>"lay-o"</td></tr>
 							<tr><td style="text-align: center;">7</td><td class="char-cell">七</td><td>qī</td><td>"chee" in "cheese"</td></tr>
 							<tr><td style="text-align: center;">8</td><td class="char-cell">八</td><td>bā</td><td>"ba" in "bar"</td></tr>
@@ -364,7 +447,7 @@
 					</script>
 				</div>
 				<p>In the circles suit, all tiles can be distinguished by the number of circles.</p>
-				<p><strong>Example:</strong> <img src="tiles/tong5.png" alt="5 Circle" class="inline-tile"> wǔ tǒng ("oo tong")</p>
+				<p><strong>Example:</strong> <img src="tiles/tong5.png" alt="5 Circle" class="inline-tile"> wǔ tǒng ("wuh-oo tong")</p>
 			
 			<h2>The Honors</h2>
 				<p>There are two types of honor tiles: winds and dragons.</p>
@@ -384,10 +467,10 @@
 							<tr><th>Wind</th><th>Char.</th><th>Pinyin</th><th>Sounds like</th></tr>
 						</thead>
 						<tbody>
-							<tr><td>East</td><td class="char-cell">東</td><td>dōng</td><td>"dong"</td></tr>
-							<tr><td>South</td><td class="char-cell">南</td><td>nán</td><td>"naan" bread</td></tr>
+							<tr><td>East</td><td class="char-cell">東</td><td>dōng</td><td>"dohng"</td></tr>
+							<tr><td>South</td><td class="char-cell">南</td><td>nán</td><td>"naan"</td></tr>
 							<tr><td>West</td><td class="char-cell">西</td><td>xī</td><td>"she"</td></tr>
-							<tr><td>North</td><td class="char-cell">北</td><td>běi</td><td>"bay"</td></tr>
+							<tr><td>North</td><td class="char-cell">北</td><td>běi</td><td>"beh-ee"</td></tr>
 						</tbody>
 					</table>
 				</div>
@@ -481,13 +564,19 @@
 							<tr><td>Play a tile</td><td class="char-cell">出牌</td><td>chūpái</td><td>“choo pie”</td></tr>
 							<tr><td>Draw a tile</td><td class="char-cell">摸牌</td><td>mōpái</td><td>“mo pie”</td></tr>
 							<tr><td>“Eat” – take tile for a sequence</td><td class="char-cell">吃</td><td>chī</td><td>“chur” in "church"</td></tr>
-							<tr><td>“Touch” – take tile for set of 3</td><td class="char-cell">碰</td><td>pèng</td><td>“p-ohng”</td></tr>
+							<tr><td>“Touch” – take tile for set of 3</td><td class="char-cell">碰</td><td>pèng</td><td>“pohng”</td></tr>
 							<tr><td>“Bar” – take tile for set of 4</td><td class="char-cell">槓</td><td>gàng</td><td>“gahng”</td></tr>
 							<tr><td>Win by drawing</td><td class="char-cell">自摸</td><td>zìmō</td><td>“dz-uh mo”</td></tr>
 							<tr><td>Win</td><td class="char-cell">和</td><td>hú</td><td>“hoo”</td></tr>
 						</tbody>
 					</table>
 				</div>
+				
+			<div style="margin-top: 14px; margin-bottom: 4px; text-align: center;">
+                <button class="inline-home-btn">
+					⏎&nbsp;<strong>Return to Home</strong>&nbsp;<img src="icons/home2.png" alt="Home" style="width: 24px; height: 24px; object-fit: contain; display: block;">
+				</button>
+            </div>
         </section>
 
 <!------------------------------------------SETUP TAB------------------------------------------>
@@ -608,7 +697,7 @@
 				<img src="images/setup2.png" alt="Making the Wall" style="max-width: 100%;">
 				
 			<h3>Breaking the Wall</h3>
-				<p>For the first hand of the first round, the player in the East position becomes the <strong>banker</strong>. This player rolls two dice and finds the sum. Starting with their own east wall as &ldquo;1&rdquo;, the player counts upward in a counterclockwise direction around the circle until they reach the section of wall that corresponds to the sum of the dice.</p>
+				<p>For the first hand of the first round, the player in the East position becomes the <strong>dealer</strong>. This player rolls two dice and finds the sum. Starting with their own east wall as &ldquo;1&rdquo;, the player counts upward in a counterclockwise direction around the circle until they reach the section of wall that corresponds to the sum of the dice.</p>
 				<p><strong>Example:</strong> The East player rolls a sum of 6 which results in the South wall being broken.</p>
 				<img src="images/setup3.png" alt="Dice roll" style="max-width: 100%;">
 				<p>The player on that section of the wall counts tiles from right to left on their wall until reaching the sum of the dice rolled. That player then <strong>breaks</strong> the wall to the left of this point (making a visible separation).</p>
@@ -621,38 +710,266 @@
 				<img src="images/setup5.png" alt="Dealing the Tiles" style="max-width: 100%;">
 				<p><span class="note-highlight"><strong>Note:</strong> Some variations of the game deal the tiles differently or end up with a different sum of tiles initially.</span></p>
 				<p>Once tiles have been drawn, the wall has been opened. The remaining tiles form a shape that is representative of <span class="zh-char">门</span> mén (meaning "gate").</p>
-				<p>The wall now has a <strong>head</strong> (the starting point of the first stroke to draw the character) where players will continue drawing tiles as the game goes on, and a <strong>tail</strong> (the ending point of the final stroke to draw the character) where players will draw replacements for a flower tile, season tile, or gàng.</p>
 				<img src="images/setup6.png" alt="Wall Head and Tail" style="max-width: 100%;">
+				<p>The wall now has a <strong>head</strong> (the starting point of the first stroke to draw the character) where players will continue drawing tiles as the game goes on, and a <strong>tail</strong> (the ending point of the final stroke to draw the character) where players will draw replacements for a flower tile, season tile, or gàng.</p>
 				
 			<h3>Replacements</h3>
+				<p>Players arrange their hands with the tiles stood up facing them. Players sort the tiles by suit in order 1-9 and put the honors together.</p>
 				<p>If any flower or season tiles have been drawn, these are played face up on the table in front of the player&rsquo;s rack, and players take one replacement tile at a time from the <strong>tail</strong> of the wall (in turn counterclockwise) until all players have 16 non-flower, non-season tiles in their hand. If a player draws a flower or season tile from the tail, this player will still have a replacement to draw (in turn with the other players). When drawing single tiles from the wall, always take the top tile from the end stack first, then the bottom tile.</p>
 				<p><strong>Example:</strong> The East, West, and North players are showing flowers and seasons. These players will draw replacement tiles one-at-a-time from the tail to match the number of flowers or seasons removed from their hand in this order: East player, West Player, North Player, West Player, North Player.</p>
 				<img src="images/setup7.png" alt="Replacements Example" style="max-width: 100%;">
-				
-			<h3>Arrange Your Hand</h3>
-				<p>Once flower and season tiles have been replaced, players arrange their hands with the tiles stood up facing them. Players can resort the tiles by suit in order 1-9 and put the honors together. Players should take time before the round begins to identify their strategy by analyzing whether they already have tiles for sequences of 3 (suited tiles only), or sets of 3 (any suited or honors tile).</p>
-				
+								
 			<h3>Setting Up Later Hands</h3>
-				<p>After each hand, if the &ldquo;banker&rdquo; did not h&uacute;, the starting position in the next hand passes to the next direction counterclockwise (East &rarr; South &rarr; West &rarr; North). This player then rolls the dice, indicates which wall will be broken and the player on that side of the wall will break again and begin the dealing of the tiles.</p>
-				<p>For any hand that the &ldquo;banker&rdquo; declares h&uacute;, the starting position does not move. This player rolls the dice again for their second, third, or more times as &ldquo;banker&rdquo;.</p>
-				<p>After each round, seating is chosen again (game variation dependent) and the East player becomes &ldquo;banker&rdquo; again for the first hand of that round (even though it may be the South, West, or North round).</p>       
+				<p>After each <strong>hand</strong>, if the dealder did not h&uacute;, the starting position in the next hand passes to the next direction counterclockwise (East &rarr; South &rarr; West &rarr; North). This player then rolls the dice, indicates which wall will be broken and the player on that side of the wall will break again and begin the dealing of the tiles.</p>
+				<p>For any <strong>hand</strong> that the dealer declares h&uacute;, the starting position does not move. This player rolls the dice again for their second, third, or more times as dealer.</p>
+				<p>After each <strong>round</strong>, the East player becomes dealer again for the first hand of that round (even though it may be the South, West, or North round).</p>       
        
+		   <div style="margin-top: 14px; margin-bottom: 4px; text-align: center;">
+                <button class="inline-home-btn">
+					⏎&nbsp;<strong>Return to Home</strong>&nbsp;<img src="icons/home2.png" alt="Home" style="width: 24px; height: 24px; object-fit: contain; display: block;">
+				</button>
+            </div>
         </section>
         
 <!------------------------------------------GAMEPLAY TAB------------------------------------------>
         
         <section id="gameplay" class="page">
             <h1>Gameplay</h1>
-            <p>Understand the turn order, drawing, discarding, and how to claim tiles from other players.</p>
+				
+			<h2>The Goal</h2>
+				<p>In a game of 16 tiles, be the first to create a hand of 5 sets and/or sequences of 3 (called <strong>melds</strong>) and 1 pair. This requires 17 tiles total to win.</p>
+				<p><span class="note-highlight"><strong>Note:</strong> Another variation uses 13 dealt tiles and one less meld.</span></p>
+				
+			<h2>Melds</h2>
+				<p>In a hand of 16 tiles, players are aiming to create 5 melds (<strong>sets</strong> or <strong>sequences</strong>) and 1 <strong>pair</strong>.</p>
+				
+			<h3>Sets</h3>
+				<div class="tile-row" style="margin-bottom: 12px; justify-content: flex-start;">
+					<img src="tiles/dragon1.png" alt="Red Dragon" style="max-width: 35px;">
+					<img src="tiles/dragon1.png" alt="Red Dragon" style="max-width: 35px;">
+					<img src="tiles/dragon1.png" alt="Red Dragon" style="max-width: 35px;">
+					
+					<div style="width: 24px;"></div>
+					
+					<img src="tiles/tong9.png" alt="9 Circle" style="max-width: 35px;">
+					<img src="tiles/tong9.png" alt="9 Circle" style="max-width: 35px;">
+					<img src="tiles/tong9.png" alt="9 Circle" style="max-width: 35px;">
+				</div>
+				<p>Sets are three of the same tile.</p>
+				
+			<h3>Sequences</h3>
+				<div class="tile-row" style="margin-bottom: 12px; justify-content: flex-start;">
+					<img src="tiles/wan4.png" alt="4 Character" style="max-width: 35px;">
+					<img src="tiles/wan5.png" alt="5 Character" style="max-width: 35px;">
+					<img src="tiles/wan6.png" alt="6 Character" style="max-width: 35px;">
+					
+					<div style="width: 24px;"></div>
+					
+					<img src="tiles/tiao1.png" alt="1 Bamboo" style="max-width: 35px;">
+					<img src="tiles/tiao2.png" alt="2 Bamboo" style="max-width: 35px;">
+					<img src="tiles/tiao3.png" alt="3 Bamboo" style="max-width: 35px;">
+				</div>
+				<p>Sequences are three tiles in numerical order (suited tiles only).</p>
+				
+			<h3>Pairs</h3>
+				<div class="tile-row" style="margin-bottom: 12px; justify-content: flex-start;">
+					<img src="tiles/wind2.png" alt="South Wind" style="max-width: 35px;">
+					<img src="tiles/wind2.png" alt="South Wind" style="max-width: 35px;">
+				</div>
+				<p>Pairs are two of the same tile. A pair could become a set if a third identical tile is drawn or claimed, or it can remain a pair to fulfill the winning hand condition.</p>
+				
+			<h2>Drawing and Discarding</h2>
+				<p>A typical turn consists of two steps:</p>
+				<ol style="margin-left: 24px; margin-bottom: 12px; color: #444; font-size: 15px; line-height: 1.5;">
+					<li>Draw a tile from the wall (or claim a discard).</li>
+					<li>Discard a tile (also called <strong>throwing</strong>).</li>
+				</ol>
+				<p>Always draw new tiles from the <strong>head</strong> of the wall. Always discard tiles face-up into the center of the table.</p>
+				<p><span class="note-highlight"><strong>Note:</strong> Proper game etiquette could include announcing the discarded tile by its name and arranging discarded tiles neatly so all players can easily track what has been thrown.</span></p>
+				
+			<h2>Claiming Discards</h2>
+				<p>There are three ways to claim tiles that other players discard, bypassing the standard wall draw.</p>
+				
+			<h3>Chī <span class="zh-char">吃</span></h3>
+				<p>If a player discards a tile that could complete a sequence in the next player’s hand (counterclockwise), that player can claim it instead of drawing from the wall.</p>
+				<p>To do so, the next player must simply announce “Chī”, reveal the two matching sequence tiles from their hand, and place all three tiles face-up in front of them. This player then discards a tile as usual, and play continues to the person on their right.</p>
+				<p><span class="note-highlight"><strong>Note:</strong> Players can only chī from the player sitting directly before them in the standard turn rotation.</span></p>
+				
+			<h3>Pèng <span class="zh-char">碰</span></h3>
+				<p>If any player discards a tile that could complete a set of 3 in another player’s hand, that player can claim it—even if it is not currently their turn in the rotation.</p>
+				<p>To do so, the player must announce “Pèng”, reveal the two identical tiles from their hand, and place all three tiles face-up in front of them. This player then discards a tile as usual, and play continues to the right of this player (regardless of how many players may have been "skipped" between the original player who discarded and the player who declared pèng).</p>
+				
+			<h3>Gàng <span class="zh-char">槓</span></h3>
+				<p>If any player discards a tile that could complete a set of 4 in another player’s hand, that player can claim it immediately, regardless of turn order.</p>
+				<p>To do so, the player must announce “Gàng”, reveal the three identical tiles from their hand, and place all four tiles face-up in front of them. This is known as an <strong>open gàng</strong>. Because an extra tile is locked up in a set of four, the player must draw a replacement tile from the <strong>tail</strong> of the wall before discarding a tile as usual. Play then continues to the person on their right.</p>
+				
+			<h3>Special Gàng Conditions</h3>
+				<p>The standard claim results in an open gàng. However, a <strong>closed gàng</strong> can also be declared directly from a player's hidden hand.</p>
+				<p>If a player draws the fourth tile of a set already in their hand, they have two options:</p>
+				<ol style="margin-left: 24px; margin-bottom: 12px; color: #444; font-size: 15px; line-height: 1.5;">
+					<li><strong>Declare it as a closed gàng:</strong> The player places all four tiles face-down in front of them (sometimes flipping the two outer tiles face-up to show the set identity). They draw a replacement tile from the tail of the wall, discard a tile, and play continues to their right. Declaring a closed gàng safely increases the hand's score if they achieve hú.</li>
+					<li><strong>Use it in a sequence:</strong> Keep the tile hidden and use it as part of a separate consecutive sequence (suited tiles only). This requires no declaration, keeps a player's strategy secret, and helps the player move closer to a generic win.</li>
+				</ol>
+				<p>Additionally, if a player already has an exposed pèng face-up on the table and they draw the fourth matching tile themselves, they can add it to the meld to upgrade it to an open gàng. They must then draw a replacement tile from the tail and discard.</p>
+				<p><span class="note-highlight"><strong>Note:</strong> Players are never allowed to use a tile discarded by another player to upgrade an existing face-up pèng.</span></p>
+				
+			<h3>Hú <span class="zh-char">和</span></h3>
+				<p>When a player is exactly one tile away from winning (a state known as <strong>tenpai</strong>), they gain the ability to claim a discarded tile from <em>any</em> player to complete their hand—whether it finishes a sequence, a set, or their final pair. This is the only scenario where a pair can be completed using a discarded tile.</p>
+				
+			<h3>Multiple Claims</h3>
+				<p>If two or more players attempt to claim the exact same discarded tile simultaneously, priority is given based on the following hierarchy:</p>
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr><th>Priority</th><th>Action</th><th>Condition Allowed</th></tr>
+						</thead>
+						<tbody>
+							<tr><td style="font-weight: bold; text-align: center; color: var(--mahjong-red);">1</td><td><strong>Hú</strong></td><td>Completing a winning hand</td></tr>
+							<tr><td style="font-weight: bold; text-align: center; color: var(--mahjong-blue);">2</td><td><strong>Gàng / Pèng</strong></td><td>Completing sets of 3 or 4</td></tr>
+							<tr><td style="font-weight: bold; text-align: center; color: var(--mahjong-green);">3</td><td><strong>Chī</strong></td><td>Completing a sequence of 3</td></tr>
+						</tbody>
+					</table>
+				</div>
+				<p><span class="note-highlight"><strong>Note:</strong> If multiple players can declare hú off of the same discarded tile, standard rules dictate that only the player closest next in the turn sequence wins the tile. However, some casual variations allow both players to win simultaneously.</span></p>
+				
+			<h2>Winning the Hand</h2>
+				<p>A player completely wins the hand by securing 5 valid melds and 1 pair. If the final piece is claimed from another player’s discard pile, the player calls out “hú” to claim it and win. If the final piece is successfully drawn from the wall by the player themselves, they declare “zìmō”, which yields a higher point payout during the scoring phase.</p>
+
+			<div style="margin-top: 14px; margin-bottom: 4px; text-align: center;">
+                <button class="inline-home-btn">
+					⏎&nbsp;<strong>Return to Home</strong>&nbsp;<img src="icons/home2.png" alt="Home" style="width: 24px; height: 24px; object-fit: contain; display: block;">
+				</button>
+            </div>
         </section>
+        
+<!------------------------------------------SCORING TAB------------------------------------------>
+
         <section id="scoring" class="page">
             <h1>Scoring</h1>
             <p>Calculate points based on winning hands, specific melds, and special conditions.</p>
         </section>
+        
+<!------------------------------------------RECORD TAB------------------------------------------>
+
         <section id="record" class="page">
             <h1>Record</h1>
             <p>Keep track of your game scores and player winds across multiple rounds.</p>
         </section>
+    
+<!------------------------------------------RECORD TAB------------------------------------------>
+
+		<section id="cheatsheet" class="page" style="padding-bottom: 0;">
+            <h1 style="margin-bottom: 8px;">Cheat Sheet</h1>
+            
+			<h2 style="font-size: 16px; margin-top: 10px; margin-bottom: 6px; padding-bottom: 2px;">The Suits</h2>
+            <div class="suit-title" style="color: var(--mahjong-blue); font-size: 14px; margin-bottom: 4px;">Dots / Circles (tǒng)</div>
+            <div class="tile-row" style="margin-bottom: 6px;">
+                <script>
+                    for(let i=1; i<=9; i++) {
+                        document.write(`<img src="tiles/tong${i}.png" alt="${i} Dot">`);
+                    }
+                </script>
+            </div>
+            
+            <div class="suit-title" style="color: var(--mahjong-green); font-size: 14px; margin-bottom: 4px;">Bamboo (tiáo)</div>
+            <div class="tile-row" style="margin-bottom: 6px;">
+                <script>
+                    for(let i=1; i<=9; i++) {
+                        document.write(`<img src="tiles/tiao${i}.png" alt="${i} Bamboo">`);
+                    }
+                </script>
+            </div>
+            
+            <div class="suit-title" style="color: var(--mahjong-red); font-size: 14px; margin-bottom: 4px;">Symbols / Characters (wàn)</div>
+            <div class="tile-row" style="margin-bottom: 2px;">
+                <script>
+                    for(let i=1; i<=9; i++) {
+                        document.write(`<img src="tiles/wan${i}.png" alt="${i} Character">`);
+                    }
+                </script>
+            </div>
+
+            <div class="tile-row" style="margin-bottom: 12px; text-align: center; font-weight: bold; font-size: 12px; color: #777;">
+                <div style="flex: 1;">1</div>
+                <div style="flex: 1;">2</div>
+                <div style="flex: 1;">3</div>
+                <div style="flex: 1;">4</div>
+                <div style="flex: 1;">5</div>
+                <div style="flex: 1;">6</div>
+                <div style="flex: 1;">7</div>
+                <div style="flex: 1;">8</div>
+                <div style="flex: 1;">9</div>
+            </div>
+
+            <h2 style="font-size: 16px; margin-top: 10px; margin-bottom: 6px; padding-bottom: 2px;">The Honors</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; border: none; table-layout: fixed; margin-bottom: 16px;">
+                <tr>
+                    <td style="width: 57%; border: none; padding: 0 8px 0 0; vertical-align: top;">
+                        <div class="suit-title" style="color: #000; font-size: 14px; margin-bottom: 4px; padding-left: 0;">Winds (fēng)</div>
+                        <table style="width: 100%; border-collapse: collapse; border: none; table-layout: fixed;">
+                            <tr>
+                                <td style="border: none; padding: 0 1px; text-align: center;"><img src="tiles/wind1.png" alt="East" style="width: 100%; max-width: 32px; display: inline-block;"></td>
+                                <td style="border: none; padding: 0 1px; text-align: center;"><img src="tiles/wind2.png" alt="South" style="width: 100%; max-width: 32px; display: inline-block;"></td>
+                                <td style="border: none; padding: 0 1px; text-align: center;"><img src="tiles/wind3.png" alt="West" style="width: 100%; max-width: 32px; display: inline-block;"></td>
+                                <td style="border: none; padding: 0 1px; text-align: center;"><img src="tiles/wind4.png" alt="North" style="width: 100%; max-width: 32px; display: inline-block;"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: none; padding: 2px 0 0 0; text-align: center; font-size: 11px; font-weight: bold; color: #777;">East</td>
+                                <td style="border: none; padding: 2px 0 0 0; text-align: center; font-size: 11px; font-weight: bold; color: #777;">South</td>
+                                <td style="border: none; padding: 2px 0 0 0; text-align: center; font-size: 11px; font-weight: bold; color: #777;">West</td>
+                                <td style="border: none; padding: 2px 0 0 0; text-align: center; font-size: 11px; font-weight: bold; color: #777;">North</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                    <td style="width: 43%; border: none; padding: 0 0 0 8px; vertical-align: top;">
+                        <div class="suit-title" style="color: #000; font-size: 14px; margin-bottom: 4px; padding-left: 0;">Dragons (sānyuán)</div>
+                        <table style="width: 100%; border-collapse: collapse; border: none; table-layout: fixed;">
+                            <tr>
+                                <td style="border: none; padding: 0 1px; text-align: center;"><img src="tiles/dragon1.png" alt="Red" style="width: 100%; max-width: 32px; display: inline-block;"></td>
+                                <td style="border: none; padding: 0 1px; text-align: center;"><img src="tiles/dragon2.png" alt="Green" style="width: 100%; max-width: 32px; display: inline-block;"></td>
+                                <td style="border: none; padding: 0 1px; text-align: center;"><img src="tiles/dragon3.png" alt="White" style="width: 100%; max-width: 32px; display: inline-block;"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: none; padding: 2px 0 0 0; text-align: center; font-size: 11px; font-weight: bold; color: #777;">Red</td>
+                                <td style="border: none; padding: 2px 0 0 0; text-align: center; font-size: 11px; font-weight: bold; color: #777;">Green</td>
+                                <td style="border: none; padding: 2px 0 0 0; text-align: center; font-size: 11px; font-weight: bold; color: #777;">White</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <h2 style="font-size: 16px; margin-top: 10px; margin-bottom: 6px; padding-bottom: 2px;">Bonus Tiles</h2>
+            <div style="display: flex; gap: 16px; margin-bottom: 10px;">
+                <div style="flex: 1;">
+                    <div class="suit-title" style="font-size: 14px; margin-bottom: 4px;">Flowers</div>
+                    <div class="tile-row" style="gap: 2px;">
+                        <img src="tiles/flower1.png" alt="Plum" style="max-width: 32px;">
+                        <img src="tiles/flower2.png" alt="Orchid" style="max-width: 32px;">
+                        <img src="tiles/flower3.png" alt="Chrysanthemum" style="max-width: 32px;">
+                        <img src="tiles/flower4.png" alt="Bamboo" style="max-width: 32px;">
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <div class="suit-title" style="font-size: 14px; margin-bottom: 4px;">Seasons</div>
+                    <div class="tile-row" style="gap: 2px;">
+                        <img src="tiles/season1.png" alt="Spring" style="max-width: 32px;">
+                        <img src="tiles/season2.png" alt="Summer" style="max-width: 32px;">
+                        <img src="tiles/season3.png" alt="Autumn" style="max-width: 32px;">
+                        <img src="tiles/season4.png" alt="Winter" style="max-width: 32px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 14px; margin-bottom: 4px; text-align: center;">
+                <button class="inline-home-btn">
+					⏎&nbsp;<strong>Return to Home</strong>&nbsp;<img src="icons/home2.png" alt="Home" style="width: 24px; height: 24px; object-fit: contain; display: block;">
+				</button>
+            </div>
+        </section>
+
     </main>
 
     <nav class="bottom-nav">
@@ -662,23 +979,23 @@
         </div>
 
         <div class="nav-item" data-tab="terms">
-            <img src="icons/terms.png" alt="Terms" class="nav-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2NjYyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'">
+            <img src="icons/terms.png" alt="Terms" class="nav-icon">
             <span class="nav-label">Terms</span>
         </div>
         <div class="nav-item" data-tab="setup">
-            <img src="icons/setup.png" alt="Setup" class="nav-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2NjYyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'">
+            <img src="icons/setup.png" alt="Setup" class="nav-icon">
             <span class="nav-label">Setup</span>
         </div>
         <div class="nav-item" data-tab="gameplay">
-            <img src="icons/gameplay.png" alt="Gameplay" class="nav-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2NjYyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'">
+            <img src="icons/gameplay.png" alt="Gameplay" class="nav-icon">
             <span class="nav-label">Gameplay</span>
         </div>
         <div class="nav-item" data-tab="scoring">
-            <img src="icons/scoring.png" alt="Scoring" class="nav-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2NjYyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'">
+            <img src="icons/scoring.png" alt="Scoring" class="nav-icon">
             <span class="nav-label">Scoring</span>
         </div>
         <div class="nav-item" data-tab="record">
-            <img src="icons/record.png" alt="Record" class="nav-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2NjYyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+PC9zdmc+'">
+            <img src="icons/record.png" alt="Record" class="nav-icon">
             <span class="nav-label">Record</span>
         </div>
     </nav>
@@ -729,7 +1046,7 @@
                 nav.classList.remove('active');
                 const img = nav.querySelector('img');
                 const tabName = nav.getAttribute('data-tab');
-                img.src = `${tabName}.png`; 
+                img.src = `icons/${tabName}.png`; 
             });
 
             // 3. Hide all pages
@@ -741,6 +1058,52 @@
             document.getElementById('intro').classList.add('active-page');
             document.querySelector('main').scrollTop = 0;
         });
+        
+        // Home Screen Grid Navigation Mapping
+        const gridCards = document.querySelectorAll('.grid-card');
+        
+        gridCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const targetTab = card.getAttribute('data-target');
+                
+                // SPECIAL CASE: Cheat Sheet does not live on the bottom tab bar
+                if (targetTab === 'cheatsheet') {
+                    // 1. Clear out active tab styling and slide pill away
+                    highlightWrapper.style.opacity = '0';
+                    navItems.forEach(nav => {
+                        nav.classList.remove('active');
+                        const img = nav.querySelector('img');
+                        const tabName = nav.getAttribute('data-tab');
+                        img.src = `icons/${tabName}.png`; 
+                    });
+                    
+                    // 2. Hide all pages
+                    pages.forEach(page => page.classList.remove('active-page'));
+                    
+                    // 3. Directly target and launch Cheat Sheet page
+                    document.getElementById('cheatsheet').classList.add('active-page');
+                    document.querySelector('main').scrollTop = 0;
+                } else {
+                    // STANDARD CASE: Simulate standard bottom navbar tab clicks
+                    let targetIndex = -1;
+                    navItems.forEach((nav, index) => {
+                        if(nav.getAttribute('data-tab') === targetTab) targetIndex = index;
+                    });
+                    
+                    if (targetIndex !== -1) {
+                        navItems[targetIndex].click();
+                    }
+                }
+            });
+        });
+        
+        // Return to Home Button Logic (Targeting all instances)
+		const inlineHomeButtons = document.querySelectorAll('.inline-home-btn');
+		inlineHomeButtons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				homeBtn.click(); // Leverages your existing header home click sequence
+			});
+		});
     </script>
 
 </body>
