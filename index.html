@@ -342,16 +342,16 @@
         
         <section id="intro" class="page active-page">
             <h1>Welcome!</h1>
-            <p>This app explains the traditional rules of Chinese Mahjong. Tap any of the icons below to get started. Click the header at the top to return to this page at any time.</p>
+            <p>This app explains the basic rules of <span style="color: var(--mahjong-green);"><strong>Standard Taiwanese Mahjong</strong></span>. Tap any of the icons below to get started. Click the header at the top to return to this page at any time.</p>
 			
             <div class="home-grid">
                 <div class="grid-card" data-target="cheatsheet">
                     <img src="icons/cheatsheet2.png" alt="Cheat Sheet" class="grid-icon">
-                    <span class="grid-label">Cheat Sheet</span>
+                    <span class="grid-label">Tiles<br>Cheat Sheet</span>
                 </div>
                 <div class="grid-card" data-target="setup">
                     <img src="icons/setup2.png" alt="Setup" class="grid-icon">
-                    <span class="grid-label">Setup Guide</span>
+                    <span class="grid-label">Scoring<br>Cheat Sheet</span>
                 </div>
                 <div class="grid-card" data-target="gameplay">
                     <img src="icons/gameplay2.png" alt="Gameplay" class="grid-icon">
@@ -363,7 +363,7 @@
                 </div>
             </div>
 
-            <p style="margin-top: 24px; font-size: 12px; color: #777;">Icons were created by <em>Freepik</em> on <a href="https://www.flaticon.com/authors/freepik" title="Flaticon" style="color: #777;">Flaticon</a></p>
+            <p style="margin-top: 24px; font-size: 12px; color: #777; text-align: center;">Icons by <em>Freepik</em> on <a href="https://www.flaticon.com/authors/freepik" title="Flaticon" style="color: #777;">Flaticon</a></p>
         </section>
 
 <!------------------------------------------TERMS TAB------------------------------------------>
@@ -572,7 +572,7 @@
 					</table>
 				</div>
 				
-			<div style="margin-top: 14px; margin-bottom: 4px; text-align: center;">
+			<div style="margin: 14px 0px; text-align: center;">
                 <button class="inline-home-btn">
 					⏎&nbsp;<strong>Return to Home</strong>&nbsp;<img src="icons/home2.png" alt="Home" style="width: 24px; height: 24px; object-fit: contain; display: block;">
 				</button>
@@ -697,7 +697,7 @@
 				<img src="images/setup2.png" alt="Making the Wall" style="max-width: 100%;">
 				
 			<h3>Breaking the Wall</h3>
-				<p>For the first hand of the first round, the player in the East position becomes the <strong>dealer</strong>. This player rolls two dice and finds the sum. Starting with their own east wall as &ldquo;1&rdquo;, the player counts upward in a counterclockwise direction around the circle until they reach the section of wall that corresponds to the sum of the dice.</p>
+				<p>For the first hand of the first round, the player in the East position becomes the <strong>dealer</strong>. This player rolls three dice and finds the sum. Starting with their own east wall as &ldquo;1&rdquo;, the player counts upward in a counterclockwise direction around the circle until they reach the section of wall that corresponds to the sum of the dice.</p>
 				<p><strong>Example:</strong> The East player rolls a sum of 6 which results in the South wall being broken.</p>
 				<img src="images/setup3.png" alt="Dice roll" style="max-width: 100%;">
 				<p>The player on that section of the wall counts tiles from right to left on their wall until reaching the sum of the dice rolled. That player then <strong>breaks</strong> the wall to the left of this point (making a visible separation).</p>
@@ -720,11 +720,11 @@
 				<img src="images/setup7.png" alt="Replacements Example" style="max-width: 100%;">
 								
 			<h3>Setting Up Later Hands</h3>
-				<p>After each <strong>hand</strong>, if the dealder did not h&uacute;, the starting position in the next hand passes to the next direction counterclockwise (East &rarr; South &rarr; West &rarr; North). This player then rolls the dice, indicates which wall will be broken and the player on that side of the wall will break again and begin the dealing of the tiles.</p>
-				<p>For any <strong>hand</strong> that the dealer declares h&uacute;, the starting position does not move. This player rolls the dice again for their second, third, or more times as dealer.</p>
-				<p>After each <strong>round</strong>, the East player becomes dealer again for the first hand of that round (even though it may be the South, West, or North round).</p>       
+				<p>After each <strong>hand</strong>, if the dealer declares h&uacute;, the starting position does not move. This player rolls the dice again for their second, third, or more times as dealer.</p>
+				<p>For any <strong>hand</strong> that the dealer did not h&uacute;, the starting position in the next hand passes to the next player counterclockwise. This player then rolls the dice, indicates which wall will be broken, and the player on that side of the wall will break again and begin the dealing of the tiles. Once all players have been dealer in a round, it is time to move to the next round.</p>
+				<p>At the beginning of each consecutive <strong>round</strong>, the East player becomes dealer again.</p>       
        
-		   <div style="margin-top: 14px; margin-bottom: 4px; text-align: center;">
+		   <div style="margin: 14px 0px; text-align: center;">
                 <button class="inline-home-btn">
 					⏎&nbsp;<strong>Return to Home</strong>&nbsp;<img src="icons/home2.png" alt="Home" style="width: 24px; height: 24px; object-fit: contain; display: block;">
 				</button>
@@ -830,12 +830,17 @@
 						</tbody>
 					</table>
 				</div>
-				<p><span class="note-highlight"><strong>Note:</strong> If multiple players can declare hú off of the same discarded tile, standard rules dictate that only the player closest next in the turn sequence wins the tile. However, some casual variations allow both players to win simultaneously.</span></p>
+				<p><span class="note-highlight"><strong>Note:</strong> If multiple players can declare hú off of the same discarded tile, multiple players win the hand.</span></p>
 				
 			<h2>Winning the Hand</h2>
 				<p>A player completely wins the hand by securing 5 valid melds and 1 pair. If the final piece is claimed from another player’s discard pile, the player calls out “hú” to claim it and win. If the final piece is successfully drawn from the wall by the player themselves, they declare “zìmō”, which yields a higher point payout during the scoring phase.</p>
+            
+			<h2>Special Situations</h2>
+			<h3>Yellow Hand</h3>
+				<p>If no player is able to complete a winning hand by the time all wall tiles are drawn and discards have been made, the hand is declared a <strong>yellow hand</strong>. No one wins and the dealer position rotates.</p>
+				<p><span class="note-highlight"><strong>Note:</strong> Some variations create a carry over pool (such as 1 base per person) payable to the next self-draw winner.</span></p>
 
-			<div style="margin-top: 14px; margin-bottom: 4px; text-align: center;">
+			<div style="margin: 14px 0px; text-align: center;">
                 <button class="inline-home-btn">
 					⏎&nbsp;<strong>Return to Home</strong>&nbsp;<img src="icons/home2.png" alt="Home" style="width: 24px; height: 24px; object-fit: contain; display: block;">
 				</button>
@@ -846,7 +851,100 @@
 
         <section id="scoring" class="page">
             <h1>Scoring</h1>
-            <p>Calculate points based on winning hands, specific melds, and special conditions.</p>
+            
+            <h2>Payouts</h2>
+				<p>In Taiwanese Mahjong, scoring is calculated in tai <span class="zh-char">台</span> points.</b>
+				<p>Depending on a player’s hand and the conditions under which a player wins, the player can earn more tai and therefore a higher payout.</p>
+				<p>Many groups play with a 5-tai minimum to win, but some allow 0-tai wins (simply completing a hand).</p>
+				<p>Once a winner is declared, find the sum of tai earned by the winner of the hand. If the winning tile came from a discarded tile of another player, that other player pays the hand winner in the amount of tai earned. If the winning tile was self-drawn from the wall (Zì mō), all players each pay the hand winner in the amount of tai earned.</p>
+				
+			<h3>Base</h3>
+				<p>Depending on house rules, some tables may use an initial base for any winning hand. For example, a hú by a non-dealer on a no-streak dealer hand with no other special conditions would earn a base of 3 tai.</p>
+				
+			<h3>Dealer Bonuses</h3>
+				<p>When a dealer wins a hand, they earn tai based on their winning streak. For the first hand they win, they receive one tai. In every subsequent win, the dealer bonus increases by 2 tai. Therefore, the number of tai a dealer earns based on the number of hands they have won in a row, <em>n</em>, can be found using the equation:</p>
+				<p style="text-align: center; font-size: 18px; font-weight: bold; color: var(--mahjong-red); margin: 8px 0 16px 0;">2n &ndash; 1</p>
+				
+			<h3>Regular Win Conditions</h3>
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr><th>Name</th><th>Pinyin</th><th style="text-align: center;">Tai</th><th>Condition</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>Self-Draw</td><td>Zì mō</td><td style="text-align: center; font-weight: bold;">1</td><td>Draw the winning tile from the wall</td></tr>
+							<tr><td>Concealed Hand</td><td>Mén qīng</td><td style="text-align: center; font-weight: bold;">1</td><td>Win with no open sets, sequences, or gàngs except final tile</td></tr>
+							<tr><td>Fully Concealed Hand</td><td>Mén qīng bù qiú</td><td style="text-align: center; font-weight: bold;">3</td><td>Zì mō + concealed hand</td></tr>
+						</tbody>
+					</table>
+				</div>
+				
+			<h3>Regular Tile Bonuses</h3>
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr><th>Name</th><th>Pinyin</th><th style="text-align: center;">Tai</th><th>Condition</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>No Flowers</td><td>Wú huā</td><td style="text-align: center; font-weight: bold;">1</td><td>No flowers drawn</td></tr>
+							<tr><td>No Honors</td><td>Wú zì</td><td style="text-align: center; font-weight: bold;">1</td><td>No honors used in winning hand</td></tr>
+							<tr><td>No Honors or Flowers</td><td>Wú zì wú huā</td><td style="text-align: center; font-weight: bold;">3</td><td>No honors or flowers used in winning hand</td></tr>
+							<tr><td>Matching Flower</td><td>Huā</td><td style="text-align: center; font-weight: bold;">1</td><td>Flower matching current round (repeatable)</td></tr>
+							<tr><td>Matching Wind</td><td>Fēng pái</td><td style="text-align: center; font-weight: bold;">1</td><td>Set of wind matching current round</td></tr>
+							<tr><td>Exposed Gàng</td><td>Míng gàng</td><td style="text-align: center; font-weight: bold;">1</td><td>Hand contains open gàng (repeatable)</td></tr>
+							<tr><td>Concealed Gàng</td><td>An gàng</td><td style="text-align: center; font-weight: bold;">2</td><td>Hand contains closed gàng (repeatable)</td></tr>
+							<tr><td>Straight hú</td><td>Xiǎo píng hú</td><td style="text-align: center; font-weight: bold;">3</td><td>Hand contains all sequences + one pair</td></tr>
+							<tr><td>Pon pon hú</td><td>Pèng pèng hú</td><td style="text-align: center; font-weight: bold;">10</td><td>Hand contains all sets + one pair</td></tr>
+						</tbody>
+					</table>
+				</div>
+				
+			<h3>Rare Win Conditions</h3>
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr><th>Name</th><th>Pinyin</th><th style="text-align: center;">Tai</th><th>Condition</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>Last Tile Win (draw)</td><td>Hǎi dǐ lāo yuè</td><td style="text-align: center; font-weight: bold;">1</td><td>Win with final tile drawn from wall</td></tr>
+							<tr><td>Last Tile Win (discard)</td><td>Hé dǐ lāo yú</td><td style="text-align: center; font-weight: bold;">1</td><td>Win with final possible discarded tile</td></tr>
+							<tr><td>Robbing the gàng</td><td>Qiǎng gàng</td><td style="text-align: center; font-weight: bold;">1</td><td>Win with tile used by another player to promote an open pèng</td></tr>
+							<tr><td>Win within 10 discards</td><td>Sù hé</td><td style="text-align: center; font-weight: bold;">5</td><td>Win when there are 6-10 discards on the table</td></tr>
+							<tr><td>Win within 5 discards</td><td>Sù hé</td><td style="text-align: center; font-weight: bold;">10</td><td>Win when there are 5 or fewer discards on the table</td></tr>
+							<tr><td>Heaven Hand (God hú)</td><td>Tiān hú</td><td style="text-align: center; font-weight: bold;">40</td><td>Dealer wins on first draw (no discard)</td></tr>
+							<tr><td>Earthly Hand</td><td>de hú</td><td style="text-align: center; font-weight: bold;">40</td><td>Other player wins on dealer’s first discard</td></tr>
+						</tbody>
+					</table>
+				</div>
+				
+			<h3>Rare Tile Bonuses</h3>
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr><th>Name</th><th>Pinyin</th><th style="text-align: center;">Tai</th><th>Condition</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>Full Straight (open)</td><td>Wài lóng</td><td style="text-align: center; font-weight: bold;">5</td><td>Hand contains numbers 1-9 of same suit (at least 1 sequence open)</td></tr>
+							<tr><td>Little Three Winds</td><td>Xiǎo sān fēng</td><td style="text-align: center; font-weight: bold;">5</td><td>Hand contains 2 sets and a pair</td></tr>
+							<tr><td>Full Straight (closed)</td><td>Nèi lóng</td><td style="text-align: center; font-weight: bold;">10</td><td>Hand contains numbers 1-9 of same suit (all closed)</td></tr>
+							<tr><td>All Revealed</td><td>Quán qiú rén</td><td style="text-align: center; font-weight: bold;">10</td><td>All melds are open</td></tr>
+							<tr><td>Little Three Dragons</td><td>Xiao sān yuán</td><td style="text-align: center; font-weight: bold;">10</td><td>Two sets and a pair of the 3 dragons</td></tr>
+							<tr><td>Big Three Winds</td><td>Sān fēng</td><td style="text-align: center; font-weight: bold;">10</td><td>Hand contains sets of all 3 winds</td></tr>
+							<tr><td>All Flowers</td><td>Bā xiān guò hǎi</td><td style="text-align: center; font-weight: bold;">30</td><td>Hand contains all 8 flowers/seasons</td></tr>
+							<tr><td>Little Four Winds</td><td>Xiǎo sì xǐ</td><td style="text-align: center; font-weight: bold;">30</td><td>Three sets and a pair of the 4 winds</td></tr>
+							<tr><td>Big Three Dragons</td><td>Dà sān yuán</td><td style="text-align: center; font-weight: bold;">30</td><td>Hand contains sets of all 3 dragons</td></tr>
+							<tr><td>Big Four Winds</td><td>Dà sì xǐ</td><td style="text-align: center; font-weight: bold;">40</td><td>Hand contains sets of all 4 winds</td></tr>
+							<tr><td>Half Flush</td><td>Hùn yī sè</td><td style="text-align: center; font-weight: bold;">10</td><td>Hand contains only one suit and honor tiles</td></tr>
+							<tr><td>Full Flush</td><td>Ching yi sher</td><td style="text-align: center; font-weight: bold;">40</td><td>Hand contains only one suit</td></tr>
+						</tbody>
+					</table>
+				</div>
+
+            <div style="margin: 14px 0px; text-align: center;">
+                <button class="inline-home-btn">
+					⏎&nbsp;<strong>Return to Home</strong>&nbsp;<img src="icons/home2.png" alt="Home" style="width: 24px; height: 24px; object-fit: contain; display: block;">
+				</button>
+            </div>
         </section>
         
 <!------------------------------------------RECORD TAB------------------------------------------>
@@ -856,7 +954,7 @@
             <p>Keep track of your game scores and player winds across multiple rounds.</p>
         </section>
     
-<!------------------------------------------RECORD TAB------------------------------------------>
+<!------------------------------------------TILE CHEAT SHEET TAB------------------------------------------>
 
 		<section id="cheatsheet" class="page" style="padding-bottom: 0;">
             <h1 style="margin-bottom: 8px;">Cheat Sheet</h1>
@@ -963,7 +1061,7 @@
                 </div>
             </div>
             
-            <div style="margin-top: 14px; margin-bottom: 4px; text-align: center;">
+            <div style="margin: 14px 0px; text-align: center;">
                 <button class="inline-home-btn">
 					⏎&nbsp;<strong>Return to Home</strong>&nbsp;<img src="icons/home2.png" alt="Home" style="width: 24px; height: 24px; object-fit: contain; display: block;">
 				</button>
