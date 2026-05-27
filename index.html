@@ -326,6 +326,150 @@
 			line-height: 1;
             box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 		}
+		
+		/* --- SCORE CALCULATOR STYLES --- */
+		.receipt-bar {
+			position: sticky;
+			top: -15px; 
+			background-color: var(--mahjong-green);
+			color: white;
+			padding: 12px 20px;
+			/* Adjust margin to perfectly offset the main container's 80px padding */
+			margin: -20px -20px 20px -20px; 
+			box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+			z-index: 100;
+			display: flex;
+			flex-direction: column;
+		}
+		
+		.receipt-total {
+			font-size: 18px;
+			font-weight: 800;
+			margin-bottom: 4px;
+		}
+		
+		.receipt-breakdown {
+			font-size: 11px;
+			font-weight: 500;
+			opacity: 0.9;
+			line-height: 1.4;
+			min-height: 18px; /* Prevents jumping when empty */
+		}
+		
+		/* Segmented Controls */
+		.segment-group {
+			display: flex;
+			background: #e0e0e0;
+			border-radius: 8px;
+			padding: 2px;
+			margin-bottom: 16px;
+		}
+		
+		.segment-btn {
+			flex: 1;
+			text-align: center;
+			padding: 6px;
+			font-size: 12px;
+			font-weight: 600;
+			color: #555;
+			background: transparent;
+			border-radius: 6px;
+			cursor: pointer;
+			transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+		}
+		
+		.segment-btn.active {
+			background: #ffffff;
+			color: var(--mahjong-blue);
+			box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+		}
+		
+		/* Counters */
+		.counter-row {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background: #fff;
+			border: 1px solid #e0e0e0;
+			border-radius: 8px;
+			padding: 5px 16px;
+			margin-bottom: 10px;
+		}
+		
+		.counter-label {
+			font-size: 12px;
+			font-weight: 500;
+			color: #333;
+		}
+		
+		.counter-controls {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+		
+		.counter-btn {
+			width: 28px;
+			height: 28px;
+			border-radius: 50%;
+			background: #f4f4f9;
+			border: 1px solid #ccc;
+			font-size: 14px;
+			font-weight: bold;
+			color: #333;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			user-select: none;
+		}
+		
+		.counter-btn:active { background: #e0e0e0; }
+		.counter-val { font-size: 14px; font-weight: bold; width: 20px; text-align: center; }
+		.counter-row.disabled { opacity: 0.5; pointer-events: none; }
+		
+		/* Smart Chips */
+		.chip-grid {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-bottom: 20px;
+		}
+		
+		.smart-chip {
+			background: #fff;
+			border: 1px solid #ccc;
+			padding: 8px 12px;
+			border-radius: 20px;
+			font-size: 12px;
+			font-weight: 500;
+			color: #555;
+			cursor: pointer;
+			transition: all 0.2s;
+			user-select: none;
+		}
+		
+		.smart-chip.active {
+			background: #e8f5e9;
+			border-color: var(--mahjong-green);
+			color: var(--mahjong-green);
+			font-weight: 700;
+		}
+		
+		.smart-chip.disabled {
+			opacity: 0.4;
+			background: #f9f9f9;
+			pointer-events: none;
+		}
+		
+		.calc-section-title {
+			font-size: 14px;
+			font-weight: 700;
+			text-transform: uppercase;
+			color: #888;
+			margin: 20px 0 10px 0;
+			letter-spacing: 0.5px;
+		}
 
     </style>
 </head>
@@ -360,10 +504,10 @@
                     <img src="icons/score2.png" alt="Scoring Cheat Sheet" class="grid-icon">
                     <span class="grid-label">Scoring<br>Cheat Sheet</span>
                 </div>
-                <div class="grid-card" data-target="info">
-                    <img src="icons/info2.png" alt="Info" class="grid-icon">
-                    <span class="grid-label">TBD</span>
-                </div>
+                <div class="grid-card" data-target="scorecalc">
+					<img src="icons/calculator2.png" alt="Calculator" class="grid-icon">
+					<span class="grid-label">Score<br>Calculator</span>
+				</div>
             </div>
 
             <p style="margin-top: 24px; font-size: 12px; color: #777; text-align: center;">Icons by <em>Freepik</em> on <a href="https://www.flaticon.com/authors/freepik" title="Flaticon" style="color: #777;">Flaticon</a></p>
@@ -1102,31 +1246,31 @@
                 <table style="width: 100%;">
                     <thead>
                         <tr>
-                            <th style="padding: 6px 2px;">Wind</th>
+                            <th style="padding: 6px 2px 6px 4px;">Wind</th>
                             <th style="padding: 6px 2px;">Flower</th>
                             <th style="padding: 6px 2px;">Season</th>
                         </tr>
                     </thead>
                     <tbody style="font-size: 13px;">
                         <tr>
-                            <td style="padding: 6px 2px;"><img src="tiles/wind1.png" style="width:30px; vertical-align:middle; margin:0px 4px;">East</td>
-                            <td style="padding: 6px 2px;"><img src="tiles/flower1.png" style="width:30px; vertical-align:middle; margin-right:4px;">Plum</td>
-                            <td style="padding: 6px 2px;"><img src="tiles/season1.png" style="width:30px; vertical-align:middle; margin-right:4px;">Spring</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/wind1.png" style="width:28px; vertical-align:middle; margin:0px 4px;">East</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/flower1.png" style="width:28px; vertical-align:middle; margin-right:4px;">Plum</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/season1.png" style="width:28px; vertical-align:middle; margin-right:4px;">Spring</td>
                         </tr>
                         <tr>
-                            <td style="padding: 6px 2px;"><img src="tiles/wind2.png" style="width:30px; vertical-align:middle; margin:0px 4px;">South</td>
-                            <td style="padding: 6px 2px;"><img src="tiles/flower2.png" style="width:30px; vertical-align:middle; margin-right:4px;">Orchid</td>
-                            <td style="padding: 6px 2px;"><img src="tiles/season2.png" style="width:30px; vertical-align:middle; margin-right:4px;">Summer</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/wind2.png" style="width:28px; vertical-align:middle; margin:0px 4px;">South</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/flower2.png" style="width:28px; vertical-align:middle; margin-right:4px;">Orchid</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/season2.png" style="width:28px; vertical-align:middle; margin-right:4px;">Summer</td>
                         </tr>
                         <tr>
-                            <td style="padding: 6px 2px;"><img src="tiles/wind3.png" style="width:30px; vertical-align:middle; margin:0px 4px;">West</td>
-                            <td style="padding: 6px 2px;"><img src="tiles/flower3.png" style="width:30px; vertical-align:middle; margin-right:4px;">Chrys.</td>
-                            <td style="padding: 6px 2px;"><img src="tiles/season3.png" style="width:30px; vertical-align:middle; margin-right:4px;">Autumn</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/wind3.png" style="width:28px; vertical-align:middle; margin:0px 4px;">West</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/flower3.png" style="width:28px; vertical-align:middle; margin-right:4px;">Chrys.</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/season3.png" style="width:28px; vertical-align:middle; margin-right:4px;">Autumn</td>
                         </tr>
                         <tr>
-                            <td style="padding: 6px 2px;"><img src="tiles/wind4.png" style="width:30px; vertical-align:middle; margin:0px 4px;">North</td>
-                            <td style="padding: 6px 2px;"><img src="tiles/flower4.png" style="width:30px; vertical-align:middle; margin-right:4px;">Bamboo</td>
-                            <td style="padding: 6px 2px;"><img src="tiles/season4.png" style="width:30px; vertical-align:middle; margin-right:4px;">Winter</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/wind4.png" style="width:28px; vertical-align:middle; margin:0px 4px;">North</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/flower4.png" style="width:28px; vertical-align:middle; margin-right:4px;">Bamboo</td>
+                            <td style="padding: 6px 2px;"><img src="tiles/season4.png" style="width:28px; vertical-align:middle; margin-right:4px;">Winter</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1149,7 +1293,6 @@
                 <span style="color: #555; font-size: 11px;">(<em>n</em> = consecutive hands won as dealer)</span>
             </div>
 
-            <h2 style="font-size: 15px; margin-top: 0; margin-bottom: 6px; padding-bottom: 2px;">Regular Tai Conditions</h2>
             <div class="table-wrapper" style="margin-bottom: 12px; width: 100%;">
                 <table style="width: 100%; font-size: 13px;">
                     <thead>
@@ -1190,6 +1333,86 @@
             </div>
 		</section>
 		
+<!------------------------------------------SCORE CALCULATOR TAB------------------------------------------>
+		
+		<section id="scorecalc" class="page">
+			<div class="receipt-bar">
+				<div class="receipt-total">Total: <span id="calc-total">3</span> Tai</div>
+				<div class="receipt-breakdown" id="calc-breakdown">Base: 3</div>
+			</div>
+		
+			<div class="segment-group" id="seg-win-type">
+				<div class="segment-btn active" data-val="discard">Standard hú</div>
+				<div class="segment-btn" data-val="zimo">Zì mō</div>
+			</div>
+			<div class="segment-group" id="seg-concealed">
+				<div class="segment-btn active" data-val="open">Open Hand</div>
+				<div class="segment-btn" data-val="concealed">Concealed (Mén qīng)</div>
+			</div>
+		
+			<div class="calc-section-title">Base & Counters</div>
+			
+			<div class="counter-row">
+				<div class="counter-label">Base (House Rules)</div>
+				<div class="counter-controls">
+					<div class="counter-btn" onclick="updateCounter('base', -1)">-</div>
+					<div class="counter-val" id="val-base">3</div>
+					<div class="counter-btn" onclick="updateCounter('base', 1)">+</div>
+				</div>
+			</div>
+			
+			<div class="counter-row">
+				<div class="counter-label">Dealer Win Streak</div>
+				<div class="counter-controls">
+					<div class="counter-btn" onclick="updateCounter('dealer', -1)">-</div>
+					<div class="counter-val" id="val-dealer">0</div>
+					<div class="counter-btn" onclick="updateCounter('dealer', 1)">+</div>
+				</div>
+			</div>
+		
+			<div class="counter-row">
+				<div class="counter-label">Exposed Gàngs</div>
+				<div class="counter-controls">
+					<div class="counter-btn" onclick="updateCounter('expgang', -1)">-</div>
+					<div class="counter-val" id="val-expgang">0</div>
+					<div class="counter-btn" onclick="updateCounter('expgang', 1, 4)">+</div>
+				</div>
+			</div>
+		
+			<div class="counter-row">
+				<div class="counter-label">Concealed Gàngs</div>
+				<div class="counter-controls">
+					<div class="counter-btn" onclick="updateCounter('congang', -1)">-</div>
+					<div class="counter-val" id="val-congang">0</div>
+					<div class="counter-btn" onclick="updateCounter('congang', 1, 4)">+</div>
+				</div>
+			</div>
+		
+			<div class="calc-section-title">Tile Bonuses</div>
+			<div class="chip-grid">
+				<div class="smart-chip" data-id="noflowers" data-points="1" data-name="No Flowers">No Flowers / Seasons</div>
+				<div class="smart-chip" data-id="nohonors" data-points="1" data-name="No Honors">No Honors</div>
+				<div class="smart-chip" data-id="matchingflower" data-points="1" data-name="Matching Flower">Matching Flower</div>
+				<div class="smart-chip" data-id="matchingseason" data-points="1" data-name="Matching Season">Matching Season</div>
+				<div class="smart-chip" data-id="matchingwind" data-points="1" data-name="Matching Wind Set">Matching Wind Set</div>
+			</div>
+		
+			<div class="calc-section-title">Hand Structures</div>
+			<div class="chip-grid">
+				<div class="smart-chip" data-id="straighthu" data-points="3" data-name="Straight hú">Straight hú</div>
+				<div class="smart-chip" data-id="ponponhu" data-points="10" data-name="Pon pon hú">Pon pon hú</div>
+				<div class="smart-chip" data-id="halfflush" data-points="10" data-name="Half Flush">Half Flush</div>
+				<div class="smart-chip" data-id="fullflush" data-points="40" data-name="Full Flush">Full Flush</div>
+				<div class="smart-chip" data-id="allrevealed" data-points="10" data-name="All Revealed">All Revealed</div>
+			</div>
+			<hr>
+			<div style="margin: 18px 0px 14px 0px; text-align: center;">
+				<button class="inline-btn" onclick="resetCalculator()">
+					↺&nbsp;<strong>Reset Calculator</strong>
+				</button>
+			</div>
+		</section>
+    
     </main>
 
     <nav class="bottom-nav">
@@ -1287,7 +1510,7 @@
 				const targetTab = card.getAttribute('data-target');
 				
 				// Array of special cases that do not live on the bottom tab bar
-				const specialTabs = ['tilecheatsheet', 'rotationcheatsheet', 'scoringcheatsheet'];
+				const specialTabs = ['tilecheatsheet', 'rotationcheatsheet', 'scoringcheatsheet', 'scorecalc'];
 				
 				// SPECIAL CASE: Check if the target is one of our special cheat sheets
 				if (specialTabs.includes(targetTab)) {
@@ -1327,6 +1550,254 @@
 				homeBtn.click(); // Leverages your existing header home click sequence
 			});
 		});
+		
+		// --- SCORE CALCULATOR LOGIC ---
+		const calcState = {
+			winType: 'discard', // 'discard' or 'zimo'
+			concealed: 'open',  // 'open' or 'concealed'
+			counters: { base: 3, dealer: 0, expgang: 0, congang: 0 },
+			chips: new Set()
+		};
+		
+		// Handle Segmented Controls
+		document.querySelectorAll('.segment-group').forEach(group => {
+			group.querySelectorAll('.segment-btn').forEach(btn => {
+				btn.addEventListener('click', (e) => {
+					// Remove active from siblings
+					group.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
+					btn.classList.add('active');
+					
+					// Update state
+					if(group.id === 'seg-win-type') calcState.winType = btn.dataset.val;
+					if(group.id === 'seg-concealed') calcState.concealed = btn.dataset.val;
+					
+					calculateScore();
+				});
+			});
+		});
+		
+		// Handle Counters
+		function updateCounter(type, change, max = 99) {
+			let newVal = calcState.counters[type] + change;
+			if (newVal < 0) newVal = 0;
+			if (newVal > max) newVal = max;
+			
+			calcState.counters[type] = newVal;
+			document.getElementById(`val-${type}`).innerText = newVal;
+			
+			calculateScore();
+		}
+		
+		// Handle Smart Chips
+		document.querySelectorAll('.smart-chip').forEach(chip => {
+			chip.addEventListener('click', () => {
+				const id = chip.dataset.id;
+				
+				if (calcState.chips.has(id)) {
+					calcState.chips.delete(id);
+					chip.classList.remove('active');
+				} else {
+					calcState.chips.add(id);
+					chip.classList.add('active');
+				}
+				
+				calculateScore();
+			});
+		});
+		
+		// Main Calculation Engine
+		function calculateScore() {
+			let totalTai = 0;
+			let breakdown = [];
+		
+			// 1. Base Points
+			if (calcState.counters.base > 0) {
+				totalTai += calcState.counters.base;
+				breakdown.push(`Base: ${calcState.counters.base}`);
+			}
+		
+			// 2. Win Type & Concealed Logic (The tricky combinations)
+			if (calcState.winType === 'zimo' && calcState.concealed === 'concealed') {
+				totalTai += 3;
+				breakdown.push(`Fully Concealed Zì mō: 3`);
+			} else {
+				if (calcState.winType === 'zimo') {
+					totalTai += 1;
+					breakdown.push(`Zì mō: 1`);
+				}
+				if (calcState.concealed === 'concealed') {
+					totalTai += 1;
+					breakdown.push(`Mén qīng (Concealed): 1`);
+				}
+			}
+		
+			// 3. Dealer Bonus Formula (2n - 1)
+			if (calcState.counters.dealer > 0) {
+				const dealerBonus = (2 * calcState.counters.dealer) - 1;
+				totalTai += dealerBonus;
+				breakdown.push(`Dealer Streak (x${calcState.counters.dealer}): ${dealerBonus}`);
+			}
+		
+			// 4. Counters
+			if (calcState.counters.expgang > 0) {
+				totalTai += calcState.counters.expgang;
+				breakdown.push(`Exposed Gàngs (x${calcState.counters.expgang}): ${calcState.counters.expgang}`);
+			}
+			if (calcState.counters.congang > 0) {
+				const congangPoints = calcState.counters.congang * 2;
+				totalTai += congangPoints;
+				breakdown.push(`Concealed Gàngs (x${calcState.counters.congang}): ${congangPoints}`);
+			}
+		
+			// 5. Smart Chips Mutually Exclusive Logic
+			enforceExclusivity();
+		
+			// No Honors vs No Flowers combo logic
+			if (calcState.chips.has('nohonors') && calcState.chips.has('noflowers')) {
+				totalTai += 3;
+				breakdown.push(`No Honors OR Flowers: 3`);
+			} else {
+				if (calcState.chips.has('nohonors')) { totalTai += 1; breakdown.push(`No Honors: 1`); }
+				if (calcState.chips.has('noflowers')) { totalTai += 1; breakdown.push(`No Flowers: 1`); }
+			}
+		
+			// Process remaining standard chips
+			const specialExclusions = ['nohonors', 'noflowers']; 
+			document.querySelectorAll('.smart-chip').forEach(chip => {
+				const id = chip.dataset.id;
+				if (calcState.chips.has(id) && !specialExclusions.includes(id) && !chip.classList.contains('disabled')) {
+					const pts = parseInt(chip.dataset.points);
+					totalTai += pts;
+					breakdown.push(`${chip.dataset.name}: ${pts}`);
+				}
+			});
+		
+			// Update UI
+			document.getElementById('calc-total').innerText = totalTai;
+			document.getElementById('calc-breakdown').innerText = breakdown.length > 0 ? breakdown.join('\n') : 'No conditions met.';
+		}
+		
+		// Disable impossible combinations dynamically
+		function enforceExclusivity() {
+			const chipPonPon = document.querySelector('.smart-chip[data-id="ponponhu"]');
+			const chipStraight = document.querySelector('.smart-chip[data-id="straighthu"]');
+			const chipHalfFlush = document.querySelector('.smart-chip[data-id="halfflush"]');
+			const chipFullFlush = document.querySelector('.smart-chip[data-id="fullflush"]');
+			const chipNoHonors = document.querySelector('.smart-chip[data-id="nohonors"]');
+			const chipMatchingWind = document.querySelector('.smart-chip[data-id="matchingwind"]');
+			const chipNoFlowers = document.querySelector('.smart-chip[data-id="noflowers"]');
+			const chipMatchingFlower = document.querySelector('.smart-chip[data-id="matchingflower"]');
+			const chipMatchingSeason = document.querySelector('.smart-chip[data-id="matchingseason"]');
+			
+			// Pon Pon Hu vs Straight Hu
+			if (calcState.chips.has('ponponhu')) {
+				chipStraight.classList.add('disabled');
+				calcState.chips.delete('straighthu'); // Force remove if it was selected
+				chipStraight.classList.remove('active');
+			} else {
+				chipStraight.classList.remove('disabled');
+			}
+		
+			if (calcState.chips.has('straighthu')) {
+				chipPonPon.classList.add('disabled');
+			} else {
+				chipPonPon.classList.remove('disabled');
+			}
+		
+			// Half Flush vs Full Flush
+			if (calcState.chips.has('fullflush')) {
+				chipHalfFlush.classList.add('disabled');
+				calcState.chips.delete('halfflush');
+				chipHalfFlush.classList.remove('active');
+			} else {
+				chipHalfFlush.classList.remove('disabled');
+			}
+		
+			if (calcState.chips.has('halfflush')) {
+				chipFullFlush.classList.add('disabled');
+			} else {
+				chipFullFlush.classList.remove('disabled');
+			}
+		
+			// --- NO HONORS VS MATCHING WIND ---
+			if (calcState.chips.has('nohonors')) {
+				if (chipMatchingWind) {
+					chipMatchingWind.classList.add('disabled');
+					calcState.chips.delete('matchingwind');
+					chipMatchingWind.classList.remove('active');
+				}
+			} else {
+				if (chipMatchingWind) chipMatchingWind.classList.remove('disabled');
+			}
+		
+			if (calcState.chips.has('matchingwind')) {
+				if (chipNoHonors) {
+					chipNoHonors.classList.add('disabled');
+					calcState.chips.delete('nohonors');
+					chipNoHonors.classList.remove('active');
+				}
+			} else {
+				// Only re-enable if it shouldn't be disabled by something else
+				if (chipNoHonors) chipNoHonors.classList.remove('disabled');
+			}
+			
+			// --- NO FLOWERS VS MATCHING FLOWER / SEASON ---
+			if (calcState.chips.has('noflowers')) {
+				if (chipMatchingFlower) {
+					chipMatchingFlower.classList.add('disabled');
+					calcState.chips.delete('matchingflower');
+					chipMatchingFlower.classList.remove('active');
+				}
+				if (chipMatchingSeason) {
+					chipMatchingSeason.classList.add('disabled');
+					calcState.chips.delete('matchingseason');
+					chipMatchingSeason.classList.remove('active');
+				}
+			} else {
+				if (chipMatchingFlower) chipMatchingFlower.classList.remove('disabled');
+				if (chipMatchingSeason) chipMatchingSeason.classList.remove('disabled');
+			}
+		
+			// If either Matching Flower OR Season is active, disable No Flowers
+			if (calcState.chips.has('matchingflower') || calcState.chips.has('matchingseason')) {
+				if (chipNoFlowers) {
+					chipNoFlowers.classList.add('disabled');
+					calcState.chips.delete('noflowers');
+					chipNoFlowers.classList.remove('active');
+				}
+			} else {
+				if (chipNoFlowers) chipNoFlowers.classList.remove('disabled');
+			}
+			
+			
+		}
+		
+		// Reset button functionality
+		function resetCalculator() {
+			calcState.winType = 'discard';
+			calcState.concealed = 'open';
+			calcState.counters = { base: 3, dealer: 0, expgang: 0, congang: 0 };
+			calcState.chips.clear();
+		
+			// Reset Segments
+			document.getElementById('seg-win-type').children[0].click();
+			document.getElementById('seg-concealed').children[0].click();
+		
+			// Reset Counters
+			Object.keys(calcState.counters).forEach(key => {
+				document.getElementById(`val-${key}`).innerText = calcState.counters[key];
+			});
+		
+			// Reset Chips
+			document.querySelectorAll('.smart-chip').forEach(chip => {
+				chip.classList.remove('active', 'disabled');
+			});
+		
+			calculateScore();
+		}
+		
+		// Ensure the calculator resets/refreshes when navigating to the section if needed
+		// Adding it to your existing specialTabs array logic in your navigation script
     </script>
 
 </body>
