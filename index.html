@@ -362,7 +362,7 @@
 			background: #e0e0e0;
 			border-radius: 8px;
 			padding: 2px;
-			margin-bottom: 16px;
+			margin-bottom: 4px;
 		}
 		
 		.segment-btn {
@@ -1135,42 +1135,32 @@
 			<h1 style="margin-bottom: 8px;">Game Record</h1>
 		
 			<div id="record-setup">
-				<p style="font-size: 13px; margin-bottom: 16px; color: #555;">Enter player names and select the starting dealer (East).</p>
+				<p style="font-size: 13px; margin-bottom: 16px; color: #555;">Enter player names in starting seating order.</p>
 				
 				<div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
-					<input type="text" id="p1-name" value="Player 1" class="player-input">
-					<input type="text" id="p2-name" value="Player 2" class="player-input">
-					<input type="text" id="p3-name" value="Player 3" class="player-input">
-					<input type="text" id="p4-name" value="Player 4" class="player-input">
+					<label style="font-size: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: bold;"><span style="color: var(--mahjong-red);">東 East:</span> <input type="text" id="p1-name" placeholder="P1" class="player-input" style="width: 70%; font-weight: normal;"></label>
+					<label style="font-size: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: bold;"><span style="color: var(--mahjong-blue);">南 South:</span> <input type="text" id="p2-name" placeholder="P2" class="player-input" style="width: 70%; font-weight: normal;"></label>
+					<label style="font-size: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: bold;"><span style="color: var(--mahjong-green);">西 West:</span> <input type="text" id="p3-name" placeholder="P3" class="player-input" style="width: 70%; font-weight: normal;"></label>
+					<label style="font-size: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: bold;"><span style="color: #444;">北 North:</span> <input type="text" id="p4-name" placeholder="P4" class="player-input" style="width: 70%; font-weight: normal;"></label>
 				</div>
 				
-				<div class="calc-section-title">Starting Dealer</div>
-				<div class="segment-group" id="seg-start-dealer">
-					<div class="segment-btn active" data-val="0">P1</div>
-					<div class="segment-btn" data-val="1">P2</div>
-					<div class="segment-btn" data-val="2">P3</div>
-					<div class="segment-btn" data-val="3">P4</div>
-				</div>
-				
-				<button class="inline-btn" id="start-game-btn" style="width: 100%; margin-top: 24px; background-color: var(--mahjong-green); color: white; font-weight: bold; padding: 12px; border-radius: 8px; border: none;">Start Game</button>
+				<button class="inline-btn" id="start-game-btn" style="width: 100%; margin-top: 12px; background-color: var(--mahjong-green); color: white; font-weight: bold; padding: 12px; border-radius: 8px; border: none;">Start Game</button>
 			</div>
 		
 			<div id="record-gameplay" style="display: none;">
-        
-				<div style="background: #e8f5e9; padding: 12px; border-radius: 8px; font-size: 15px; margin-bottom: 20px; text-align: center; color: var(--mahjong-green); border: 1px solid #c8e6c9; font-weight: bold;" id="current-game-status">
+		
+				<div style="background: #e8f5e9; padding: 6px; border-radius: 8px; font-size: 15px; margin-bottom: 10px; text-align: center; color: var(--mahjong-green); border: 1px solid #c8e6c9; font-weight: bold;" id="current-game-status">
 					Round 1 (East) — Hand 1<br>
-					<span style="font-size: 12px; color: #555; font-weight: normal;">Dealer: <strong id="current-dealer-name">Player 1</strong></span>
+					<span style="font-size: 12px; color: #555; font-weight: normal;">Dealer: <strong id="current-dealer-name">P1</strong></span>
 				</div>
 		
-				<div class="calc-section-title">Who Won?</div>
-				<div class="chip-grid" id="record-payees" style="margin-bottom: 16px;">
-					</div>
+				<div class="calc-section-title" style="margin-top: 8px;">Who Won?</div>
+				<div class="chip-grid" id="record-payees" style="margin-bottom: 12px;"></div>
 		
-				<div class="calc-section-title">Who Pays?</div>
-				<div class="chip-grid" id="record-payers" style="margin-bottom: 16px;">
-					</div>
+				<div class="calc-section-title" style="margin-top: 8px;">Who Pays?</div>
+				<div class="chip-grid" id="record-payers" style="margin-bottom: 8px;"></div>
 		
-				<div class="counter-row" style="margin-top: 24px;">
+				<div class="counter-row" style="margin-top: 12px; margin-bottom: 8px;">
 					<div class="counter-label">Tai Earned</div>
 					<div class="counter-controls">
 						<div class="counter-btn" onclick="updateRecordTai(-1)">-</div>
@@ -1179,44 +1169,43 @@
 					</div>
 				</div>
 		
-				<div style="display: flex; gap: 12px; margin-top: 16px; margin-bottom: 24px;">
-					<button class="inline-btn" id="change-seating-btn" style="flex: 1; background-color: #f4f4f9; color: #333; font-weight: bold; padding: 12px; border-radius: 8px;">Change Seating</button>
-					<button class="inline-btn" id="log-score-btn" style="flex: 2; background-color: var(--mahjong-blue); color: white; font-weight: bold; padding: 12px; border-radius: 8px; border: none;">Log Score & Advance</button>
+				<div id="dealer-dynamic-label" style="text-align: center; font-style: italic; color: var(--mahjong-red); font-size: 13px; min-height: 18px; margin-bottom: 8px;"></div>
+		
+				<div style="display: flex; gap: 12px; margin-top: 8px; margin-bottom: 24px;">
+					<button class="inline-btn" id="change-seating-btn" style="flex: 2; background-color: #f4f4f9; color: #333; font-weight: bold; padding: 10px; border-radius: 8px;">Change Seating</button>
+					<button class="inline-btn" id="log-score-btn" style="flex: 3; background-color: var(--mahjong-green); color: white; font-weight: bold; padding: 10px; border-radius: 8px; border: none;">Log Score & Advance</button>
 				</div>
 		
 				<div id="reseat-ui" style="display: none; background: #f8f9fa; border: 1px solid #e0e0e0; padding: 16px; border-radius: 8px; margin-bottom: 32px; text-align: left;">
-					<h3 style="font-size: 14px; margin-bottom: 6px; color: var(--mahjong-blue);">Reassign Seating</h3>
-					<p style="font-size: 12px; color: #666; margin-bottom: 12px;">Assign players to their new seats. Existing scores will be preserved.</p>
+					<h3 style="font-size: 14px; margin: 0 0 6px 0; color: var(--mahjong-blue);">Reassign Seating</h3>
+					<p style="font-size: 12px; color: #666; margin-bottom: 12px;">Tap to assign players to their new seats. Existing scores will be preserved.</p>
 					
-					<div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
-						<label style="font-size: 13px; display: flex; align-items: center; justify-content: space-between;">East: <select id="seat-0" class="player-input" style="width: 70%; padding: 6px;"></select></label>
-						<label style="font-size: 13px; display: flex; align-items: center; justify-content: space-between;">South: <select id="seat-1" class="player-input" style="width: 70%; padding: 6px;"></select></label>
-						<label style="font-size: 13px; display: flex; align-items: center; justify-content: space-between;">West: <select id="seat-2" class="player-input" style="width: 70%; padding: 6px;"></select></label>
-						<label style="font-size: 13px; display: flex; align-items: center; justify-content: space-between;">North: <select id="seat-3" class="player-input" style="width: 70%; padding: 6px;"></select></label>
+					<div id="seating-groups" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 6px;"></div>
+					<div style="display: flex; justify-content: center; width: 100%;">
+						<button class="inline-btn" id="save-seating-btn" style="width: auto; background-color: var(--mahjong-blue); color: white; padding: 10px 16px; border: none; border-radius: 8px; font-weight: bold; margin-top: 10px;">Save & Continue</button>
 					</div>
-					<button class="inline-btn" id="save-seating-btn" style="width: 100%; background-color: var(--mahjong-blue); color: white; padding: 10px; border: none; border-radius: 8px; font-weight: bold;">Save & Continue</button>
 				</div>
 		
 				<h2 style="font-size: 18px; color: #111; text-align: center;">Scoreboard</h2>
 				<div class="table-wrapper" style="margin-bottom: 24px;">
-					<table id="scoreboard-table" style="width: 100%; text-align: center; font-size: 13px;">
+					<table id="scoreboard-table" style="width: auto; margin: 0 auto; text-align: center; font-size: 13px; border-collapse: collapse;">
 						<thead>
-							<tr id="scoreboard-headers">
-								</tr>
+							<tr id="scoreboard-headers"></tr>
 						</thead>
-						<tbody id="scoreboard-body">
-							</tbody>
-						<tfoot id="scoreboard-footer" style="font-weight: bold; background-color: #f4f4f9;">
-							</tfoot>
+						<tbody id="scoreboard-body"></tbody>
+						<tfoot id="scoreboard-footer" style="font-weight: bold; background-color: #f4f4f9;"></tfoot>
 					</table>
 				</div>
 				
 				<div style="text-align: center;">
-					<button class="inline-btn" id="end-game-btn" style="background-color: #fff; border: 1px solid var(--mahjong-red); color: var(--mahjong-red); padding: 8px 16px; margin: 0 auto;">End Game & Reset</button>
+					<button class="inline-btn" id="end-game-btn" style="background-color: var(--mahjong-red); color: white; padding: 10px 16px; margin: 0 auto; border-radius: 8px;"><strong>End Game & Reset</strong></button>
 				</div>
 			</div>
 			
-			<div style="margin: 24px 0px; text-align: center; display: flex; justify-content: center;">
+			<div style="margin: 24px 0px; text-align: center; display: flex; justify-content: center; gap: 12px;">
+				<button class="inline-btn" onclick="navigateTo('scorecalc')">
+					<strong>Go To<br>Calculator</strong>&nbsp;<img src="icons/calculator2.png" alt="Calculator" style="width: 24px; height: 24px; object-fit: contain; display: block;">
+				</button>
 				<button class="inline-home-btn" onclick="navigateTo('intro')">
 					⏎&nbsp;<strong>Return<br>to Home</strong>&nbsp;<img src="icons/home2.png" alt="Home" style="width: 24px; height: 24px; object-fit: contain; display: block;">
 				</button>
@@ -1462,11 +1451,11 @@
 				<div class="receipt-breakdown" id="calc-breakdown">Base: 3</div>
 			</div>
 		
-			<div class="segment-group" id="seg-win-type">
+			<div class="segment-group" id="seg-win-type" style="margin-bottom: 16px;">
 				<div class="segment-btn active" data-val="discard">Standard hú</div>
 				<div class="segment-btn" data-val="zimo">Zì mō</div>
 			</div>
-			<div class="segment-group" id="seg-concealed">
+			<div class="segment-group" id="seg-concealed" style="margin-bottom: 16px;">
 				<div class="segment-btn active" data-val="open">Open Hand</div>
 				<div class="segment-btn" data-val="concealed">Concealed (Mén qīng)</div>
 			</div>
@@ -1901,8 +1890,8 @@
 		// ==========================================
 		const recordState = {
 			players: [],
-			startDealer: 0,
 			currentDealer: 0,
+			dealerStreak: 0, // Tracks consecutive dealer wins
 			roundIndex: 0, // 0=East, 1=South, 2=West, 3=North
 			handIndex: 1,
 			tai: 3,
@@ -1912,27 +1901,19 @@
 			totals: [0, 0, 0, 0]
 		};
 		
-		const roundNames = ['East', 'South', 'West', 'North'];
+		const roundNames = ['東', '南', '西', '北'];
 		
-		// 1. Setup Dealer Selection
-		document.getElementById('seg-start-dealer').addEventListener('click', (e) => {
-			if(e.target.classList.contains('segment-btn')) {
-				document.querySelectorAll('#seg-start-dealer .segment-btn').forEach(b => b.classList.remove('active'));
-				e.target.classList.add('active');
-				recordState.startDealer = parseInt(e.target.dataset.val);
-			}
-		});
-		
-		// 2. Start Game Initialization
+		// 1. Start Game Initialization
 		document.getElementById('start-game-btn').addEventListener('click', () => {
 			recordState.players = [
-				document.getElementById('p1-name').value || "Player 1",
-				document.getElementById('p2-name').value || "Player 2",
-				document.getElementById('p3-name').value || "Player 3",
-				document.getElementById('p4-name').value || "Player 4"
+				document.getElementById('p1-name').value.trim() || "P1",
+				document.getElementById('p2-name').value.trim() || "P2",
+				document.getElementById('p3-name').value.trim() || "P3",
+				document.getElementById('p4-name').value.trim() || "P4"
 			];
 			
-			recordState.currentDealer = recordState.startDealer;
+			recordState.currentDealer = 0; // East is always starting dealer
+			recordState.dealerStreak = 0;
 			recordState.roundIndex = 0;
 			recordState.handIndex = 1;
 			recordState.totals = [0, 0, 0, 0];
@@ -1941,12 +1922,13 @@
 			buildGameplayUI();
 			updateGameStatus();
 			renderScoreboard();
+			updateDynamicDealerLabel();
 		
 			document.getElementById('record-setup').style.display = 'none';
 			document.getElementById('record-gameplay').style.display = 'block';
 		});
 		
-		// 3. Build the Dynamic Forms
+		// 2. Build the Dynamic Forms
 		function buildGameplayUI() {
 			// Build Payees (Smart Chips)
 			const payeeContainer = document.getElementById('record-payees');
@@ -1969,7 +1951,7 @@
 				payeeContainer.appendChild(chip);
 			});
 		
-			// Build Payers (Smart Chips instead of Segment Buttons)
+			// Build Payers
 			const payerContainer = document.getElementById('record-payers');
 			payerContainer.innerHTML = `<div class="smart-chip" data-val="all">Zì mō</div>`;
 			recordState.players.forEach((p, i) => {
@@ -1988,8 +1970,41 @@
 			
 			// Setup Scoreboard Headers
 			const headers = document.getElementById('scoreboard-headers');
-			headers.innerHTML = `<th style="width: 20%;">Hand</th>`;
-			recordState.players.forEach(p => headers.innerHTML += `<th style="width: 20%;">${p}</th>`);
+			headers.innerHTML = `<th style="width: 1%; white-space: nowrap; padding: 10px 8px;">Hand</th>`;
+			recordState.players.forEach(p => headers.innerHTML += `<th style="min-width: 60px;">${p}</th>`);
+		}
+		
+		// 3. Update Dynamic Dealer Label
+		function updateDynamicDealerLabel() {
+			const label = document.getElementById('dealer-dynamic-label');
+			const dealerBonus = (2 * recordState.dealerStreak) + 1;
+			const t = recordState.tai;
+			const isDealerWinner = recordState.payees.has(recordState.currentDealer);
+			const isDealerPayer = recordState.payer == recordState.currentDealer;
+			const isZimo = recordState.payer === 'all';
+			const numWinners = recordState.payees.size;
+		
+			if (numWinners === 0 || !recordState.payer) {
+				label.innerText = '';
+				return;
+			}
+		
+			if (isDealerWinner) {
+				// Dealer wins: gets T+Bonus from each loser
+				let earned = t + dealerBonus;
+				label.innerText = `Dealer earns ${earned} tai${isZimo ? ' from each player' : ''}`;
+			} else if (isDealerPayer) {
+				// Dealer discarded: pays T+Bonus to each winner
+				let paid = numWinners * (t + dealerBonus);
+				label.innerText = `Dealer pays ${paid} tai`;
+			} else if (isZimo && !isDealerWinner) {
+				// Non-Dealer Zimo: Dealer pays T+Bonus, others pay T
+				let paid = t + dealerBonus;
+				label.innerText = `Dealer pays ${paid} tai`;
+			} else {
+				// Standard discard and Dealer is not involved
+				label.innerText = ''; 
+			}
 		}
 		
 		// 4. Ensure payer cannot be a payee
@@ -2000,8 +2015,7 @@
 			payeeContainer.querySelectorAll('.smart-chip').forEach(c => c.classList.remove('disabled'));
 			payerContainer.querySelectorAll('.smart-chip').forEach(b => b.classList.remove('disabled'));
 		
-			// Disable payee chip if they are currently paying
-			if(recordState.payer !== 'all') {
+			if(recordState.payer !== 'all' && recordState.payer !== null) {
 				const pIdx = parseInt(recordState.payer);
 				const chipToDisable = payeeContainer.querySelector(`.smart-chip[data-idx="${pIdx}"]`);
 				if(chipToDisable) {
@@ -2013,11 +2027,12 @@
 				}
 			}
 		
-			// Disable payer chip if they are currently a winner
 			recordState.payees.forEach(pIdx => {
 				const btnToDisable = payerContainer.querySelector(`.smart-chip[data-val="${pIdx}"]`);
 				if(btnToDisable) btnToDisable.classList.add('disabled');
 			});
+		
+			updateDynamicDealerLabel();
 		}
 		
 		function updateRecordTai(change) {
@@ -2025,6 +2040,7 @@
 			if (newVal < 0) newVal = 0;
 			recordState.tai = newVal;
 			document.getElementById('record-tai-val').innerText = recordState.tai;
+			updateDynamicDealerLabel();
 		}
 		
 		function updateGameStatus() {
@@ -2032,13 +2048,23 @@
 			const rName = roundNames[recordState.roundIndex] || 'Extra';
 			const dealerName = recordState.players[recordState.currentDealer];
 			
-			statusDiv.innerHTML = `Round ${recordState.roundIndex + 1} (${rName}) — Hand ${recordState.handIndex}<br>
-			<span style="font-size: 12px; color: #555; font-weight: normal;">Dealer: <strong>${dealerName}</strong></span>`;
+			// Calculate the total number of consecutive hands this dealer has played
+			let streakText = '';
+			if (recordState.dealerStreak > 0) {
+				const totalTimes = recordState.dealerStreak + 1;
+				let suffix = 'th';
+				if (totalTimes === 2) suffix = 'nd';
+				if (totalTimes === 3) suffix = 'rd';
+				
+				streakText = ` (${totalTimes}${suffix} time)`;
+			}
+			
+			statusDiv.innerHTML = `Round ${recordState.roundIndex + 1} (<span class="zh-char">${rName}</span>) — Hand ${recordState.handIndex}<br>
+			<span style="font-size: 12px; color: #555; font-weight: normal;">Dealer: <strong>${dealerName}${streakText}</strong></span>`;
 		}
 		
 		// 5. Submit Score & Math Engine
 		document.getElementById('log-score-btn').addEventListener('click', () => {
-			// New Validations
 			if(recordState.payees.size === 0) {
 				alert("Please select who won (Payee).");
 				return;
@@ -2049,47 +2075,60 @@
 			}
 		
 			const t = recordState.tai;
+			const dealerBonus = (2 * recordState.dealerStreak) + 1;
 			let changes = [0, 0, 0, 0];
-			const numWinners = recordState.payees.size;
 		
-			if (recordState.payer === 'all') {
-				// Zì mō logic: All losers pay the winner(s)
+			// Math Engine incorporating Dealer Bonus
+			if (recordState.payer === 'all') { // Zimo
 				recordState.players.forEach((_, i) => {
-					if(recordState.payees.has(i)) {
-						changes[i] += (t * (4 - numWinners)); 
+					if (recordState.payees.has(i)) {
+						// Ignore winner here, calculate them by summing what losers pay
 					} else {
-						changes[i] -= (t * numWinners);
+						let amountToPay = t;
+						// Add dealer bonus if the loser IS the dealer, OR the winner IS the dealer
+						if (i === recordState.currentDealer || recordState.payees.has(recordState.currentDealer)) {
+							amountToPay += dealerBonus;
+						}
+						changes[i] -= amountToPay;
+						
+						// Zimo implies only 1 winner
+						let winnerIdx = Array.from(recordState.payees)[0];
+						changes[winnerIdx] += amountToPay;
 					}
 				});
-			} else {
-				// Standard discard logic
+			} else { // Standard Discard
 				const payerIdx = parseInt(recordState.payer);
 				recordState.payees.forEach(payeeIdx => {
-					changes[payeeIdx] += t;
-					changes[payerIdx] -= t;
+					let amount = t;
+					// Add dealer bonus if the payer IS the dealer, OR the payee IS the dealer
+					if (payerIdx === recordState.currentDealer || payeeIdx === recordState.currentDealer) {
+						amount += dealerBonus;
+					}
+					changes[payeeIdx] += amount;
+					changes[payerIdx] -= amount;
 				});
 			}
 		
-			// Create log entry
+			// Log the event
 			const rName = roundNames[recordState.roundIndex] ? roundNames[recordState.roundIndex].charAt(0) : 'E';
 			const logEntry = {
-				game: `${rName}-${recordState.handIndex}`,
+				game: `<span class="zh-char">${rName}</span>-${recordState.handIndex}`,
 				changes: changes
 			};
 			recordState.logs.push(logEntry);
-		
-			// Update totals
 			changes.forEach((c, i) => recordState.totals[i] += c);
 		
 			// Dealer Progression Logic
 			if (recordState.payees.has(recordState.currentDealer)) {
-				// Dealer won: They keep the dealer status, stay on the same hand
+				// Dealer won: Streak increases
+				recordState.dealerStreak++;
 			} else {
 				// Dealer lost: Rotate dealer and advance hand
+				recordState.dealerStreak = 0;
 				recordState.currentDealer = (recordState.currentDealer + 1) % 4;
 				recordState.handIndex++;
 		
-				// If hand exceeds 4, move to next round
+				// End of round check
 				if (recordState.handIndex > 4) {
 					recordState.handIndex = 1;
 					recordState.roundIndex++;
@@ -2099,18 +2138,12 @@
 			// Reset Form
 			recordState.tai = 3;
 			document.getElementById('record-tai-val').innerText = '3';
-			
-			// Clear Payees
 			recordState.payees.clear();
 			document.querySelectorAll('#record-payees .smart-chip').forEach(c => c.classList.remove('active'));
-			
-			// Clear Payers completely instead of defaulting to 'all'
 			recordState.payer = null;
 			document.querySelectorAll('#record-payers .smart-chip').forEach(c => c.classList.remove('active'));
 			
-			// Re-run validation to remove disabled states from the next hand
-			validatePayerPayee();
-			
+			validatePayerPayee(); // Triggers label clearing
 			updateGameStatus();
 			renderScoreboard();
 		});
@@ -2153,44 +2186,67 @@
 		// 8. Seating Order Logic
 		document.getElementById('change-seating-btn').addEventListener('click', () => {
 			const reseatUI = document.getElementById('reseat-ui');
+			const seatingGroups = document.getElementById('seating-groups');
+			
 			if (reseatUI.style.display === 'none') {
-				// Populate the dropdowns with current players
-				[0, 1, 2, 3].forEach(seatIdx => {
-					const select = document.getElementById(`seat-${seatIdx}`);
-					select.innerHTML = '';
+				seatingGroups.innerHTML = '';
+				const seatNames = [
+					'<span style="color: var(--mahjong-red);">東 East</span>', 
+					'<span style="color: var(--mahjong-blue);">南 South</span>', 
+					'<span style="color: var(--mahjong-green);">西 West</span>', 
+					'<span style="color: #444;">北 North</span>'
+				];
+				
+				// Generate a row of buttons for each seat
+				seatNames.forEach((seatName, seatIdx) => {
+					let html = `<div style="font-size: 13px; font-weight: bold; margin-bottom: 2px;">${seatName}</div>`;
+					html += `<div class="segment-group" id="seat-group-${seatIdx}">`;
 					recordState.players.forEach((p, pIdx) => {
-						const isSelected = pIdx === seatIdx ? 'selected' : '';
-						select.innerHTML += `<option value="${pIdx}" ${isSelected}>${p}</option>`;
+						const isActive = pIdx === seatIdx ? 'active' : '';
+						html += `<div class="segment-btn ${isActive}" data-pidx="${pIdx}">${p}</div>`;
+					});
+					html += `</div>`;
+					seatingGroups.innerHTML += html;
+				});
+		
+				// Add tap logic to the newly generated buttons
+				document.querySelectorAll('[id^="seat-group-"]').forEach(group => {
+					group.querySelectorAll('.segment-btn').forEach(btn => {
+						btn.addEventListener('click', (e) => {
+							group.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
+							e.target.classList.add('active');
+						});
 					});
 				});
+		
 				reseatUI.style.display = 'block';
-				// Scroll down to make sure it's visible
-				reseatUI.scrollIntoView({ behavior: 'smooth' });
+				// 'block: center' forces the div to the middle of the screen, bypassing your sticky header
+				reseatUI.scrollIntoView({ behavior: 'smooth', block: 'center' });
 			} else {
 				reseatUI.style.display = 'none';
 			}
 		});
 		
 		document.getElementById('save-seating-btn').addEventListener('click', () => {
-			const newIndices = [
-				parseInt(document.getElementById('seat-0').value),
-				parseInt(document.getElementById('seat-1').value),
-				parseInt(document.getElementById('seat-2').value),
-				parseInt(document.getElementById('seat-3').value)
-			];
+			const newIndices = [];
+			
+			// Grab the active button from each seat's segment group
+			[0, 1, 2, 3].forEach(seatIdx => {
+				const activeBtn = document.querySelector(`#seat-group-${seatIdx} .segment-btn.active`);
+				if (activeBtn) {
+					newIndices.push(parseInt(activeBtn.dataset.pidx));
+				}
+			});
 		
-			// Validate no duplicates
 			const unique = new Set(newIndices);
 			if (unique.size !== 4) {
 				alert("Each player must be assigned to exactly one seat. You have duplicates.");
 				return;
 			}
 		
-			// Map old data to new player order
 			const newPlayers = newIndices.map(oldIdx => recordState.players[oldIdx]);
 			const newTotals = newIndices.map(oldIdx => recordState.totals[oldIdx]);
 			
-			// Reorder historical logs to match the new columns so the scoreboard remains accurate
 			recordState.logs.forEach(log => {
 				log.changes = newIndices.map(oldIdx => log.changes[oldIdx]);
 			});
@@ -2198,15 +2254,17 @@
 			recordState.players = newPlayers;
 			recordState.totals = newTotals;
 		
-			// Reset the current dealer to 0 (East) since it's a new seating arrangement
+			// Reset the current dealer and streak since it's a new seating arrangement
 			recordState.currentDealer = 0; 
-			
-			// Hide UI and rebuild board
+			recordState.dealerStreak = 0;
+		
 			document.getElementById('reseat-ui').style.display = 'none';
 			buildGameplayUI();
 			updateGameStatus();
 			renderScoreboard();
+			updateDynamicDealerLabel();
 		});
+
     </script>
 
 </body>
