@@ -7,6 +7,7 @@
     
     <link rel="apple-touch-icon" href="icons/mahjong.png">
 	<link rel="icon" type="image/png" href="icons/mahjong.png">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
 		:root {
@@ -1148,47 +1149,59 @@
 			</div>
 		
 			<div id="record-gameplay" style="display: none;">
+				<div id="gameplay-controls">
+					<div style="background: #e8f5e9; padding: 6px; border-radius: 8px; font-size: 15px; margin-bottom: 10px; text-align: center; color: var(--mahjong-green); border: 1px solid #c8e6c9; font-weight: bold;" id="current-game-status">
+						Round 1 (East) — Hand 1<br>
+						<span style="font-size: 12px; color: #555; font-weight: normal;">Dealer: <strong id="current-dealer-name">P1</strong></span>
+					</div>
 		
-				<div style="background: #e8f5e9; padding: 6px; border-radius: 8px; font-size: 15px; margin-bottom: 10px; text-align: center; color: var(--mahjong-green); border: 1px solid #c8e6c9; font-weight: bold;" id="current-game-status">
-					Round 1 (East) — Hand 1<br>
-					<span style="font-size: 12px; color: #555; font-weight: normal;">Dealer: <strong id="current-dealer-name">P1</strong></span>
-				</div>
+					<div class="calc-section-title" style="margin-top: 8px;">Who Won?</div>
+					<div class="chip-grid" id="record-payees" style="margin-bottom: 12px;"></div>
 		
-				<div class="calc-section-title" style="margin-top: 8px;">Who Won?</div>
-				<div class="chip-grid" id="record-payees" style="margin-bottom: 12px;"></div>
+					<div class="calc-section-title" style="margin-top: 8px;">Who Pays?</div>
+					<div class="chip-grid" id="record-payers" style="margin-bottom: 8px;"></div>
 		
-				<div class="calc-section-title" style="margin-top: 8px;">Who Pays?</div>
-				<div class="chip-grid" id="record-payers" style="margin-bottom: 8px;"></div>
+					<div class="counter-row" style="margin-top: 12px; margin-bottom: 8px;">
+						<div class="counter-label">Tai Earned</div>
+						<div class="counter-controls">
+							<div class="counter-btn" onclick="updateRecordTai(-1)">-</div>
+							<div class="counter-val" id="record-tai-val">3</div>
+							<div class="counter-btn" onclick="updateRecordTai(1)">+</div>
+						</div>
+					</div>
 		
-				<div class="counter-row" style="margin-top: 12px; margin-bottom: 8px;">
-					<div class="counter-label">Tai Earned</div>
-					<div class="counter-controls">
-						<div class="counter-btn" onclick="updateRecordTai(-1)">-</div>
-						<div class="counter-val" id="record-tai-val">3</div>
-						<div class="counter-btn" onclick="updateRecordTai(1)">+</div>
+					<div id="dealer-dynamic-label" style="text-align: center; font-weight: bold; color: var(--mahjong-red); font-size: 13px; min-height: 18px; margin-bottom: 16px;"></div>
+		
+					<div style="display: flex; gap: 12px; margin-top: 8px; margin-bottom: 24px;">
+						<button class="inline-btn" id="change-seating-btn" style="flex: 2; background-color: #f4f4f9; color: #333; font-weight: bold; padding: 10px; border-radius: 8px;">Change Seating</button>
+						<button class="inline-btn" id="log-score-btn" style="flex: 3; background-color: var(--mahjong-green); color: white; font-weight: bold; padding: 10px; border-radius: 8px; border: none;">Log Score & Advance</button>
+					</div>
+		
+					<div id="reseat-ui" style="display: none; background: #f8f9fa; border: 1px solid #e0e0e0; padding: 16px; border-radius: 8px; margin-bottom: 32px; text-align: left;">
+						<h3 style="font-size: 14px; margin: 0 0 6px 0; color: var(--mahjong-blue);">Reassign Seating</h3>
+						<p style="font-size: 12px; color: #666; margin-bottom: 12px;">Tap to assign players to their new seats. Existing scores will be preserved.</p>
+						<div id="seating-groups" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
+						<div style="display: flex; justify-content: center; width: 100%;">
+							<button class="inline-btn" id="save-seating-btn" style="width: auto; background-color: var(--mahjong-blue); color: white; padding: 10px 24px; border: none; border-radius: 8px; font-weight: bold; margin-top: 10px;">Save & Continue</button>
+						</div>
 					</div>
 				</div>
 		
-				<div id="dealer-dynamic-label" style="text-align: center; font-style: italic; color: var(--mahjong-red); font-size: 13px; min-height: 18px; margin-bottom: 8px;"></div>
-		
-				<div style="display: flex; gap: 12px; margin-top: 8px; margin-bottom: 24px;">
-					<button class="inline-btn" id="change-seating-btn" style="flex: 2; background-color: #f4f4f9; color: #333; font-weight: bold; padding: 10px; border-radius: 8px;">Change Seating</button>
-					<button class="inline-btn" id="log-score-btn" style="flex: 3; background-color: var(--mahjong-green); color: white; font-weight: bold; padding: 10px; border-radius: 8px; border: none;">Log Score & Advance</button>
-				</div>
-		
-				<div id="reseat-ui" style="display: none; background: #f8f9fa; border: 1px solid #e0e0e0; padding: 16px; border-radius: 8px; margin-bottom: 32px; text-align: left;">
-					<h3 style="font-size: 14px; margin: 0 0 6px 0; color: var(--mahjong-blue);">Reassign Seating</h3>
-					<p style="font-size: 12px; color: #666; margin-bottom: 12px;">Tap to assign players to their new seats. Existing scores will be preserved.</p>
+				<div id="game-over-ui" style="display: none; text-align: center; margin-bottom: 24px;">
+					<div style="background: #e8f5e9; padding: 16px; border-radius: 8px; border: 2px solid var(--mahjong-green); margin-bottom: 16px;">
+						<h2 style="font-size: 22px; color: var(--mahjong-green); margin: 0; padding: 0; border: none;" id="winner-announcement">Player 1 Wins!</h2>
+						<p style="font-size: 14px; color: #555; margin-top: 4px; margin-bottom: 0;">Game Over</p>
+					</div>
 					
-					<div id="seating-groups" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 6px;"></div>
-					<div style="display: flex; justify-content: center; width: 100%;">
-						<button class="inline-btn" id="save-seating-btn" style="width: auto; background-color: var(--mahjong-blue); color: white; padding: 10px 16px; border: none; border-radius: 8px; font-weight: bold; margin-top: 10px;">Save & Continue</button>
+					<div style="display: flex; gap: 12px; justify-content: center;">
+						<button class="inline-btn" id="copy-table-btn" style="flex: 1; background-color: #f4f4f9; font-weight: bold; font-size: 12px; padding: 10px;">Copy Scoreboard</button>
+						<button class="inline-btn" id="save-image-btn" style="flex: 1; background-color: #f4f4f9; font-weight: bold; font-size: 12px; padding: 10px;">Save Image</button>
 					</div>
 				</div>
 		
-				<h2 style="font-size: 18px; color: #111; text-align: center;">Scoreboard</h2>
+				<h2 style="font-size: 18px; color: #111; text-align: center; margin-top: 0;">Scoreboard</h2>
 				<div class="table-wrapper" style="margin-bottom: 24px;">
-					<table id="scoreboard-table" style="width: auto; margin: 0 auto; text-align: center; font-size: 13px; border-collapse: collapse;">
+					<table id="scoreboard-table" style="width: 100%; max-width: 100%; margin: 0 auto; text-align: center; font-size: 13px;">
 						<thead>
 							<tr id="scoreboard-headers"></tr>
 						</thead>
@@ -1198,7 +1211,7 @@
 				</div>
 				
 				<div style="text-align: center;">
-					<button class="inline-btn" id="end-game-btn" style="background-color: var(--mahjong-red); color: white; padding: 10px 16px; margin: 0 auto; border-radius: 8px;"><strong>End Game & Reset</strong></button>
+					<button class="inline-btn" id="end-game-btn" style="background-color: var(--mahjong-red); color: white; padding: 10px 24px; margin: 0 auto; border-radius: 8px;"><strong>End Game & Reset</strong></button>
 				</div>
 			</div>
 			
@@ -1905,27 +1918,45 @@
 		
 		// 1. Start Game Initialization
 		document.getElementById('start-game-btn').addEventListener('click', () => {
-			recordState.players = [
-				document.getElementById('p1-name').value.trim() || "P1",
-				document.getElementById('p2-name').value.trim() || "P2",
-				document.getElementById('p3-name').value.trim() || "P3",
-				document.getElementById('p4-name').value.trim() || "P4"
-			];
-			
-			recordState.currentDealer = 0; // East is always starting dealer
-			recordState.dealerStreak = 0;
+			// Grab names and default to P1/P2/P3/P4 if left blank
+			const p1 = document.getElementById('p1-name').value.trim() || "P1";
+			const p2 = document.getElementById('p2-name').value.trim() || "P2";
+			const p3 = document.getElementById('p3-name').value.trim() || "P3";
+			const p4 = document.getElementById('p4-name').value.trim() || "P4";
+		
+			// Hard reset the game state
+			recordState.players = [p1, p2, p3, p4];
+			recordState.totals = [0, 0, 0, 0]; // Start everyone at 0
+			recordState.logs = [];
 			recordState.roundIndex = 0;
 			recordState.handIndex = 1;
-			recordState.totals = [0, 0, 0, 0];
-			recordState.logs = [];
+			recordState.currentDealer = 0;
+			recordState.dealerStreak = 0;
+			recordState.tai = 3;
+			recordState.payees.clear();
+			recordState.payer = null;
 		
+			// Build the UI
 			buildGameplayUI();
 			updateGameStatus();
 			renderScoreboard();
 			updateDynamicDealerLabel();
 		
+			// Configure Visibility of all Divs
 			document.getElementById('record-setup').style.display = 'none';
 			document.getElementById('record-gameplay').style.display = 'block';
+			
+			document.getElementById('gameplay-controls').style.display = 'block';
+			document.getElementById('game-over-ui').style.display = 'none';
+			document.getElementById('reseat-ui').style.display = 'none';
+		
+			// Reset the "End Game" button back to red (in case it was blue from a finished game)
+			const endBtn = document.getElementById('end-game-btn');
+			endBtn.innerHTML = '<strong>End Game & Reset</strong>';
+			endBtn.style.backgroundColor = 'var(--mahjong-red)';
+		
+			// Reset the Tai tracker visually to 3
+			document.getElementById('record-tai-val').innerText = '3';
 		});
 		
 		// 2. Build the Dynamic Forms
@@ -2081,17 +2112,13 @@
 			// Math Engine incorporating Dealer Bonus
 			if (recordState.payer === 'all') { // Zimo
 				recordState.players.forEach((_, i) => {
-					if (recordState.payees.has(i)) {
-						// Ignore winner here, calculate them by summing what losers pay
-					} else {
+					if (!recordState.payees.has(i)) {
 						let amountToPay = t;
-						// Add dealer bonus if the loser IS the dealer, OR the winner IS the dealer
 						if (i === recordState.currentDealer || recordState.payees.has(recordState.currentDealer)) {
 							amountToPay += dealerBonus;
 						}
 						changes[i] -= amountToPay;
 						
-						// Zimo implies only 1 winner
 						let winnerIdx = Array.from(recordState.payees)[0];
 						changes[winnerIdx] += amountToPay;
 					}
@@ -2100,7 +2127,6 @@
 				const payerIdx = parseInt(recordState.payer);
 				recordState.payees.forEach(payeeIdx => {
 					let amount = t;
-					// Add dealer bonus if the payer IS the dealer, OR the payee IS the dealer
 					if (payerIdx === recordState.currentDealer || payeeIdx === recordState.currentDealer) {
 						amount += dealerBonus;
 					}
@@ -2112,7 +2138,7 @@
 			// Log the event
 			const rName = roundNames[recordState.roundIndex] ? roundNames[recordState.roundIndex].charAt(0) : 'E';
 			const logEntry = {
-				game: `<span class="zh-char">${rName}</span>-${recordState.handIndex}`,
+				game: `${rName}-${recordState.handIndex}`,
 				changes: changes
 			};
 			recordState.logs.push(logEntry);
@@ -2120,22 +2146,26 @@
 		
 			// Dealer Progression Logic
 			if (recordState.payees.has(recordState.currentDealer)) {
-				// Dealer won: Streak increases
 				recordState.dealerStreak++;
 			} else {
-				// Dealer lost: Rotate dealer and advance hand
 				recordState.dealerStreak = 0;
 				recordState.currentDealer = (recordState.currentDealer + 1) % 4;
 				recordState.handIndex++;
 		
-				// End of round check
 				if (recordState.handIndex > 4) {
 					recordState.handIndex = 1;
 					recordState.roundIndex++;
 				}
 			}
 		
-			// Reset Form
+			// GAME OVER CHECK: If we pass round index 3 (North round), end the game.
+			if (recordState.roundIndex > 3) {
+				renderScoreboard();
+				triggerGameOver();
+				return;
+			}
+		
+			// Reset Form for next hand
 			recordState.tai = 3;
 			document.getElementById('record-tai-val').innerText = '3';
 			recordState.payees.clear();
@@ -2143,9 +2173,60 @@
 			recordState.payer = null;
 			document.querySelectorAll('#record-payers .smart-chip').forEach(c => c.classList.remove('active'));
 			
-			validatePayerPayee(); // Triggers label clearing
+			validatePayerPayee(); 
 			updateGameStatus();
 			renderScoreboard();
+		});
+		
+		// --- NEW GAME OVER LOGIC ---
+		function triggerGameOver() {
+			// Hide controls, show game over UI
+			document.getElementById('gameplay-controls').style.display = 'none';
+			document.getElementById('game-over-ui').style.display = 'block';
+		
+			// Find the winner(s)
+			const maxScore = Math.max(...recordState.totals);
+			const winners = [];
+			recordState.totals.forEach((score, index) => {
+				if (score === maxScore) winners.push(recordState.players[index]);
+			});
+		
+			const winnerText = winners.join(' & ') + (winners.length > 1 ? ' Tie for the Win!' : ' Wins!');
+			document.getElementById('winner-announcement').innerText = winnerText;
+		
+			// Transform the reset button
+			const endBtn = document.getElementById('end-game-btn');
+			endBtn.innerHTML = '<strong>Start New Game</strong>';
+			endBtn.style.backgroundColor = 'var(--mahjong-blue)';
+		}
+		
+		// --- EXPORT BUTTONS LOGIC ---
+		document.getElementById('copy-table-btn').addEventListener('click', () => {
+			let text = "Hand\t" + recordState.players.join("\t") + "\n";
+			recordState.logs.forEach(log => {
+				text += log.game + "\t" + log.changes.join("\t") + "\n";
+			});
+			text += "TOTAL\t" + recordState.totals.join("\t");
+			
+			navigator.clipboard.writeText(text).then(() => {
+				const btn = document.getElementById('copy-table-btn');
+				btn.innerText = "Copied!";
+				setTimeout(() => btn.innerText = "Copy Scoreboard", 2000);
+			});
+		});
+		
+		document.getElementById('save-image-btn').addEventListener('click', () => {
+			const tableWrapper = document.querySelector('.table-wrapper');
+			const btn = document.getElementById('save-image-btn');
+			btn.innerText = "Saving...";
+			
+			html2canvas(tableWrapper, { backgroundColor: "#ffffff" }).then(canvas => {
+				const link = document.createElement('a');
+				link.download = 'mahjong-scoreboard.png';
+				link.href = canvas.toDataURL('image/png');
+				link.click();
+				btn.innerText = "Save Image";
+			});
 		});
 		
 		// 6. Draw the Table
@@ -2177,7 +2258,10 @@
 		
 		// 7. End Game Reset
 		document.getElementById('end-game-btn').addEventListener('click', () => {
-			if(confirm("Are you sure you want to end this game? All records will be erased.")) {
+			const isGameOver = document.getElementById('game-over-ui').style.display === 'block';
+			
+			// Skip the confirm dialog if the game is already over
+			if(isGameOver || confirm("Are you sure you want to end this game? All records will be erased.")) {
 				document.getElementById('record-gameplay').style.display = 'none';
 				document.getElementById('record-setup').style.display = 'block';
 			}
