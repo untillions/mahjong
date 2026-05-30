@@ -1,3 +1,1 @@
-# mahjong
-A simple phone app for explaining the basics of Standard Taiwanese Mahjong to an English-speaking audience.
-(Still in progress)
+A simple phone app for explaining the basics, highlighting the rules, and scoring the game of Standard Taiwanese Mahjong.
