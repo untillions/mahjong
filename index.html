@@ -12,8 +12,10 @@
     <style>
 		:root {
             --mahjong-green: #3B9C61;
-            --mahjong-blue: #3B699B; /* Swap with #2B6BA6 if you prefer */
-            --mahjong-red: #9B3B44;  /* Swap with #C73E47 if you prefer */
+            --mahjong-blue: #3B699B;
+            --mahjong-red: #9B3B44;
+            --mahjong-gray: #444;
+            --mahjong-white: #fff;
         }
 
         * {
@@ -37,6 +39,11 @@
 		body.dark-mode {
 			background-color: #121212;
 			color: #e0e0e0;
+			--mahjong-green: #4FB373; 
+			--mahjong-blue: #5087C7; 
+			--mahjong-red: #C4555E;
+			--mahjong-gray: #676767;
+			--mahjong-white: #121212;
 		}
 		/* Surface Backgrounds */
 		body.dark-mode .top-header,
@@ -49,18 +56,21 @@
 		body.dark-mode .smart-chip,
 		body.dark-mode .player-input,
 		body.dark-mode #capture-area,
-		body.dark-mode #reseat-ui,
-		body.dark-mode .segment-btn.active {
+		body.dark-mode #reseat-ui {
 			background-color: #1e1e1e;
 			color: #e0e0e0;
 			border-color: #333;
 		}
+		body.dark-mode .green-div { background-color: #e4f5e5; color: var(--mahjong-green); }
+		body.dark-mode .setup-image { background-color: #e0e0e0; }
 		/* Table elements */
 		body.dark-mode th,
+		body.dark-mode .td-separator,
+		body.dark-mode .scoreboard-row-header,
 		body.dark-mode tfoot {
 			background-color: #2a2a2a !important;
 			color: #e0e0e0;
-			border-color: #444;
+			border-color: var(--mahjong-gray);
 		}
 		body.dark-mode td { border-color: #333; }
 		/* Text elements */
@@ -68,19 +78,27 @@
 		body.dark-mode td,
 		body.dark-mode .counter-label,
 		body.dark-mode .grid-label,
-		body.dark-mode h1,
-		body.dark-mode .zh-char {
+		body.dark-mode h1 {
 			color: #e0e0e0 !important;
 		}
 		body.dark-mode h2 { border-color: #333; }
 		/* Specialized UI */
-		body.dark-mode .note-highlight { background-color: #3a3822; color: #ddd; }
+		body.dark-mode .note-highlight { background-color: #73814b; color: #ddd; }
 		body.dark-mode .nav-highlight { background-color: #2d3b2e; }
 		body.dark-mode .segment-group { background-color: #333; }
 		body.dark-mode .segment-btn { color: #aaa; }
+		body.dark-mode .segment-btn.active { 
+			background-color: #1b3a20; 
+			border: 1px solid var(--mahjong-green); 
+			color: var(--mahjong-green); 
+		}
 		body.dark-mode .counter-btn { background: #2a2a2a; border-color: #444; color: #e0e0e0; }
 		body.dark-mode .smart-chip.active { background-color: #1b3a20; border-color: var(--mahjong-green); color: var(--mahjong-green); }
 		body.dark-mode .smart-chip.disabled { background-color: #2a2a2a; color: #555; }
+		
+		body.dark-mode .nav-icon { filter: brightness(0) invert(1); }
+		body.dark-mode .nav-item.active .nav-icon { filter: none; }
+		body.dark-mode .nav-item.active .nav-label { color: #338439; }
 		
 		/* Toggle Switch Styling */
 		.theme-switch input:checked + .slider { background-color: var(--mahjong-blue); }
@@ -274,7 +292,7 @@
         h1 { font-size: 24px; margin-bottom: 16px; color: #111; }
         h2 { font-size: 20px; margin-top: 24px; margin-bottom: 12px; color: var(--mahjong-blue); border-bottom: 2px solid #e0e0e0; padding-bottom: 4px;}
         h3 { font-size: 17px; margin-top: 20px; margin-bottom: 8px; color: var(--mahjong-green); }
-        p { font-size: 15px; line-height: 1.5; color: #444; margin-bottom: 12px; }
+        p { font-size: 15px; line-height: 1.5; color: var(--mahjong-gray); margin-bottom: 12px; }
         
         /* Table Styling */
         .table-wrapper {
@@ -285,6 +303,18 @@
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             background: #fff;
+        }
+        
+        .green-div {
+        	background: #e8f5e9; padding: 6px; border-radius: 8px; font-size: 15px; 
+        	margin-bottom: 10px; text-align: center; color: var(--mahjong-green); 
+        	border: 1px solid #c8e6c9;
+        }
+        
+        .setup-image {
+        	max-width: 100%;
+        	border-radius: 4px;
+        	background-color: #f4f4f9;
         }
         
         table {
@@ -414,7 +444,7 @@
 		.segment-group {
 			display: flex;
 			background: #e0e0e0;
-			border-radius: 8px;
+			border-radius: 24px; /* Rounded pill shape to match chips */
 			padding: 2px;
 			margin-bottom: 4px;
 		}
@@ -427,14 +457,17 @@
 			font-weight: 600;
 			color: #555;
 			background: transparent;
-			border-radius: 6px;
+			border: 1px solid transparent; /* Prevents jumping when active border applies */
+			border-radius: 20px; /* Rounded pill shape to fit inside the group */
 			cursor: pointer;
-			transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+			transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 		}
 		
 		.segment-btn.active {
-			background: #ffffff;
-			color: var(--mahjong-blue);
+			background: #e8f5e9; /* Matches smart-chip active background */
+			border: 1px solid var(--mahjong-green); /* Matches smart-chip active border */
+			color: var(--mahjong-green); /* Matches smart-chip active text */
+			font-weight: 700;
 			box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 		}
 		
@@ -552,7 +585,14 @@
 			border-bottom: 1px solid #eee;
 		}
 		
+		#reseat-ui {
+			display: none; background: #f8f9fa; border: 1px solid #e0e0e0; padding: 16px; 
+			border-radius: 8px; margin-bottom: 32px; text-align: left;
+		}
 		
+		#capture-area {
+			background-color: #ffffff; padding: 12px; border-radius: 8px;
+		}		
 
     </style>
 </head>
@@ -593,15 +633,15 @@
 				</div>
             </div>
             
-            <div style="display: flex; justify-content: center; align-items: center; margin-top: 16px; margin-bottom: 8px; gap: 12px;">
-				<span style="font-size: 14px; font-weight: bold; color: #777;">Light</span>
+            <div style="display: flex; justify-content: center; align-items: center; margin-top: 64px; margin-bottom: 8px; gap: 12px;">
+				<span style="font-size: 14px; font-weight: bold;">Light<br>Mode</span>☀️
 				<label class="theme-switch" style="position: relative; display: inline-block; width: 50px; height: 26px;">
 					<input type="checkbox" id="theme-toggle" style="opacity: 0; width: 0; height: 0;">
 					<span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;">
 						<span class="slider-circle" style="position: absolute; content: ''; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
 					</span>
 				</label>
-				<span style="font-size: 14px; font-weight: bold; color: #777;">Dark</span>
+				🌙<span style="font-size: 14px; font-weight: bold;">Dark<br>Mode</span>
 			</div>
 
             <p style="margin-top: 24px; font-size: 12px; color: #777; text-align: center;">Icons by <em>Freepik</em> on <a href="https://www.flaticon.com/authors/freepik" title="Flaticon" style="color: #777;">Flaticon</a></p>
@@ -827,7 +867,7 @@
             
             <h2>Understanding the Tiles</h2>
 				<p>The 144 Mahjong tiles are organized into 3 main groups:</p>
-				<ul style="margin-left: 24px; margin-bottom: 12px; color: #444; font-size: 15px; line-height: 1.5;">
+				<ul style="margin-left: 24px; margin-bottom: 12px; font-size: 15px; line-height: 1.5;">
 					<li>The suits</li>
 					<li>The honors</li>
 					<li>The bonus tiles</li>
@@ -935,30 +975,30 @@
 				
 			<h3>Making the Wall</h3>
 				<p>All 144 tiles are placed face down and <strong>washed</strong> (shuffled). Each player takes out 36 tiles and stacks them face down in a row of tiles 18 long and 2 high. The rows are then arranged in the pattern below to form the <strong>wall</strong>.</p>
-				<img src="images/setup2.png" alt="Making the Wall" style="max-width: 100%;">
+				<img class="setup-image" src="images/setup2.png" alt="Making the Wall">
 				
 			<h3>Breaking the Wall</h3>
 				<p>For the first hand of the first round, the player in the East position becomes the <strong>dealer</strong>. This player rolls three dice and finds the sum. Starting with their own east wall as &ldquo;1&rdquo;, the player counts upward in a counterclockwise direction around the circle until they reach the section of wall that corresponds to the sum of the dice.</p>
 				<p><strong>Example:</strong> The East player rolls a sum of 6 which results in the South wall being broken.</p>
-				<img src="images/setup3.png" alt="Dice roll" style="max-width: 100%;">
+				<img class="setup-image" src="images/setup3.png" alt="Dice roll">
 				<p>The player on that section of the wall counts tiles from right to left on their wall until reaching the sum of the dice rolled. That player then <strong>breaks</strong> the wall to the left of this point (making a visible separation).</p>
 				<p><strong>Example:</strong> The South player (from their point of view) breaks the wall after the 6th tile from the right counting left.</p>
-				<img src="images/setup4.png" alt="Breaking the Wall" style="max-width: 100%;">
+				<img class="setup-image" src="images/setup4.png" alt="Breaking the Wall">
 				<p><span class="note-highlight"><strong>Note:</strong> Some variations of the game require the person who will break the wall to reroll a sum rather than using the East player&rsquo;s sum of dice.</span></p>
 				
 			<h3>Dealing the Tiles</h3>
 				<p>The player who broke the wall takes the next two stacks (four tiles) to the left of the break and adds them to their hand. Moving around the table counterclockwise, each player continues taking the next two stacks (four tiles) until all players have 16 tiles in their hand.</p>
-				<img src="images/setup5.png" alt="Dealing the Tiles" style="max-width: 100%;">
+				<img class="setup-image" src="images/setup5.png" alt="Dealing the Tiles">
 				<p><span class="note-highlight"><strong>Note:</strong> Some variations of the game deal the tiles differently or end up with a different sum of tiles initially.</span></p>
 				<p>Once tiles have been drawn, the wall has been opened. The remaining tiles form a shape that is representative of <span class="zh-char">门</span> mén (meaning "gate").</p>
-				<img src="images/setup6.png" alt="Wall Head and Tail" style="max-width: 100%;">
+				<img class="setup-image" src="images/setup6.png" alt="Wall Head and Tail">
 				<p>The wall now has a <strong>head</strong> (the starting point of the first stroke to draw the character) where players will continue drawing tiles as the game goes on, and a <strong>tail</strong> (the ending point of the final stroke to draw the character) where players will draw replacements for a flower tile, season tile, or gàng.</p>
 				
 			<h3>Replacements</h3>
 				<p>Players arrange their hands with the tiles stood up facing them. Players sort the tiles by suit in order 1-9 and put the honors together.</p>
 				<p>If any flower or season tiles have been drawn, these are played face up on the table in front of the player&rsquo;s rack, and players take one replacement tile at a time from the <strong>tail</strong> of the wall (in turn counterclockwise) until all players have 16 non-flower, non-season tiles in their hand. If a player draws a flower or season tile from the tail, this player will still have a replacement to draw (in turn with the other players). When drawing single tiles from the wall, always take the top tile from the end stack first, then the bottom tile.</p>
 				<p><strong>Example:</strong> The East, West, and North players are showing flowers and seasons. These players will draw replacement tiles one-at-a-time from the tail to match the number of flowers or seasons removed from their hand in this order: East player, West Player, North Player, West Player, North Player.</p>
-				<img src="images/setup7.png" alt="Replacements Example" style="max-width: 100%;">
+				<img class="setup-image" src="images/setup7.png" alt="Replacements Example">
 								
 			<h3>Setting Up Later Hands</h3>
 				<p>After each <strong>hand</strong>, if the dealer declares h&uacute;, the starting position does not move. This player rolls the dice again for their second, third, or more times as dealer.</p>
@@ -1021,7 +1061,7 @@
 				
 			<h2>Drawing and Discarding</h2>
 				<p>A typical turn consists of two steps:</p>
-				<ol style="margin-left: 24px; margin-bottom: 12px; color: #444; font-size: 15px; line-height: 1.5;">
+				<ol style="margin-left: 24px; margin-bottom: 12px; font-size: 15px; line-height: 1.5;">
 					<li>Draw a tile from the wall (or claim a discard).</li>
 					<li>Discard a tile (also called <strong>throwing</strong>).</li>
 				</ol>
@@ -1047,7 +1087,7 @@
 			<h3>Special Gàng Conditions</h3>
 				<p>The standard claim results in an open gàng. However, a <strong>closed gàng</strong> can also be declared directly from a player's hidden hand.</p>
 				<p>If a player draws the fourth tile of a set already in their hand, they have two options:</p>
-				<ol style="margin-left: 24px; margin-bottom: 12px; color: #444; font-size: 15px; line-height: 1.5;">
+				<ol style="margin-left: 24px; margin-bottom: 12px; font-size: 15px; line-height: 1.5;">
 					<li><strong>Declare it as a closed gàng:</strong> The player places all four tiles face-down in front of them (sometimes flipping the two outer tiles face-up to show the set identity). They draw a replacement tile from the tail of the wall, discard a tile, and play continues to their right. Declaring a closed gàng safely increases the hand's score if they achieve hú.</li>
 					<li><strong>Use it in a sequence:</strong> Keep the tile hidden and use it as part of a separate consecutive sequence (suited tiles only). This requires no declaration, keeps a player's strategy secret, and helps the player move closer to a generic win.</li>
 				</ol>
@@ -1116,7 +1156,7 @@
 					</tbody>
 				</table>
 			</div>
-				<p>Therefore, the number of hands the dealer has won in a row, <em>n</em>, can help find the dealer bonus with:</p>
+				<p>Therefore, the hand number as the dealer, <em>n</em>, can help find the dealer bonus with:</p>
 				<p style="text-align: center; font-size: 18px; font-weight: bold; color: var(--mahjong-red); margin: 0px 0 16px 0;">2<em>n</em> – 1</p>
 				
 			<h3>Regular Win Conditions</h3>
@@ -1225,7 +1265,7 @@
 					<label style="font-size: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: bold;"><span style="color: var(--mahjong-red);">東 East:</span> <input type="text" id="p1-name" placeholder="P1" class="player-input" style="width: 70%; font-weight: normal;"></label>
 					<label style="font-size: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: bold;"><span style="color: var(--mahjong-blue);">南 South:</span> <input type="text" id="p2-name" placeholder="P2" class="player-input" style="width: 70%; font-weight: normal;"></label>
 					<label style="font-size: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: bold;"><span style="color: var(--mahjong-green);">西 West:</span> <input type="text" id="p3-name" placeholder="P3" class="player-input" style="width: 70%; font-weight: normal;"></label>
-					<label style="font-size: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: bold;"><span style="color: #444;">北 North:</span> <input type="text" id="p4-name" placeholder="P4" class="player-input" style="width: 70%; font-weight: normal;"></label>
+					<label style="font-size: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: bold;"><span style="color: var(--mahjong-gray);">北 North:</span> <input type="text" id="p4-name" placeholder="P4" class="player-input" style="width: 70%; font-weight: normal;"></label>
 				</div>
 				
 				<button class="inline-btn" id="start-game-btn" style="width: 100%; margin-top: 12px; background-color: var(--mahjong-green); color: white; font-weight: bold; padding: 12px; border: none;">Start Game</button>
@@ -1233,7 +1273,7 @@
 		
 			<div id="record-gameplay" style="display: none;">
 				<div id="gameplay-controls">
-					<div style="background: #e8f5e9; padding: 6px; border-radius: 8px; font-size: 15px; margin-bottom: 10px; text-align: center; color: var(--mahjong-green); border: 1px solid #c8e6c9; font-weight: bold;" id="current-game-status">
+					<div class="green-div" style="font-weight: bold;" id="current-game-status">
 						Round 1 (East) — Hand 1<br>
 						<span style="font-size: 12px; color: #555; font-weight: normal;">Dealer: <strong id="current-dealer-name">P1</strong></span>
 					</div>
@@ -1256,11 +1296,11 @@
 					<div id="dealer-dynamic-label" style="text-align: center; font-weight: bold; color: var(--mahjong-red); font-size: 13px; min-height: 18px; margin-bottom: 16px;"></div>
 		
 					<div style="display: flex; gap: 12px; margin-top: 8px; margin-bottom: 24px;">
-						<button class="inline-btn" id="change-seating-btn" style="flex: 2; background-color: #f4f4f9; color: #333; font-weight: bold; padding: 10px;">Change Seating</button>
+						<button class="inline-btn" id="change-seating-btn" style="flex: 2; font-weight: bold; padding: 10px;">Change Seating</button>
 						<button class="inline-btn" id="log-score-btn" style="flex: 3; background-color: var(--mahjong-green); color: white; font-weight: bold; padding: 10px; border: none;">Log Score & Advance</button>
 					</div>
 		
-					<div id="reseat-ui" style="display: none; background: #f8f9fa; border: 1px solid #e0e0e0; padding: 16px; border-radius: 8px; margin-bottom: 32px; text-align: left;">
+					<div id="reseat-ui">
 						<h3 style="font-size: 14px; margin: 0 0 6px 0; color: var(--mahjong-blue);">Reassign Seating</h3>
 						<p style="font-size: 12px; color: #666; margin-bottom: 12px;">Tap to assign players to their new seats. Existing scores will be preserved.</p>
 						<div id="seating-groups" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
@@ -1271,29 +1311,29 @@
 				</div>
 		
 				<div id="game-over-ui" style="display: none; text-align: center; margin-bottom: 24px;">
-					<div style="background: #e8f5e9; padding: 16px; border-radius: 8px; border: 2px solid var(--mahjong-green); margin-bottom: 16px;">
+					<div class="green-div" style="border: 2px solid var(--mahjong-green); margin-bottom: 16px;">
 						<h2 style="font-size: 22px; color: var(--mahjong-green); margin: 0; padding: 0; border: none;" id="winner-announcement">Player 1 Wins!</h2>
-						<p style="font-size: 14px; color: #555; margin-top: 4px; margin-bottom: 0;">Game Over</p>
+						<span style="font-size: 14px; margin-top: 4px; margin-bottom: 0; color: #555;">Game Over</span>
 					</div>
 					
 					<div style="display: flex; gap: 12px; justify-content: center;">
-						<button class="inline-btn" id="copy-table-btn" style="flex: 1; background-color: white; font-weight: bold; font-size: 12px; padding: 10px;">
+						<button class="inline-btn" id="copy-table-btn" style="flex: 1; font-weight: bold; font-size: 12px; padding: 10px;">
 							<strong>Copy Table<br>of Scoreboard</strong>&nbsp;<img src="icons/copy2.png" alt="Copy" style="width: 24px; height: 24px; object-fit: contain; display: block;">
 						</button>
-						<button class="inline-btn" id="save-image-btn" style="flex: 1; background-color: white; font-weight: bold; font-size: 12px; padding: 10px;">
+						<button class="inline-btn" id="save-image-btn" style="flex: 1; font-weight: bold; font-size: 12px; padding: 10px;">
 							<strong>Save Image<br>of Scoreboard</strong>&nbsp;<img src="icons/save2.png" alt="Save" style="width: 24px; height: 24px; object-fit: contain; display: block;">
 						</button>
 					</div>
 				</div>
 		
-				<h2 style="font-size: 18px; color: #111; text-align: center; margin-top: 0;">Scoreboard</h2>
+				<h2 style="font-size: 18px; text-align: center; margin-top: 0;">Scoreboard</h2>
 				<div class="table-wrapper" style="margin: 0 auto;">
 					
-					<div id="capture-area" style="background-color: #ffffff; padding: 12px; border-radius: 8px;">
+					<div id="capture-area">
 						
 						<div id="scoreboard-timestamp" style="display: none; text-align: center; margin-bottom: 16px; line-height: 1.4;">
-							<span style="font-size: 20px; font-weight: bold; color: var(--mahjong-red);">Mahjong</span>&nbsp;<span class="zh-char" style="font-size: 20px; font-weight: bold; color: #111;">麻将</span><br>
-							<span style="font-size: 13px; color: #666;" id="scoreboard-date"></span>
+							<span style="font-size: 20px; font-weight: bold; color: var(--mahjong-red);">Mahjong</span>&nbsp;<span class="zh-char" style="font-size: 20px; font-weight: bold;">麻将</span><br>
+							<span style="font-size: 13px;" id="scoreboard-date"></span>
 						</div>
 						
 						<table id="scoreboard-table" style="width: 100%; max-width: 100%; margin: 0 auto; text-align: center; font-size: 13px; border-collapse: collapse;">
@@ -1442,7 +1482,7 @@
             <h1 style="margin-bottom: 8px;">Rotation Cheat Sheet</h1>
             
             <h2 style="font-size: 15px; margin-top: 10px; margin-bottom: 6px; padding-bottom: 2px;">Game Structure</h2>
-            <div style="display: flex; justify-content: space-between; align-items: center; text-align: center; font-size: 13px; margin-bottom: 12px; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; text-align: center; font-size: 13px; margin-bottom: 12px; background: var(--mahjong-white); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 10px;">
                 <div><strong style="color: var(--mahjong-red);">1 Game</strong><br>4 Rounds</div>
                 <div style="color: #ccc;">|</div>
                 <div><strong style="color: var(--mahjong-blue);">1 Round</strong><br>4 Hands</div>
@@ -1451,7 +1491,7 @@
             </div>
 
             <h2 style="font-size: 15px; margin-top: 10px; margin-bottom: 6px; padding-bottom: 2px;">Turn Order (Counterclockwise)</h2>
-            <div style="position: relative; width: 150px; height: 150px; margin: 12px auto 16px auto; background: #fff; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 2px solid #e0e0e0;">
+            <div style="position: relative; width: 150px; height: 150px; margin: 12px auto 16px auto; background: var(--mahjong-white); border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 2px solid #e0e0e0;">
                 <div style="position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); text-align: center; font-size: 11px; line-height: 1.1;"><strong>North</strong><br><img src="tiles/wind4.png" style="width:20px; margin-top: 2px;"></div>
                 <div style="position: absolute; top: 50%; right: 6px; transform: translateY(-50%); text-align: center; font-size: 11px; line-height: 1.1;"><strong>East</strong><br><img src="tiles/wind1.png" style="width:20px; margin-top: 2px;"></div>
                 <div style="position: absolute; top: 4px; left: 50%; transform: translateX(-50%); text-align: center; font-size: 11px; line-height: 1.1;"><strong>South</strong><br><img src="tiles/wind2.png" style="width:20px; margin-top: 2px;"></div>
@@ -1505,9 +1545,9 @@
 		<section id="scoringcheatsheet" class="page" style="padding-bottom: 0;">
             <h1 style="margin-bottom: 8px;">Scoring Cheat Sheet</h1>
             
-            <div style="background: #e8f5e9; padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; text-align: center; color: var(--mahjong-green); border: 1px solid #c8e6c9;">
-                <strong>Dealer Bonus:</strong> <span style="font-size: 16px; font-weight: bold;">2<em>n</em> + 1</span> Tai<br>
-                <span style="color: #555; font-size: 11px;">(<em>n</em> = consecutive hands won as dealer)</span>
+            <div class="green-div" style="background: #e8f5e9; padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; text-align: center; color: var(--mahjong-green); border: 1px solid #c8e6c9;">
+                <strong>Dealer Bonus:</strong> <span style="font-size: 16px; font-weight: bold;">2<em>n</em> – 1</span> Tai<br>
+                <span style="color: #555; font-size: 11px;">(<em>n</em> = hand # as dealer)</span>
             </div>
 
             <div class="table-wrapper" style="margin-bottom: 12px; width: 100%;">
@@ -1520,7 +1560,7 @@
                         <tr><td style="padding: 6px 10px;"><strong>Concealed Hand</strong></td><td style="text-align: center; font-weight: bold; padding: 6px 10px;">1</td></tr>
                         <tr><td style="padding: 6px 10px;"><strong>Zì mō + Concealed</strong></td><td style="text-align: center; font-weight: bold; padding: 6px 10px;">3</td></tr>
                         
-                        <tr><td colspan="2" style="background: #f8f9fa; text-align: center; font-size: 11px; color: #666; padding: 4px; border-bottom: 1px solid #eee;"><strong>Tile Bonuses</strong></td></tr>
+                        <tr><td class="td-separator" colspan="2" style="background: #f8f9fa; text-align: center; font-size: 11px; color: #666; padding: 4px; border-bottom: 1px solid #eee;"><strong>TILE BONUSES</strong></td></tr>
                         
                         <tr><td style="padding: 6px 10px;"><strong>No Flowers / No Honors</strong></td><td style="text-align: center; font-weight: bold; padding: 6px 10px;">1 ea.</td></tr>
                         <tr><td style="padding: 6px 10px;"><strong>No Honors OR Flowers</strong></td><td style="text-align: center; font-weight: bold; padding: 6px 10px;">3</td></tr>
@@ -1528,7 +1568,7 @@
                         <tr><td style="padding: 6px 10px;"><strong>Exposed Gàng</strong> (Míng gàng)</td><td style="text-align: center; font-weight: bold; padding: 6px 10px;">1</td></tr>
                         <tr><td style="padding: 6px 10px;"><strong>Concealed Gàng</strong> (An gàng)</td><td style="text-align: center; font-weight: bold; padding: 6px 10px;">2</td></tr>
                         
-                        <tr><td colspan="2" style="background: #f8f9fa; text-align: center; font-size: 11px; color: #666; padding: 4px; border-bottom: 1px solid #eee;"><strong>Common Hand Structures</strong></td></tr>
+                        <tr><td class="td-separator" colspan="2" style="background: #f8f9fa; text-align: center; font-size: 11px; color: #666; padding: 4px; border-bottom: 1px solid #eee;"><strong>COMMON HAND STRUCTURES</strong></td></tr>
                         
                         <tr><td style="padding: 6px 10px;"><strong>Straight hú</strong> (Sequences + pair)</td><td style="text-align: center; font-weight: bold; padding: 6px 10px;">3</td></tr>
                         <tr><td style="padding: 6px 10px;"><strong>Pon pon hú</strong> (Only sets + pair)</td><td style="text-align: center; font-weight: bold; padding: 6px 10px;">10</td></tr>
@@ -2396,10 +2436,10 @@
 			
 			tbody.innerHTML = '';
 			recordState.logs.forEach(log => {
-				let row = `<tr><td style="font-weight: bold; background: #f9f9f9; border-right: 1px solid #eee;">${log.game}</td>`;
+				let row = `<tr><td class="scoreboard-row-header" style="font-weight: bold; background: #f9f9f9; border-right: 1px solid #eee;">${log.game}</td>`;
 				log.changes.forEach(c => {
-					if (c > 0) row += `<td style="color: var(--mahjong-green); font-weight: bold;">+${c}</td>`;
-					else if (c < 0) row += `<td style="color: var(--mahjong-red);">${c}</td>`;
+					if (c > 0) row += `<td style="color: var(--mahjong-green) !important; font-weight: bold;">+${c}</td>`;
+					else if (c < 0) row += `<td style="color: var(--mahjong-red) !important;">${c}</td>`;
 					else row += `<td style="color: #bbb;">0</td>`;
 				});
 				row += `</tr>`;
@@ -2408,8 +2448,8 @@
 		
 			let footerRow = `<tr><td style="padding: 10px 4px; border-right: 1px solid #ccc;">TOTAL</td>`;
 			recordState.totals.forEach(t => {
-				if (t > 0) footerRow += `<td style="color: var(--mahjong-green); padding: 10px 4px;">+${t}</td>`;
-				else if (t < 0) footerRow += `<td style="color: var(--mahjong-red); padding: 10px 4px;">${t}</td>`;
+				if (t > 0) footerRow += `<td style="color: var(--mahjong-green) !important; padding: 10px 4px;">+${t}</td>`;
+				else if (t < 0) footerRow += `<td style="color: var(--mahjong-red) !important; padding: 10px 4px;">${t}</td>`;
 				else footerRow += `<td style="padding: 10px 4px; color: #777;">0</td>`;
 			});
 			footerRow += `</tr>`;
@@ -2438,7 +2478,7 @@
 					'<span style="color: var(--mahjong-red);">東 East</span>', 
 					'<span style="color: var(--mahjong-blue);">南 South</span>', 
 					'<span style="color: var(--mahjong-green);">西 West</span>', 
-					'<span style="color: #444;">北 North</span>'
+					'<span style="color: var(--mahjong-gray);">北 North</span>'
 				];
 				
 				// Generate a row of buttons for each seat
