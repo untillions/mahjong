@@ -1194,20 +1194,34 @@
 					</div>
 					
 					<div style="display: flex; gap: 12px; justify-content: center;">
-						<button class="inline-btn" id="copy-table-btn" style="flex: 1; background-color: #f4f4f9; font-weight: bold; font-size: 12px; padding: 10px;">Copy Scoreboard</button>
-						<button class="inline-btn" id="save-image-btn" style="flex: 1; background-color: #f4f4f9; font-weight: bold; font-size: 12px; padding: 10px;">Save Image</button>
+						<button class="inline-btn" id="copy-table-btn" style="flex: 1; background-color: white; font-weight: bold; font-size: 12px; padding: 10px;">
+							<strong>Copy Table<br>of Scoreboard</strong>&nbsp;<img src="icons/copy2.png" alt="Copy" style="width: 24px; height: 24px; object-fit: contain; display: block;">
+						</button>
+						<button class="inline-btn" id="save-image-btn" style="flex: 1; background-color: white; font-weight: bold; font-size: 12px; padding: 10px;">
+							<strong>Save Image<br>of Scoreboard</strong>&nbsp;<img src="icons/save2.png" alt="Save" style="width: 24px; height: 24px; object-fit: contain; display: block;">
+						</button>
 					</div>
 				</div>
 		
 				<h2 style="font-size: 18px; color: #111; text-align: center; margin-top: 0;">Scoreboard</h2>
 				<div class="table-wrapper" style="margin-bottom: 24px;">
-					<table id="scoreboard-table" style="width: 100%; max-width: 100%; margin: 0 auto; text-align: center; font-size: 13px;">
-						<thead>
-							<tr id="scoreboard-headers"></tr>
-						</thead>
-						<tbody id="scoreboard-body"></tbody>
-						<tfoot id="scoreboard-footer" style="font-weight: bold; background-color: #f4f4f9;"></tfoot>
-					</table>
+					
+					<div id="capture-area" style="background-color: #ffffff; padding: 12px; border-radius: 8px;">
+						
+						<div id="scoreboard-timestamp" style="display: none; text-align: center; margin-bottom: 16px; line-height: 1.4;">
+							<span style="font-size: 20px; font-weight: bold; color: var(--mahjong-red);">Mahjong</span>&nbsp;<span class="zh-char" style="font-size: 20px; font-weight: bold; color: #111;">麻将</span><br>
+							<span style="font-size: 13px; color: #666;" id="scoreboard-date"></span>
+						</div>
+						
+						<table id="scoreboard-table" style="width: 100%; max-width: 100%; margin: 0 auto; text-align: center; font-size: 13px; border-collapse: collapse;">
+							<thead>
+								<tr id="scoreboard-headers"></tr>
+							</thead>
+							<tbody id="scoreboard-body"></tbody>
+							<tfoot id="scoreboard-footer" style="font-weight: bold; background-color: #f4f4f9;"></tfoot>
+						</table>
+					</div>
+		
 				</div>
 				
 				<div style="text-align: center;">
@@ -1949,6 +1963,7 @@
 			document.getElementById('gameplay-controls').style.display = 'block';
 			document.getElementById('game-over-ui').style.display = 'none';
 			document.getElementById('reseat-ui').style.display = 'none';
+			document.getElementById('scoreboard-timestamp').style.display = 'none';
 		
 			// Reset the "End Game" button back to red (in case it was blue from a finished game)
 			const endBtn = document.getElementById('end-game-btn');
@@ -2184,6 +2199,12 @@
 			document.getElementById('gameplay-controls').style.display = 'none';
 			document.getElementById('game-over-ui').style.display = 'block';
 		
+			// Format today's date and show the timestamp header
+			const today = new Date();
+			const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+			document.getElementById('scoreboard-date').innerText = `Game played on ${formattedDate}`;
+			document.getElementById('scoreboard-timestamp').style.display = 'block';
+		
 			// Find the winner(s)
 			const maxScore = Math.max(...recordState.totals);
 			const winners = [];
@@ -2211,21 +2232,45 @@
 			navigator.clipboard.writeText(text).then(() => {
 				const btn = document.getElementById('copy-table-btn');
 				btn.innerText = "Copied!";
-				setTimeout(() => btn.innerText = "Copy Scoreboard", 2000);
+				setTimeout(() => {
+					btn.innerHTML = '<strong>Copy Table<br>of Scoreboard</strong>&nbsp;<img src="icons/copy2.png" alt="Copy" style="width: 24px; height: 24px; object-fit: contain; display: block;">';
+				}, 2000);
 			});
 		});
 		
 		document.getElementById('save-image-btn').addEventListener('click', () => {
-			const tableWrapper = document.querySelector('.table-wrapper');
+			const tableElement = document.getElementById('capture-area'); 
 			const btn = document.getElementById('save-image-btn');
+			
+			// Change to "Saving..." but keep the formatting and icon
 			btn.innerText = "Saving...";
 			
-			html2canvas(tableWrapper, { backgroundColor: "#ffffff" }).then(canvas => {
+			const previousScrollY = window.scrollY;
+			window.scrollTo(0, 0);
+			
+			html2canvas(tableElement, { 
+				backgroundColor: "#ffffff",
+				scale: 2 
+			}).then(canvas => {
+				window.scrollTo(0, previousScrollY);
+				
 				const link = document.createElement('a');
 				link.download = 'mahjong-scoreboard.png';
 				link.href = canvas.toDataURL('image/png');
 				link.click();
-				btn.innerText = "Save Image";
+				
+				// Change to "Saved!" with the formatting and icon
+				btn.innerText = "Saved!";
+				
+				// Restore the original button state after 2 seconds
+				setTimeout(() => {
+					btn.innerHTML = '<strong>Save Image<br>of Scoreboard</strong>&nbsp;<img src="icons/save2.png" alt="Save" style="width: 24px; height: 24px; object-fit: contain; display: block;">';
+				}, 2000);
+				
+			}).catch(err => {
+				console.error("Image generation failed:", err);
+				btn.innerHTML = '<strong>Error<br>Try Again</strong>&nbsp;<img src="icons/save2.png" alt="Save" style="width: 24px; height: 24px; object-fit: contain; display: block;">';
+				window.scrollTo(0, previousScrollY); 
 			});
 		});
 		
