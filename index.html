@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mahjong for White People</title>
+    <title>Mahjong for Cool People</title>
     
     <link rel="apple-touch-icon" href="icons/mahjong.png">
 	<link rel="icon" type="image/png" href="icons/mahjong.png">
@@ -169,7 +169,6 @@
 		.setup-image { max-width: 100%; border-radius: 4px; background-color: #f4f4f9; }
 		.btn-icon { width: 24px; height: 24px; object-fit: contain; display: block; }
 		.action-row { margin: 14px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
-		.action-row .inline-btn { flex: 1 1 calc(50% - 8px); min-width: 140px; }
         .green-div, .green-div-sm {
         	background: #e8f5e9; border-radius: 8px; text-align: center; 
         	color: var(--mahjong-green); border: 1px solid #c8e6c9;
@@ -297,7 +296,7 @@
         <div class="header-left"><span class="text-red">Mahjong</span>&nbsp;<span class="zh-char">麻将</span></div>
         <div class="header-right">
             <span>for</span>
-            <span>White</span>
+            <span>Cool</span>
             <span>People</span>
         </div>
     </header>
@@ -308,7 +307,7 @@
   
         <section id="intro" class="page active-page">
             <h1>Welcome!</h1>
-            <p>This app explains the basic rules of <span class="text-green text-bold">Standard Taiwanese Mahjong</span>. Tap any of the icons below to get started. Click the header at the top to return to this page at any time.</p>
+            <p>This app explains the basic rules of <span class="text-green text-bold">Standard Taiwanese Mahjong</span>. Use the nav bar icons to understand the game or the icons on this homepage during gameplay. Click the logo at the top to return to this page at any time.</p>
 			
             <div class="home-grid">
                 <div class="grid-card" data-target="tilecheatsheet">
@@ -329,7 +328,7 @@
 				</div>
             </div>
             
-            <div style="display: flex; justify-content: center; align-items: center; margin-top: 64px; margin-bottom: 8px; gap: 12px;">
+            <div style="display: flex; justify-content: center; align-items: center; margin-top: 48px; margin-bottom: 8px; gap: 12px;">
 				<span style="font-size: 14px; font-weight: bold;">Light<br>Mode</span>☀️
 				<label class="theme-switch" style="position: relative; display: inline-block; width: 50px; height: 26px;">
 					<input type="checkbox" id="theme-toggle" style="opacity: 0; width: 0; height: 0;">
@@ -977,36 +976,53 @@
 						<span style="font-size: 12px; color: #555; font-weight: normal;">Dealer: <strong id="current-dealer-name">P1</strong></span>
 					</div>
 		
+					<div id="reseat-ui">
+						<h3 style="font-size: 14px; margin: 0 0 6px 0; color: var(--mahjong-blue);">Reassign Seating</h3>
+						<p style="font-size: 12px; color: #666; margin-bottom: 12px;">Tap to assign players to their new seats. If seats are unchanged, click "Save & Continue".</p>
+						<div id="seating-groups" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
+						<div style="display: flex; justify-content: center; width: 100%;">
+							<button class="inline-btn" id="save-seating-btn" style="width: auto; background-color: var(--mahjong-green); color: white; border: none;">
+								<span>Save & <br>Continue </span><img src="icons/save2.png" alt="Save" class="btn-icon">
+							</button>
+						</div>
+					</div>
+					
 					<div class="calc-section-title" style="margin-top: 8px;">Who Won?</div>
 					<div class="chip-grid" id="record-payees" style="margin-bottom: 12px;"></div>
 		
 					<div class="calc-section-title" style="margin-top: 8px;">Who Pays?</div>
-					<div class="chip-grid" id="record-payers" style="margin-bottom: 8px;"></div>
+					<div class="chip-grid" id="record-payers" style="margin-bottom: 12px;"></div>
 		
-					<div class="counter-row" style="margin-top: 12px; margin-bottom: 8px;">
-						<div class="counter-label">Tai Earned</div>
-						<div class="counter-controls">
-							<div class="counter-btn" onclick="updateRecordTai(-1)">-</div>
-							<div class="counter-val" id="record-tai-val">3</div>
-							<div class="counter-btn" onclick="updateRecordTai(1)">+</div>
+					<div class="calc-section-title" style="margin-top: 8px;">Tai Earned</div>
+					<div style="display: flex; gap: 10px; margin-top: 12px;">
+						<div class="counter-row" style="margin-bottom: 4px;">
+							<div class="counter-controls">
+								<div class="counter-btn" onclick="updateRecordTai(-1)">-</div>
+								<div class="counter-val" id="record-tai-val" style="color: var(--mahjong-green);">3</div>
+								<div class="counter-btn" onclick="updateRecordTai(1)">+</div>
+							</div>
+						</div>
+						<div style="display: flex; gap: 12px; height: 36px; margin-top: 2px;">
+							<button class="inline-btn" onclick="navigateTo('scorecalc')" style="background-color: var(--mahjong-blue); color: white; border: none;">
+								<span>Use <br>Calc </span><img src="icons/calculator2.png" alt="Calculator" class="btn-icon">
+							</button>
+							<button class="inline-btn" id="log-score-btn" style="background-color: var(--mahjong-green); color: white; border: none; min-height: 34px;">
+								<span>Submit <br>Score </span><img src="icons/save2.png" alt="Submit" class="btn-icon">
+							</button>
 						</div>
 					</div>
-		
-					<div id="dealer-dynamic-label" class="text-center text-bold text-red" style="font-size: 13px; min-height: 18px; margin-bottom: 16px;"></div>
+						
+					<div id="dealer-dynamic-label" class="text-center text-bold text-red" style="font-size: 13px; min-height: 18px; margin-bottom: 12px; width: 134px;"></div>
 		
 					<div style="display: flex; gap: 12px; margin-top: 8px; margin-bottom: 24px;">
-						<button class="inline-btn" id="change-seating-btn" style="flex: 2; padding: 10px;">Change Seating</button>
-						<button class="inline-btn" id="log-score-btn" style="flex: 3; background-color: var(--mahjong-green); color: white; padding: 10px; border: none;">Log Score & Advance</button>
+						<button class="inline-btn" id="change-seating-btn" style="color: white;">
+							<span>Change <br>Seating </span><img src="icons/change2.png" alt="Change" class="btn-icon">
+						</button>
+						<button class="inline-btn" id="undo-score-btn" style="background-color: var(--mahjong-red); color: white; border: none;">
+							<span>Undo <br>Last Hand </span><img src="icons/undo2.png" alt="Change" class="btn-icon">
+						</button>
 					</div>
-		
-					<div id="reseat-ui">
-						<h3 style="font-size: 14px; margin: 0 0 6px 0; color: var(--mahjong-blue);">Reassign Seating</h3>
-						<p style="font-size: 12px; color: #666; margin-bottom: 12px;">Tap to assign players to their new seats. Existing scores will be preserved.</p>
-						<div id="seating-groups" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
-						<div style="display: flex; justify-content: center; width: 100%;">
-							<button class="inline-btn" id="save-seating-btn" style="width: auto; background-color: var(--mahjong-blue); color: white; padding: 10px 24px; border: none; margin-top: 10px;">Save & Continue</button>
-						</div>
-					</div>
+	
 				</div>
 		
 				<div id="game-over-ui" style="display: none; text-align: center; margin-bottom: 24px;">
@@ -1049,16 +1065,15 @@
 				</div>
 				
 				<div style="text-align: center; margin: 24px 0 12px 0;">
-					<button class="inline-btn" id="end-game-btn" style="background-color: var(--mahjong-red); color: white; padding: 10px 24px; margin: 0 auto;">End Game & Reset</button>
+					<button class="inline-btn" id="end-game-btn" style="background-color: var(--mahjong-red); color: white; margin: 0 auto;">
+						<span>End Game<br>& Reset</span>
+						<img src="icons/reset2.png" alt="Reset" class="btn-icon">
+					</button>
 				</div>
 			</div>
 			
-			<div class="action-row">
-				<button class="inline-btn" onclick="navigateTo('scorecalc')">
-					<span>Go To<br>Calculator</span>
-					<img src="icons/calculator2.png" alt="Calculator" class="btn-icon">
-				</button>
-				<button class="inline-btn" onclick="navigateTo('intro')" onclick="navigateTo('intro')">
+			<div style="text-align: center; margin: 24px 0 12px 0;">
+				<button class="inline-btn" onclick="navigateTo('intro')" style="margin: 0 auto;">
 					<span>⏎&nbsp;Return<br>to Home</span>
 					<img src="icons/home2.png" alt="Home" class="btn-icon">
 				</button>
@@ -1283,7 +1298,7 @@
             
             <div class="action-row">
                 <button class="inline-btn" onclick="navigateTo('scoring')">
-                    <span>See Full<br>Scoring Rules</span>
+                    <span>See Full&nbsp;<br>Scoring Rules&nbsp;</span>
                     <img src="icons/scoring2.png" alt="Scoring" class="btn-icon">
                 </button>
                 <button class="inline-btn" onclick="navigateTo('scorecalc')">
@@ -1373,16 +1388,19 @@
 				<div class="smart-chip" data-id="allrevealed" data-points="10" data-name="All Revealed">All Revealed</div>
 			</div>
 			<div>
-				<button class="inline-btn" onclick="resetCalculator()" style="background-color: var(--mahjong-red); color: white; padding: 10px 24px; margin: 0 auto;">Reset Calculator</button>
+				<button class="inline-btn" onclick="resetCalculator()" style="background-color: var(--mahjong-red); color: white; margin: 0 auto;">
+				<span>Reset<br>Calculator</span>
+					<img src="icons/reset2.png" alt="Reset" class="btn-icon">
+				</button>
 			</div>
 			
 			<div class="action-row">
                 <button class="inline-btn" onclick="navigateTo('scoring')">
-					<span>More on&nbsp;<br>Scoring</span>
+					<span>More on&nbsp;<br>Scoring&nbsp;</span>
 					<img src="icons/scoring2.png" alt="Scoring" class="btn-icon">
 				</button>
                 <button class="inline-btn" onclick="navigateTo('record')">
-					<span>Record<br>the Round</span>
+					<span>Record&nbsp;<br>a Hand&nbsp;</span>
 					<img src="icons/record2.png" alt="Record" class="btn-icon">
 				</button>
 				<button class="inline-btn" onclick="navigateTo('intro')" style="flex: none;">
@@ -1394,8 +1412,9 @@
     
     </main>
 
+<!------------------------------------------BOTTOM NAVIGATION------------------------------------------>
+
     <nav class="bottom-nav">
-        <!-- The Sliding Highlight -->
         <div class="nav-highlight-wrapper" id="highlight-wrapper">
             <div class="nav-highlight"></div>
         </div>
@@ -1634,6 +1653,11 @@
 			document.getElementById('calc-total').innerText = totalTai;
 			document.getElementById('calc-breakdown').innerText = breakdown.length > 0 ? breakdown.join('\n') : 'No conditions met.';
 			
+			// Sync to Record Tab
+			recordState.tai = totalTai;
+			const recordTaiVal = document.getElementById('record-tai-val');
+			recordTaiVal.innerText = totalTai;
+
 			// Update Dealer Adjusted UI
 			const dealerAdjustedEl = document.getElementById('calc-dealer-adjusted');
 			if (calcState.counters.dealer > 0) {
@@ -1818,7 +1842,7 @@
 		
 			// Reset the "End Game" button back to red (in case it was blue from a finished game)
 			const endBtn = document.getElementById('end-game-btn');
-			endBtn.innerHTML = '<strong>End Game & Reset</strong>';
+			endBtn.innerHTML = '<span>End Game<br>& Reset</span><img src="icons/reset2.png" alt="Reset" class="btn-icon">';
 			endBtn.style.backgroundColor = 'var(--mahjong-red)';
 		
 			// Reset the Tai tracker visually to 3
@@ -1975,7 +1999,7 @@
 			const dealerBonus = (2 * recordState.dealerStreak) + 1;
 			let changes = [0, 0, 0, 0];
 		
-			// Math Engine incorporating Dealer Bonus
+			// Dealer Bonus
 			if (recordState.payer === 'all') { // Zimo
 				recordState.players.forEach((_, i) => {
 					if (!recordState.payees.has(i)) {
@@ -2005,7 +2029,13 @@
 			const rName = roundNames[recordState.roundIndex] ? roundNames[recordState.roundIndex].charAt(0) : 'E';
 			const logEntry = {
 				game: `${rName}-${recordState.handIndex}`,
-				changes: changes
+				changes: changes,
+				prevState: {
+					currentDealer: recordState.currentDealer,
+					dealerStreak: recordState.dealerStreak,
+					handIndex: recordState.handIndex,
+					roundIndex: recordState.roundIndex
+				}
 			};
 			recordState.logs.push(logEntry);
 			changes.forEach((c, i) => recordState.totals[i] += c);
@@ -2021,10 +2051,12 @@
 				if (recordState.handIndex > 4) {
 					recordState.handIndex = 1;
 					recordState.roundIndex++;
+					const reassignBtn = document.getElementById('change-seating-btn');
+					reassignBtn.click();
 				}
 			}
 		
-			// GAME OVER CHECK: If we pass round index 3 (North round), end the game.
+			// Game over check
 			if (recordState.roundIndex > 3) {
 				renderScoreboard();
 				triggerGameOver();
@@ -2042,6 +2074,44 @@
 			validatePayerPayee(); 
 			updateGameStatus();
 			renderScoreboard();
+			resetCalculator();
+		});
+		
+		// --- UNDO LAST HAND LOGIC ---
+		document.getElementById('undo-score-btn').addEventListener('click', () => {
+			if (recordState.logs.length === 0) {
+				alert("No hands to undo.");
+				return;
+			}
+			
+			if (confirm("Are you sure you want to undo the last hand?")) {
+				// 1. Pop the last recorded log entry
+				const lastLog = recordState.logs.pop();
+				
+				// 2. Reverse the math on the player totals
+				lastLog.changes.forEach((change, i) => {
+					recordState.totals[i] -= change;
+				});
+				
+				// 3. Revert the game state variables to their previous values
+				recordState.currentDealer = lastLog.prevState.currentDealer;
+				recordState.dealerStreak = lastLog.prevState.dealerStreak;
+				recordState.handIndex = lastLog.prevState.handIndex;
+				recordState.roundIndex = lastLog.prevState.roundIndex;
+				
+				// 4. Update the UI to reflect the reverted state
+				recordState.tai = 3;
+				document.getElementById('record-tai-val').innerText = '3';
+				recordState.payees.clear();
+				recordState.payer = null;
+				document.querySelectorAll('#record-payers .smart-chip').forEach(c => c.classList.remove('disabled', 'active'));
+				document.querySelectorAll('#record-payees .smart-chip').forEach(b => b.classList.remove('disabled', 'active'));
+				
+				validatePayerPayee();
+				updateGameStatus();
+				renderScoreboard();
+				updateDynamicDealerLabel();
+			}
 		});
 		
 		// --- NEW GAME OVER LOGIC ---
@@ -2068,7 +2138,7 @@
 		
 			// Transform the reset button
 			const endBtn = document.getElementById('end-game-btn');
-			endBtn.innerHTML = '<strong>Start New Game</strong>';
+			endBtn.innerHTML = '<span>Start<br>New Game</span><img src="icons/reset2.png" alt="Reset" class="btn-icon">';
 			endBtn.style.backgroundColor = 'var(--mahjong-blue)';
 		}
 		
@@ -2210,7 +2280,6 @@
 		document.getElementById('save-seating-btn').addEventListener('click', () => {
 			const newIndices = [];
 			
-			// Grab the active button from each seat's segment group
 			[0, 1, 2, 3].forEach(seatIdx => {
 				const activeBtn = document.querySelector(`#seat-group-${seatIdx} .segment-btn.active`);
 				if (activeBtn) {
@@ -2233,11 +2302,9 @@
 			
 			recordState.players = newPlayers;
 			recordState.totals = newTotals;
-		
-			// Reset the current dealer and streak since it's a new seating arrangement
-			recordState.currentDealer = 0; 
+			recordState.currentDealer = recordState.handIndex - 1; 
 			recordState.dealerStreak = 0;
-		
+
 			document.getElementById('reseat-ui').style.display = 'none';
 			buildGameplayUI();
 			updateGameStatus();
