@@ -1633,20 +1633,21 @@
 			// Format Conflicts
 			'straighthu': ['matchingwind', 'ponponhu', 'little3winds', 'big3winds', 'little4winds', 'big4winds', 'little3dragons', 'big3dragons'],
 			'ponponhu': ['straighthu', 'fullstraightopen', 'fullstraightclosed'],
-			'fullstraightopen': ['fullstraightclosed', 'ponponhu'],
-			'fullstraightclosed': ['fullstraightopen', 'ponponhu', 'allrevealed'],
-			'halfflush': ['fullflush'],
-			'fullflush': ['halfflush', 'matchingwind', 'little3winds', 'big3winds', 'little4winds', 'big4winds', 'little3dragons', 'big3dragons'],
+			'fullstraightopen': ['fullstraightclosed', 'ponponhu', 'big3winds', 'little4winds', 'big4winds', 'big3dragons'],
+			'fullstraightclosed': ['fullstraightopen', 'ponponhu', 'allrevealed', 'big3winds', 'little4winds', 'big4winds', 'big3dragons'],
+			'allrevealed': ['fullstraightclosed'],
+			'halfflush': ['fullflush', 'nohonors'],
+			'fullflush': ['halfflush', 'nohonors', 'matchingwind', 'little3winds', 'big3winds', 'little4winds', 'big4winds', 'little3dragons', 'big3dragons'],
 		
 			// Honor Conflicts
-			'nohonors': ['matchingwind', 'little3winds', 'big3winds', 'little4winds', 'big4winds', 'little3dragons', 'big3dragons'],
-			'matchingwind': ['nohonors'],
-			'little3winds': ['straighthu', 'nohonors', 'big3winds', 'little4winds', 'big4winds', 'little3dragons'],
-			'big3winds': ['straighthu', 'nohonors', 'little3winds', 'little4winds', 'big4winds', 'big3dragons', 'fullstraightopen', 'fullstraightclosed'],
-			'little4winds': ['straighthu', 'nohonors', 'little3winds', 'big3winds', 'big4winds', 'little3dragons', 'big3dragons', 'fullstraightopen', 'fullstraightclosed'],
-			'big4winds': ['straighthu', 'nohonors', 'little3winds', 'big3winds', 'little4winds', 'little3dragons', 'big3dragons', 'fullstraightopen', 'fullstraightclosed'],
-			'little3dragons': ['straighthu', 'nohonors', 'big3dragons', 'little3winds', 'little4winds', 'big4winds'],
-			'big3dragons': ['straighthu', 'nohonors', 'little3dragons', 'big3winds', 'little4winds', 'big4winds', 'fullstraightopen', 'fullstraightclosed'],
+			'nohonors': ['matchingwind', 'little3winds', 'big3winds', 'little4winds', 'big4winds', 'little3dragons', 'big3dragons', 'halfflush', 'fullflush'],
+			'matchingwind': ['nohonors', 'fullflush', 'straighthu'],
+			'little3winds': ['straighthu', 'fullflush', 'nohonors', 'big3winds', 'little4winds', 'big4winds', 'little3dragons'],
+			'big3winds': ['straighthu', 'fullflush', 'nohonors', 'little3winds', 'little4winds', 'big4winds', 'big3dragons', 'fullstraightopen', 'fullstraightclosed'],
+			'little4winds': ['straighthu', 'fullflush', 'nohonors', 'little3winds', 'big3winds', 'big4winds', 'little3dragons', 'big3dragons', 'fullstraightopen', 'fullstraightclosed'],
+			'big4winds': ['straighthu', 'fullflush', 'nohonors', 'little3winds', 'big3winds', 'little4winds', 'little3dragons', 'big3dragons', 'fullstraightopen', 'fullstraightclosed'],
+			'little3dragons': ['straighthu', 'fullflush', 'nohonors', 'big3dragons', 'little3winds', 'little4winds', 'big4winds'],
+			'big3dragons': ['straighthu', 'fullflush', 'nohonors', 'little3dragons', 'big3winds', 'little4winds', 'big4winds', 'fullstraightopen', 'fullstraightclosed'],
 		
 			// Flower Conflicts
 			'noflowers': ['matchingflower', 'matchingseason', 'allflowers'],
@@ -1654,9 +1655,9 @@
 			'matchingseason': ['noflowers'],
 			'allflowers': ['noflowers'],
 		
-			// Action & Timing Conflicts
-			'lasttiledraw': ['lasttilediscard', 'robgang', 'heavenhand', 'earthhand'],
-			'lasttilediscard': ['lasttiledraw', 'robgang', 'heavenhand', 'earthhand'],
+			// Action & Timing Conflicts (Bidirectional cleanup)
+			'lasttiledraw': ['lasttilediscard', 'robgang', 'heavenhand', 'earthhand', 'win5discards', 'win10discards'],
+			'lasttilediscard': ['lasttiledraw', 'robgang', 'heavenhand', 'earthhand', 'win5discards', 'win10discards'],
 			'robgang': ['lasttiledraw', 'lasttilediscard', 'heavenhand', 'earthhand'],
 			'win5discards': ['win10discards', 'heavenhand', 'earthhand', 'lasttiledraw', 'lasttilediscard'],
 			'win10discards': ['win5discards', 'heavenhand', 'earthhand', 'lasttiledraw', 'lasttilediscard'],
