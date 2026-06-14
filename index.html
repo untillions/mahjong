@@ -160,6 +160,7 @@
 	  	.text-gray { color: var(--mahjong-gray) !important; }
         .text-white { color: var(--mahjong-white) !important; }
 		.text-bold { font-weight: bold !important; }
+		.text-italic { font-style: italic !important; }
 		.text-center { text-align: center !important; }
 		.setup-image { max-width: 100%; border-radius: 4px; background-color: var(--bg-app); }
 		.btn-icon { width: 24px; height: 24px; object-fit: contain; display: block; }
@@ -170,7 +171,12 @@
         }
         .green-div { padding: 6px; font-size: 15px; margin-bottom: 10px; }
         .green-div-sm { padding: 10px; font-size: 13px; margin-bottom: 12px; }
-        
+        dialog { margin: auto; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; }
+        dialog::backdrop { background: var(--bg-app); opacity: 0.5; }
+		dialog[open] { 
+			background-color: var(--bg-app); color: var(--text-primary); display: block;
+			display: flex; flex-direction: column; top: 50%; left: 50%; transform: translate(-50%, -50%);
+		 }
         
         /* Table Styling */
         .table-wrapper {
@@ -356,6 +362,24 @@
 			</div>
 
             <p style="margin-top: 24px; font-size: 12px; color: #777; text-align: center;">Icons by <em>Freepik</em> on <a href="https://www.flaticon.com/authors/freepik" title="Flaticon" style="color: #777;">Flaticon</a></p>
+			<p id="trigger-version-info" class= "text-italic text-center text-blue" style="cursor: pointer; font-size: 12px; color: #777;">Version 1.2.4</p>
+			
+			<dialog id="version-dialog" style="padding: 20px; border-radius: 8px; border: 1px solid #ccc; max-width: 300px;">
+				<h3 style="margin-top: 0px;">App Version Info</h3>
+				<p>Version: <strong>1.2.4</strong></p>
+				<p>Last Updated: <strong>June 14, 2026</strong></p>
+				<p>Latest Updates:
+				<ul style="margin-left: 20px; font-size: 10pt;">
+					<li>"Undo Last Hand" button added to <em>Record</em> tab</li>
+					<li>"Reassign Seating" automatically appears after each round in <em>Record</em> tab</li>
+					<li><em>Score Calculator</em> syncs automatically to <em>Record</em> tab</li>
+					<li><em>Record</em> tab buttons rearranged for a more natural flow</li>
+					<li>Dark & Light Mode setting defaults to your device's settings on load</li>
+					<li><em>Score Calculator</em> now allows for rare hand conditions</li>
+				</ul></p>
+				<button class="inline-btn" id="close-dialog-btn" style="margin-top: 10px;">Close</button>
+			</dialog>
+			
         </section>
 
 <!------------------------------------------TERMS TAB------------------------------------------>
@@ -2229,6 +2253,30 @@
 			renderScoreboard();
 			updateDynamicDealerLabel();
 			saveGameState();
+		});
+		
+		// ==========================================
+		// DIALOG BOX LOGIC
+		// ==========================================
+		const versionDialog = document.getElementById('version-dialog');
+		const trigger = document.getElementById('trigger-version-info');
+		const closeBtn = document.getElementById('close-dialog-btn');
+		
+		// Open the dialog when the paragraph is clicked
+		trigger.addEventListener('click', () => {
+			versionDialog.showModal();
+		});
+		
+		// Close the dialog when the button is clicked
+		closeBtn.addEventListener('click', () => {
+			versionDialog.close();
+		});
+		
+		// Optional: Close if user clicks the backdrop (the dark overlay)
+		versionDialog.addEventListener('click', (e) => {
+			if (e.target === versionDialog) {
+				versionDialog.close();
+			}
 		});
 
     </script>
