@@ -11,82 +11,77 @@
 
     <style>
 		:root {
-            --mahjong-green: #3B9C61;
-            --mahjong-blue: #3B699B;
-            --mahjong-red: #9B3B44;
-            --mahjong-gray: #444;
-            --mahjong-white: #fff;
-        }
+			--mahjong-green: #3B9C61;
+			--mahjong-blue: #3B699B;
+			--mahjong-red: #9B3B44;
+			--mahjong-gray: #444;
+			--mahjong-white: #fff;
+			
+			--bg-app: #f4f4f9;
+			--bg-surface: #ffffff;
+			--bg-table: #f8f9fa;
+			--border-color: #e0e0e0;
+			--text-primary: #444;
+			--green-div: #e8f5e9;
+		}
+		
+		body.dark-mode {
+			--mahjong-green: #4FB373; 
+			--mahjong-blue: #5087C7; 
+			--mahjong-red: #C4555E;
+			--mahjong-gray: #676767;
+			--mahjong-white: #121212;
+			
+			--bg-app: #121212;
+			--bg-surface: #1e1e1e;
+			--bg-table: #2a2a2a;
+			--border-color: #333333;
+			--text-primary: #e0e0e0;
+			--green-div: #e4f5e5;
+		}
 
         * {
 			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             box-sizing: border-box; margin: 0; padding: 0; user-select: none; 
         }
 
-        body { background-color: #f4f4f9; color: #333; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-        
-        /* --- DARK MODE OVERRIDES --- */
-		body.dark-mode {
-			background-color: #121212;
-			color: #e0e0e0;
-			--mahjong-green: #4FB373; 
-			--mahjong-blue: #5087C7; 
-			--mahjong-red: #C4555E;
-			--mahjong-gray: #676767;
-			--mahjong-white: #121212;
+        body { 
+			background-color: var(--bg-app); color: var(--text-primary); height: 100vh;
+			display: flex; flex-direction: column; overflow: hidden; 
 		}
-		
-		/* Surface Backgrounds */
-		body.dark-mode .top-header,
-		body.dark-mode .bottom-nav,
-		body.dark-mode .grid-card,
-		body.dark-mode .table-wrapper,
-		body.dark-mode .inline-btn,
-		body.dark-mode .counter-row,
-		body.dark-mode .smart-chip,
-		body.dark-mode .player-input,
-		body.dark-mode #capture-area,
-		body.dark-mode #reseat-ui { background-color: #1e1e1e; color: #e0e0e0; border-color: #333; }
-		body.dark-mode .green-div { background-color: #e4f5e5; color: var(--mahjong-green); }
-		body.dark-mode .setup-image { background-color: #e0e0e0; }
-		
-		/* Table elements */
-		body.dark-mode td { border-color: #333; }
-		body.dark-mode th,
-		body.dark-mode .td-separator,
-		body.dark-mode .scoreboard-row-header,
-		body.dark-mode tfoot { background-color: #2a2a2a !important; color: #e0e0e0; border-color: var(--mahjong-gray); }
-		
-		/* Text elements */
-		body.dark-mode p,
-		body.dark-mode td,
-		body.dark-mode .counter-label,
-		body.dark-mode .grid-label,
-		body.dark-mode h1 { color: #e0e0e0 !important; }
-		body.dark-mode h2 { border-color: #333; }
 		
 		/* Specialized UI */
 		body.dark-mode .note-highlight { background-color: #73814b; color: #ddd; }
 		body.dark-mode .nav-highlight { background-color: #2d3b2e; }
-		body.dark-mode .segment-group { background-color: #333; }
 		body.dark-mode .segment-btn { color: #aaa; }
 		body.dark-mode .segment-btn.active { background-color: #1b3a20; border: 1px solid var(--mahjong-green); color: var(--mahjong-green); }
-		body.dark-mode .counter-btn { background: #2a2a2a; border-color: #444; color: #e0e0e0; }
 		body.dark-mode .smart-chip.active { background-color: #1b3a20; border-color: var(--mahjong-green); color: var(--mahjong-green); }
-		body.dark-mode .smart-chip.disabled { background-color: #2a2a2a; color: #555; }
-		
 		body.dark-mode .nav-icon { filter: brightness(0) invert(1); }
 		body.dark-mode .nav-item.active .nav-icon { filter: none; }
 		body.dark-mode .nav-item.active .nav-label { color: #338439; }
 		
 		/* Toggle Switch Styling */
-		.theme-switch input:checked + .slider { background-color: var(--mahjong-blue); }
+		.dark-mode-slider {
+        	display: flex; justify-content: center; align-items: center; margin-top: 36px;
+        	margin-bottom: 8px; max-width: 600px; gap: 12px;
+        }
+        .theme-switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .theme-switch #theme-toggle { opacity: 0; width: 0; height: 0; }
+        .theme-switch .slider {
+			position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+			background-color: #ccc; transition: 0.4s; border-radius: 34px;
+        }
+        .theme-switch .slider-circle {
+			position: absolute; content: ''; height: 18px; width: 18px; left: 4px;
+			bottom: 4px; background-color: white; transition: 0.4s; border-radius: 50%;
+        }
+		.theme-switch input:checked + .slider { background-color: #555; }
 		.theme-switch input:checked + .slider .slider-circle { transform: translateX(24px); }
 
         /* Sticky Top Header */
         .top-header {
             position: fixed; top: 0; left: 0;  width: 100%; height: 65px; display: flex;
-            background-color: #ffffff; border-bottom: 1px solid #e0e0e0; color: #111;
+            background-color: var(--bg-surface); color: var(--text-primary); border-bottom: 1px solid var(--border-color);
             align-items: center; justify-content: center; cursor: pointer;
             gap: 8px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
@@ -113,23 +108,23 @@
             margin-top: 24px; margin-bottom: 16px; width: 100%;
         }
         .grid-card {
-            background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 12px;
+            background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px;
             padding: 20px 12px; display: flex; flex-direction: column; align-items: center;
             justify-content: center; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.03);
             transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
 			cursor: pointer;
         }
         .grid-card:active {
-            transform: scale(0.96); background-color: #f1f8e9; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        	background-color: #f1f8e9; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         .grid-icon { width: 44px; height: 44px; margin-bottom: 10px; object-fit: contain; }
-        .grid-label { font-size: 14px; font-weight: 600; color: #333; }
+        .grid-label { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 
 
         /* Footer Navigation Bar */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 80px; z-index: 1000;
-            background-color: #ffffff; border-top: 1px solid #e0e0e0; display: flex;
+            background-color: var(--bg-surface); border-top: 1px solid var(--border-color); display: flex;
             justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
         .nav-highlight-wrapper {
@@ -154,10 +149,10 @@
         
         
         /* Content Styling */
-        h1 { font-size: 24px; margin-bottom: 16px; color: #111; }
-        h2 { font-size: 20px; margin-top: 24px; margin-bottom: 12px; color: var(--mahjong-blue); border-bottom: 2px solid #e0e0e0; padding-bottom: 4px;}
+        h1 { font-size: 24px; margin-bottom: 16px; color: var(--text-primary); }
+        h2 { font-size: 20px; margin-top: 24px; margin-bottom: 12px; color: var(--mahjong-blue); border-bottom: 2px solid var(--border-color); padding-bottom: 4px;}
         h3 { font-size: 17px; margin-top: 20px; margin-bottom: 8px; color: var(--mahjong-green); }
-        p { font-size: 15px; line-height: 1.5; color: var(--mahjong-gray); margin-bottom: 12px; }
+        p { font-size: 15px; line-height: 1.5; color: var(--text-primary); margin-bottom: 12px; }
         .h2-condensed { font-size: 16px; margin-top: 10px; margin-bottom: 6px; padding-bottom: 2px; }
         .text-red { color: var(--mahjong-red) !important; }
 		.text-blue { color: var(--mahjong-blue) !important; }
@@ -166,11 +161,11 @@
         .text-white { color: var(--mahjong-white) !important; }
 		.text-bold { font-weight: bold !important; }
 		.text-center { text-align: center !important; }
-		.setup-image { max-width: 100%; border-radius: 4px; background-color: #f4f4f9; }
+		.setup-image { max-width: 100%; border-radius: 4px; background-color: var(--bg-app); }
 		.btn-icon { width: 24px; height: 24px; object-fit: contain; display: block; }
 		.action-row { margin: 14px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
         .green-div, .green-div-sm {
-        	background: #e8f5e9; border-radius: 8px; text-align: center; 
+        	background: var(--green-div); border-radius: 8px; text-align: center; 
         	color: var(--mahjong-green); border: 1px solid #c8e6c9;
         }
         .green-div { padding: 6px; font-size: 15px; margin-bottom: 10px; }
@@ -180,15 +175,19 @@
         /* Table Styling */
         .table-wrapper {
             width: fit-content; max-width: 100%; overflow-x: auto; margin-bottom: 16px;
-            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); background: #fff;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); background: var(--bg-surface);
         }
         table { width: auto; border-collapse: collapse; text-align: left; }
-        th, td { padding: 10px 10px; border-bottom: 1px solid #eee; }
-        th { background-color: #f8f9fa; font-weight: 600; color: #333; font-size: 14px; }
-        td { font-size: 14px; color: #555; }
+        th, td { padding: 10px 10px; border-bottom: 1px solid var(--border-color); }
+        th { background-color: var(--bg-table); color: var(--text-primary); border-color: var(--mahjong-gray); font-weight: 600; font-size: 14px; }
+        td { font-size: 14px; color: var(--text-primary); }
+		tfoot { background-color: var(--bg-table); color: var(--text-primary); border-color: var(--mahjong-gray); }
         .char-cell { font-size: 18px; font-weight: bold; text-align: center; }
         .table-compact th, .table-compact td { padding: 6px 10px; }
-        .td-separator { background: #f8f9fa; text-align: center; font-size: 11px; color: #666; padding: 4px; border-bottom: 1px solid #eee; }
+        .td-separator { 
+			background-color: var(--bg-table); color: var(--text-primary); 
+			border-bottom: 1px solid var(--mahjong-gray); text-align: center; font-size: 11px; padding: 4px;
+		}
 
         /* Tile Displays */
         .tile-row { display: flex; gap: 2px; margin-bottom: 8px; width: 100%; }
@@ -203,9 +202,9 @@
             font-size: 14px; display: inline-block; margin: 4px 0 8px 0;
         }
         .inline-btn {
-			background-color: #ffffff; border: 1px solid #e0e0e0; margin: 0; border-radius: 8px;
-            padding: 5px 12px; display: flex; align-items: center; justify-content: center;
-            text-align: center; cursor: pointer; color: #444; font-size: 9pt; line-height: 1;
+			background-color: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-color); 
+			margin: 0; border-radius: 8px; padding: 5px 12px; display: flex; align-items: center; justify-content: center;
+            text-align: center; cursor: pointer; font-size: 9pt; line-height: 1;
             box-shadow: 0 2px 6px rgba(0,0,0,0.03); font-weight: bold; gap: 6px;
 		}
 		.inline-btn span { text-align: right; }
@@ -219,10 +218,22 @@
 			color: white; padding: 12px 20px; margin: -20px -20px 20px -20px; display: flex;
 			box-shadow: 0 4px 12px rgba(0,0,0,0.15); flex-direction: column;
 		}
+		.calc-section-title {
+			font-size: 14px; font-weight: 700; text-transform: uppercase;
+			color: #888; margin: 20px 0 10px 0; letter-spacing: 0.5px;
+		}
+		#toggle-rare-hands {
+			cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+			user-select: none; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px;
+			color: var(--text-primary);
+		}
+		#rare-hands-content {
+			padding: 0 16px; display: none; margin-bottom: 20px;
+		}
 
 
 		/* Segmented Controls */
-		.segment-group { display: flex; background: #e0e0e0; border-radius: 24px; padding: 2px; margin-bottom: 4px; }
+		.segment-group { display: flex; background: var(--border-color); border-radius: 24px; padding: 2px; margin-bottom: 4px; }
 		.segment-btn {
 			flex: 1; text-align: center; padding: 6px; font-size: 12px; font-weight: 600; color: #555;
 			background: transparent; border: 1px solid transparent; border-radius: 20px; cursor: pointer;
@@ -236,14 +247,15 @@
 		
 		/* Counters */
 		.counter-row {
-			display: flex; justify-content: space-between; align-items: center; background: #fff;
-			border: 1px solid #e0e0e0; border-radius: 8px; padding: 5px 16px; margin-bottom: 10px;
+			display: flex; justify-content: space-between; align-items: center; 
+			background-color: var(--bg-surface); border: 1px solid var(--border-color); 
+			border-radius: 8px; padding: 5px 16px; margin-bottom: 10px;
 		}
-		.counter-label { font-size: 12px; font-weight: 500; color: #333; }
+		.counter-label { font-size: 12px; font-weight: 500; color: var(--text-primary); }
 		.counter-controls { display: flex; align-items: center; gap: 12px; }
 		.counter-btn {
-			width: 28px; height: 28px; border-radius: 50%; background: #f4f4f9; color: #333;
-			border: 1px solid #ccc; font-size: 14px; font-weight: bold; display: flex;
+			width: 28px; height: 28px; border-radius: 50%; background: var(--bg-table); color: var(--text-primary);
+			border: 1px solid var(--border-color); font-size: 14px; font-weight: bold; display: flex;
 			align-items: center; justify-content: center; cursor: pointer; user-select: none;
 		}
 		.counter-btn:active { background: #e0e0e0; }
@@ -252,25 +264,21 @@
 		/* Smart Chips */
 		.chip-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
 		.smart-chip {
-			background: #fff; border: 1px solid #ccc; padding: 8px 12px; border-radius: 20px;
-			font-size: 12px; font-weight: 500; color: #555; cursor: pointer; transition: all 0.2s;
-			user-select: none;
+			background-color: var(--bg-surface); color: var(--text-primary);
+			border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 20px;
+			font-size: 12px; font-weight: 500; cursor: pointer; user-select: none;
 		}
 		.smart-chip.active { 
 			background: #e8f5e9; border-color: var(--mahjong-green);
 			color: var(--mahjong-green); font-weight: 700;
 		}
-		.smart-chip.disabled { opacity: 0.4; background: #f9f9f9; pointer-events: none; }
-		.calc-section-title {
-			font-size: 14px; font-weight: 700; text-transform: uppercase;
-			color: #888; margin: 20px 0 10px 0; letter-spacing: 0.5px;
-		}
-		
+		.smart-chip.disabled { opacity: 0.4; background: var(--bg-table); pointer-events: none; }
 		
 		/* Record Tab Styles */
 		.player-input {
-			width: 100%; padding: 10px 14px; border: 1px solid #e0e0e0; border-radius: 8px;
-			font-size: 14px; outline: none; background: #fff; transition: border-color 0.2s;
+			background-color: var(--bg-surface); border: 1px solid var(--border-color);
+			width: 100%; padding: 10px 14px;  border-radius: 8px;
+			font-size: 14px; outline: none; transition: border-color 0.2s;
 		}
 		.player-input:focus { border-color: var(--mahjong-green); }
 		.player-label {
@@ -278,21 +286,29 @@
 			font-weight: bold;
 		}
 		#scoreboard-table th {
-			background-color: #f4f4f9;
-			border-bottom: 2px solid #e0e0e0;
+			background-color: var(--bg-table);
+			border-bottom: 2px solid var(--border-color);
 			padding: 10px 4px;
 		}
-		#scoreboard-table td { padding: 8px 4px; border-bottom: 1px solid #eee; }
+		#scoreboard-table td { padding: 8px 4px; border-bottom: 1px solid var(--border-color); }
+		
 		#reseat-ui {
-			display: none; background: #f8f9fa; border: 1px solid #e0e0e0; padding: 16px; 
+			display: none; background: var(--bg-surface); border: 1px solid var(--border-color); padding: 16px; 
 			border-radius: 8px; margin-bottom: 32px; text-align: left;
 		}
-		#capture-area { background-color: #ffffff; padding: 12px; border-radius: 8px; }		
+		#capture-area { background-color: var(--bg-surface); padding: 12px; border-radius: 8px; }	
+		
+		.grid-card, .inline-btn, .segment-btn, .counter-btn, .smart-chip {
+			touch-action: manipulation;
+		}	
 
     </style>
 </head>
 <body>
-	<header class="top-header" id="home-btn">
+	
+<!------------------------------------------HEADER------------------------------------------>
+
+	<header class="top-header" data-to="intro">
         <div class="header-left"><span class="text-red">Mahjong</span>&nbsp;<span class="zh-char">麻将</span></div>
         <div class="header-right">
             <span>for</span>
@@ -328,12 +344,12 @@
 				</div>
             </div>
             
-            <div style="display: flex; justify-content: center; align-items: center; margin-top: 48px; margin-bottom: 8px; gap: 12px;">
+            <div class="dark-mode-slider">
 				<span style="font-size: 14px; font-weight: bold;">Light<br>Mode</span>☀️
-				<label class="theme-switch" style="position: relative; display: inline-block; width: 50px; height: 26px;">
-					<input type="checkbox" id="theme-toggle" style="opacity: 0; width: 0; height: 0;">
-					<span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;">
-						<span class="slider-circle" style="position: absolute; content: ''; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+				<label class="theme-switch">
+					<input type="checkbox" id="theme-toggle">
+					<span class="slider">
+						<span class="slider-circle"></span>
 					</span>
 				</label>
 				🌙<span style="font-size: 14px; font-weight: bold;">Dark<br>Mode</span>
@@ -391,37 +407,19 @@
 				
 			<h3>Characters Suit</h3>
 				<p><span class="zh-char">萬</span> (wàn: sounds like "Juan")</p>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=9; i++) {
-							document.write(`<img src="tiles/wan${i}.png" alt="${i} Character">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="wan" data-count="9"></div>
 				<p>In the characters suit, the character 萬 (wàn, meaning ten thousand) appears on the tile below each number.</p>
 				<p><strong>Example:</strong> <img src="tiles/wan7.png" alt="7 Character" class="inline-tile"> qī wàn ("chee Juan")</p>
 	
 			<h3>Bamboos Suit</h3>
 				<p><span class="zh-char">索</span> (tiáo: sounds like "tsea-ow")</p>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=9; i++) {
-							document.write(`<img src="tiles/tiao${i}.png" alt="${i} Bamboo">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="tiao" data-count="9"></div>
 				<p>In the bamboos suit, the yī tile usually depicts a bird rather than a single bamboo stick and the bā tile usually is formed like a diamond, rectangle, or set of 'M's. The tiles can be distinguished by the number of bamboo sticks.</p>
 				<p><strong>Example:</strong> <img src="tiles/tiao2.png" alt="2 Bamboo" class="inline-tile"> èr tiáo ("er tsea-ow")</p>
 	
 			<h3>Circles Suit</h3>
 				<p><span class="zh-char">筒</span> (tǒng: sounds like "tong")</p>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=9; i++) {
-							document.write(`<img src="tiles/tong${i}.png" alt="${i} Circle">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="tong" data-count="9"></div>
 				<p>In the circles suit, all tiles can be distinguished by the number of circles.</p>
 				<p><strong>Example:</strong> <img src="tiles/tong5.png" alt="5 Circle" class="inline-tile"> wǔ tǒng ("wuh-oo tong")</p>
 			
@@ -430,13 +428,7 @@
 				
 				<h3>Wind Tiles</h3>
 				<p><span class="zh-char">風牌</span> (fēngpái: sounds like "fung-pie")</p>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=4; i++) {
-							document.write(`<img src="tiles/wind${i}.png" alt="Wind ${i}">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="wind" data-count="4"></div>
 				<div class="table-wrapper">
 					<table>
 						<thead>
@@ -455,13 +447,7 @@
 	
 			<h3>Dragon Tiles</h3>
 				<p><span class="zh-char">三元牌</span> (sānyuán pái: sounds like "sahn ywan pie")</p>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=3; i++) {
-							document.write(`<img src="tiles/dragon${i}.png" alt="Dragon ${i}">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="dragon" data-count="3"></div>
 				<div class="table-wrapper">
 					<table>
 						<thead>
@@ -481,13 +467,7 @@
 				<p>There are two types of bonus tiles that operate in an identical way: flowers and seasons.</p>
 	
 			<h3>Flower Tiles</h3>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=4; i++) {
-							document.write(`<img src="tiles/flower${i}.png" alt="Flower ${i}">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="flower" data-count="4"></div>
 				<div class="table-wrapper">
 					<table>
 						<thead>
@@ -504,13 +484,7 @@
 				<p>Flower tiles represent the four winds in the same order: dōng, nán, xī, běi. Flower tiles are also numbered for easy reference.</p>
 	
 			<h3>Season Tiles</h3>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=4; i++) {
-							document.write(`<img src="tiles/season${i}.png" alt="Season ${i}">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="season" data-count="4"></div>
 				<div class="table-wrapper">
 					<table>
 						<thead>
@@ -549,7 +523,7 @@
 				</div>
 				
             <div class="action-row">
-                <button class="inline-btn" onclick="navigateTo('intro')" style="flex: none;">
+                <button class="inline-btn" data-to="intro">
 					<span>⏎&nbsp;Return<br>to Home</span>
 					<img src="icons/home2.png" alt="Home" class="btn-icon">
 				</button>
@@ -573,54 +547,24 @@
 				<p>There are 3 suits of tiles representing the numbers 1 through 9. Each tile appears 4 times in the deck.</p>
             
             <h3>Characters (wàn)</h3>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=9; i++) {
-							document.write(`<img src="tiles/wan${i}.png" alt="${i} Character">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="wan" data-count="9"></div>
             
             <h3>Bamboos (tiáo)</h3>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=9; i++) {
-							document.write(`<img src="tiles/tiao${i}.png" alt="${i} Bamboo">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="tiao" data-count="9"></div>
             
             <h3>Circles (tǒng)</h3>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=9; i++) {
-							document.write(`<img src="tiles/tong${i}.png" alt="${i} Circle">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="tong" data-count="9"></div>
             
             <h2>The Honors</h2>
 				<p>There are 4 winds and 3 dragons. Each wind or dragon appears 4 times in the deck.</p>
             
             <h3>Winds (fēng)</h3>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=4; i++) {
-							document.write(`<img src="tiles/wind${i}.png" alt="Wind ${i}">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="wind" data-count="4"></div>
 				<p><strong>East</strong> (dōng fēng), <strong>South</strong> (nán fēng),<br>
 				<strong>West</strong> (xī fēng), <strong>North</strong> (běi fēng)</p>
             
             <h3>Dragons (sānyuán)</h3>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=3; i++) {
-							document.write(`<img src="tiles/dragon${i}.png" alt="Dragon ${i}">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="dragon" data-count="3"></div>
 				<p><strong>Red Dragon</strong> (hóngzhōng),<br>
 				<strong>Green Dragon</strong> (fācái),<br>
 				<strong>White Dragon</strong> (báibǎn)</p>
@@ -628,24 +572,12 @@
             <h2>The Bonus Tiles</h2>
             
             <h3>Flowers</h3>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=4; i++) {
-							document.write(`<img src="tiles/flower${i}.png" alt="Flower ${i}">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="flower" data-count="4"></div>
 				<p><strong>Plum</strong> (méi), <strong>Orchid</strong> (lán),<br>
 				<strong>Chrysanthemum</strong> (jú), <strong>Bamboo</strong> (zhú)</p>
             
             <h3>Seasons</h3>
-				<div class="tile-row">
-					<script>
-						for(let i=1; i<=4; i++) {
-							document.write(`<img src="tiles/season${i}.png" alt="Season ${i}">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="season" data-count="4"></div>
 				<p><strong>Spring</strong> (chūn), <strong>Summer</strong> (xià),<br>
 				<strong>Autumn</strong> (qiū), <strong>Winter</strong> (dōng)</p>
             
@@ -654,13 +586,7 @@
 			<h3>Game Organization</h3>
 				<p>A traditional game of Mahjong is 4 <strong>rounds</strong> with 4 <strong>hands</strong> in each round. Rounds follow the order of the winds (as does gameplay) in the following sequence:</p>
 				<p class="text-center text-bold text-red" style="margin-top: 8px;">East &rarr; South &rarr; West &rarr; North</p>
-				<div class="tile-row" style="align-items: center; justify-content: center; gap: 20px;">
-					<script>
-						for(let i=1; i<=4; i++) {
-							document.write(`<img src="tiles/wind${i}.png" alt="Wind ${i}">`);
-						}
-					</script>
-				</div>
+				<div class="tile-row" data-render-tiles="wind" data-count="4" style="align-items: center; justify-content: center; gap: 20px;"></div>
 				
 			<h3>Order of Play</h3>
 				<p>To begin, choose a side of the table to be "East". Players draw one of the 4 wind tiles and arrange themselves around the table based on the <strong>counterclockwise order</strong> of winds.</p>
@@ -702,7 +628,7 @@
 				<p>At the beginning of each consecutive <strong>round</strong>, the East player becomes dealer again.</p>       
        
             <div class="action-row">
-                <button class="inline-btn" onclick="navigateTo('intro')" style="flex: none;">
+                <button class="inline-btn" data-to="intro">
 					<span>⏎&nbsp;Return<br>to Home</span>
 					<img src="icons/home2.png" alt="Home" class="btn-icon">
 				</button>
@@ -819,7 +745,7 @@
 				<p><span class="note-highlight"><strong>Note:</strong> Some variations create a carry over pool (such as 1 base per person) payable to the next self-draw winner.</span></p>
 
             <div class="action-row">
-                <button class="inline-btn" onclick="navigateTo('intro')" style="flex: none;">
+                <button class="inline-btn" data-to="intro">
 					<span>⏎&nbsp;Return<br>to Home</span>
 					<img src="icons/home2.png" alt="Home" class="btn-icon">
 				</button>
@@ -936,15 +862,15 @@
 				<p>Keep track of tai payouts in every hand (including subtracting the points from the payer and adding the points to the payee). Once the game is finished, the total tai for each player (positive or negative) determines the winner and/or how much actual money (if gambling) should be paid out.</p>
 
             <div class="action-row">
-                <button class="inline-btn" onclick="navigateTo('scoringcheatsheet')">
+                <button class="inline-btn" data-to="scoringcheatsheet">
                     <span>See Scoring<br>Cheat Sheet</span>
                     <img src="icons/score2.png" alt="Scoring" class="btn-icon">
                 </button>
-                <button class="inline-btn" onclick="navigateTo('scorecalc')">
+                <button class="inline-btn" data-to="scorecalc">
 					<span>Go To<br>Calculator</span>
 					<img src="icons/calculator2.png" alt="Calculator" class="btn-icon">
 				</button><br>
-                <button class="inline-btn" onclick="navigateTo('intro')" style="flex: none;">
+                <button class="inline-btn" data-to="intro">
 					<span>⏎&nbsp;Return<br>to Home</span>
 					<img src="icons/home2.png" alt="Home" class="btn-icon">
 				</button>
@@ -1003,7 +929,7 @@
 							</div>
 						</div>
 						<div style="display: flex; gap: 12px; height: 36px; margin-top: 2px;">
-							<button class="inline-btn" onclick="navigateTo('scorecalc')" style="background-color: var(--mahjong-blue); color: white; border: none;">
+							<button class="inline-btn" data-to="scorecalc" style="background-color: var(--mahjong-blue); color: white; border: none;">
 								<span>Use <br>Calc </span><img src="icons/calculator2.png" alt="Calculator" class="btn-icon">
 							</button>
 							<button class="inline-btn" id="log-score-btn" style="background-color: var(--mahjong-green); color: white; border: none; min-height: 34px;">
@@ -1015,7 +941,7 @@
 					<div id="dealer-dynamic-label" class="text-center text-bold text-red" style="font-size: 13px; min-height: 18px; margin-bottom: 12px; width: 134px;"></div>
 		
 					<div style="display: flex; gap: 12px; margin-top: 8px; margin-bottom: 24px;">
-						<button class="inline-btn" id="change-seating-btn" style="color: white;">
+						<button class="inline-btn" id="change-seating-btn">
 							<span>Change <br>Seating </span><img src="icons/change2.png" alt="Change" class="btn-icon">
 						</button>
 						<button class="inline-btn" id="undo-score-btn" style="background-color: var(--mahjong-red); color: white; border: none;">
@@ -1058,7 +984,7 @@
 								<tr id="scoreboard-headers"></tr>
 							</thead>
 							<tbody id="scoreboard-body"></tbody>
-							<tfoot id="scoreboard-footer" style="font-weight: bold; background-color: #f4f4f9;"></tfoot>
+							<tfoot id="scoreboard-footer" style="border-top: 2px solid var(--text-primary);"></tfoot>
 						</table>
 					</div>
 		
@@ -1072,8 +998,8 @@
 				</div>
 			</div>
 			
-			<div style="text-align: center; margin: 24px 0 12px 0;">
-				<button class="inline-btn" onclick="navigateTo('intro')" style="margin: 0 auto;">
+			<div class="action-row">
+				<button class="inline-btn" data-to="intro">
 					<span>⏎&nbsp;Return<br>to Home</span>
 					<img src="icons/home2.png" alt="Home" class="btn-icon">
 				</button>
@@ -1087,31 +1013,13 @@
             
 			<h2 class="h2-condensed">The Suits</h2>
             <div class="suit-title" style="color: var(--mahjong-blue);">Dots / Circles (tǒng)</div>
-            <div class="tile-row" style="margin-bottom: 6px;">
-                <script>
-                    for(let i=1; i<=9; i++) {
-                        document.write(`<img src="tiles/tong${i}.png" alt="${i} Dot">`);
-                    }
-                </script>
-            </div>
+            <div class="tile-row" data-render-tiles="tong" data-count="9" style="margin-bottom: 6px;"></div>
             
             <div class="suit-title" style="color: var(--mahjong-green);">Bamboo (tiáo)</div>
-            <div class="tile-row" style="margin-bottom: 6px;">
-                <script>
-                    for(let i=1; i<=9; i++) {
-                        document.write(`<img src="tiles/tiao${i}.png" alt="${i} Bamboo">`);
-                    }
-                </script>
-            </div>
-            
+            <div class="tile-row" data-render-tiles="tiao" data-count="9" style="margin-bottom: 6px;"></div>
+
             <div class="suit-title" style="color: var(--mahjong-red);">Symbols / Characters (wàn)</div>
-            <div class="tile-row" style="margin-bottom: 2px;">
-                <script>
-                    for(let i=1; i<=9; i++) {
-                        document.write(`<img src="tiles/wan${i}.png" alt="${i} Character">`);
-                    }
-                </script>
-            </div>
+            <div class="tile-row" data-render-tiles="wan" data-count="9" style="margin-bottom: 6px;"></div>
 
             <div class="tile-row" style="margin-bottom: 12px; font-size: 12px; font-weight: bold;">
                 <div style="flex: 1; text-align: center;">1</div>
@@ -1188,7 +1096,7 @@
             </div>
             
             <div class="action-row">
-                <button class="inline-btn" onclick="navigateTo('intro')" style="flex: none;">
+                <button class="inline-btn" data-to="intro">
 					<span>⏎&nbsp;Return<br>to Home</span>
 					<img src="icons/home2.png" alt="Home" class="btn-icon">
 				</button>
@@ -1253,7 +1161,7 @@
             </div>
 
             <div class="action-row">
-                <button class="inline-btn" onclick="navigateTo('intro')" style="flex: none;">
+                <button class="inline-btn" data-to="intro">
 					<span>⏎&nbsp;Return<br>to Home</span>
 					<img src="icons/home2.png" alt="Home" class="btn-icon">
 				</button>
@@ -1297,15 +1205,15 @@
             </div>
             
             <div class="action-row">
-                <button class="inline-btn" onclick="navigateTo('scoring')">
+                <button class="inline-btn" data-to="scoring">
                     <span>See Full&nbsp;<br>Scoring Rules&nbsp;</span>
                     <img src="icons/scoring2.png" alt="Scoring" class="btn-icon">
                 </button>
-                <button class="inline-btn" onclick="navigateTo('scorecalc')">
+                <button class="inline-btn" data-to="scorecalc">
 					<span>Go To<br>Calculator</span>
 					<img src="icons/calculator2.png" alt="Calculator" class="btn-icon">
 				</button>
-                <button class="inline-btn" onclick="navigateTo('intro')" style="flex: none;">
+                <button class="inline-btn" data-to="intro">
 					<span>⏎&nbsp;Return<br>to Home</span>
 					<img src="icons/home2.png" alt="Home" class="btn-icon">
 				</button>
@@ -1379,14 +1287,50 @@
 				<div class="smart-chip" data-id="matchingwind" data-points="1" data-name="Matching Wind Set">Matching Wind Set</div>
 			</div>
 		
-			<div class="calc-section-title">Hand Structures</div>
+			<div class="calc-section-title">Common Hand Structures</div>
 			<div class="chip-grid">
 				<div class="smart-chip" data-id="straighthu" data-points="3" data-name="Straight hú">Straight hú</div>
 				<div class="smart-chip" data-id="ponponhu" data-points="10" data-name="Pon pon hú">Pon pon hú</div>
-				<div class="smart-chip" data-id="halfflush" data-points="10" data-name="Half Flush">Half Flush</div>
-				<div class="smart-chip" data-id="fullflush" data-points="40" data-name="Full Flush">Full Flush</div>
-				<div class="smart-chip" data-id="allrevealed" data-points="10" data-name="All Revealed">All Revealed</div>
 			</div>
+			
+			<div class="calc-section-title" id="toggle-rare-hands" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; margin-bottom: 20px; color: var(--text-primary);">
+				<span>Rare Hand Conditions</span>
+				<span id="rare-toggle-icon" style="font-size: 12px; transition: transform 0.2s;">▼</span>
+			</div>
+			
+			<div id="rare-hands-content">
+				<div class="calc-section-title">Dragons & Winds</div>
+				<div class="chip-grid">
+					<div class="smart-chip" data-id="little3dragons" data-points="10" data-name="Little Three Dragons">Little 3 Dragons</div>
+					<div class="smart-chip" data-id="big3dragons" data-points="30" data-name="Big Three Dragons">Big 3 Dragons</div>
+					<div class="smart-chip" data-id="little3winds" data-points="5" data-name="Little Three Winds">Little 3 Winds</div>
+					<div class="smart-chip" data-id="little4winds" data-points="30" data-name="Little Four Winds">Little 4 Winds</div>
+					<div class="smart-chip" data-id="big3winds" data-points="10" data-name="Big Three Winds">Big 3 Winds</div>
+					<div class="smart-chip" data-id="big4winds" data-points="40" data-name="Big Four Winds">Big 4 Winds</div>
+				</div>
+				
+				<div class="calc-section-title">Other Hands</div>
+				<div class="chip-grid">
+					<div class="smart-chip" data-id="fullstraightopen" data-points="5" data-name="Full Straight (Open)">Full Straight (Open)</div>
+					<div class="smart-chip" data-id="fullstraightclosed" data-points="10" data-name="Full Straight (Closed)">Full Straight (Closed)</div>
+					<div class="smart-chip" data-id="halfflush" data-points="10" data-name="Half Flush">Half Flush</div>
+					<div class="smart-chip" data-id="fullflush" data-points="40" data-name="Full Flush">Full Flush</div>
+					<div class="smart-chip" data-id="allflowers" data-points="30" data-name="All Flowers">All Flowers</div>
+					<div class="smart-chip" data-id="allrevealed" data-points="10" data-name="All Revealed">All Revealed</div>
+				</div>
+				
+				<div class="calc-section-title">Luck & Special Draws</div>
+				<div class="chip-grid">
+					<div class="smart-chip" data-id="lasttiledraw" data-points="1" data-name="Last Tile Win (Draw)">Last Tile Win (Draw)</div>
+					<div class="smart-chip" data-id="lasttilediscard" data-points="1" data-name="Last Tile Win (Discard)">Last Tile Win (Discard)</div>
+					<div class="smart-chip" data-id="robgang" data-points="1" data-name="Robbing the Gàng">Robbing the Gàng</div>
+					<div class="smart-chip" data-id="win10discards" data-points="5" data-name="Win within 10 Discards">Win within 10 Discards</div>
+					<div class="smart-chip" data-id="win5discards" data-points="10" data-name="Win within 5 Discards">Win within 5 Discards</div>
+					<div class="smart-chip" data-id="heavenhand" data-points="40" data-name="Heaven Hand">Heaven Hand</div>
+					<div class="smart-chip" data-id="earthhand" data-points="40" data-name="Earthly Hand">Earthly Hand</div>
+				</div>
+			</div>
+			
 			<div>
 				<button class="inline-btn" onclick="resetCalculator()" style="background-color: var(--mahjong-red); color: white; margin: 0 auto;">
 				<span>Reset<br>Calculator</span>
@@ -1395,15 +1339,15 @@
 			</div>
 			
 			<div class="action-row">
-                <button class="inline-btn" onclick="navigateTo('scoring')">
+                <button class="inline-btn" data-to="scoring">
 					<span>More on&nbsp;<br>Scoring&nbsp;</span>
 					<img src="icons/scoring2.png" alt="Scoring" class="btn-icon">
 				</button>
-                <button class="inline-btn" onclick="navigateTo('record')">
+                <button class="inline-btn" data-to="record">
 					<span>Record&nbsp;<br>a Hand&nbsp;</span>
 					<img src="icons/record2.png" alt="Record" class="btn-icon">
 				</button>
-				<button class="inline-btn" onclick="navigateTo('intro')" style="flex: none;">
+				<button class="inline-btn" data-to="intro">
 					<span>⏎&nbsp;Return<br>to Home</span>
 					<img src="icons/home2.png" alt="Home" class="btn-icon">
 				</button>
@@ -1442,110 +1386,69 @@
     </nav>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+			loadGameState(); 
+		});
+        
         // ==========================================
 		// THEME TOGGLE (DARK MODE)
 		// ==========================================
 		const themeToggle = document.getElementById('theme-toggle');
 		
-		// Check local storage on load
-		if (localStorage.getItem('theme') === 'dark') {
+		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
 			document.body.classList.add('dark-mode');
 			themeToggle.checked = true;
+		} else {
+			themeToggle.checked = false;
 		}
 		
 		themeToggle.addEventListener('change', (e) => {
 			if (e.target.checked) {
 				document.body.classList.add('dark-mode');
-				localStorage.setItem('theme', 'dark');
 			} else {
 				document.body.classList.remove('dark-mode');
-				localStorage.setItem('theme', 'light');
 			}
 		});
         
         // ==========================================
-		// CENTRAL NAVIGATION ROUTER
+		//  CENTRALIZED NAVIGATION EVENT DELEGATION
 		// ==========================================
-		function navigateTo(targetTab) {
-			const navItems = document.querySelectorAll('.nav-item');
-			const pages = document.querySelectorAll('.page');
-			const highlightWrapper = document.getElementById('highlight-wrapper');
+		document.addEventListener('click', (event) => {
+			const toBtn = event.target.closest('[data-to]');
+			if (toBtn) {
+				navigateTo(toBtn.getAttribute('data-to'));
+				return;
+			}
 			
-			// Array of pages that do NOT have a dedicated icon on the bottom nav bar
-			const specialTabs = ['intro', 'tilecheatsheet', 'rotationcheatsheet', 'scoringcheatsheet', 'scorecalc'];
-		
-			// 1. Hide all pages
-			pages.forEach(page => page.classList.remove('active-page'));
-		
-			// 2. Reset bottom nav items to inactive and swap to un-highlighted icons
-			navItems.forEach(nav => {
-				nav.classList.remove('active');
-				const img = nav.querySelector('img');
-				const tabName = nav.getAttribute('data-tab');
-				img.src = `icons/${tabName}.png`; 
-			});
-		
-			// 3. Handle the bottom Nav Bar visual state
-			if (specialTabs.includes(targetTab)) {
-				// If heading to a page without a bottom nav icon, hide the green pill
-				highlightWrapper.style.opacity = '0';
-			} else {
-				// If heading to a standard tab, highlight it and slide the pill
-				let targetIndex = -1;
-				navItems.forEach((nav, index) => {
-					if (nav.getAttribute('data-tab') === targetTab) {
-						targetIndex = index;
-						nav.classList.add('active');
-						const activeImg = nav.querySelector('img');
-						activeImg.src = `icons/${targetTab}2.png`; // Swap to colored icon
-					}
-				});
-				
-				if (targetIndex !== -1) {
-					highlightWrapper.style.opacity = '1';
-					highlightWrapper.style.transform = `translateX(${targetIndex * 100}%)`;
-				}
+			const cardBtn = event.target.closest('[data-target]');
+			if (cardBtn) {
+				navigateTo(cardBtn.getAttribute('data-target'));
+				return;
 			}
-		
-			// 4. Show the target page and scroll the main view back to the top
-			const targetElement = document.getElementById(targetTab);
-			if (targetElement) {
-				targetElement.classList.add('active-page');
-				document.querySelector('main').scrollTop = 0;
+			
+			const tabBtn = event.target.closest('[data-tab]');
+			if (tabBtn) {
+				navigateTo(tabBtn.getAttribute('data-tab'));
+				return;
 			}
-		}
-		
-		// ==========================================
-		// EVENT LISTENERS
-		// ==========================================
-		
-		document.querySelectorAll('.nav-item').forEach(item => {
-			item.addEventListener('click', () => navigateTo(item.getAttribute('data-tab')));
 		});
 		
-		document.getElementById('home-btn').addEventListener('click', () => navigateTo('intro'));
-		
-		document.querySelectorAll('.grid-card').forEach(card => {
-			card.addEventListener('click', () => navigateTo(card.getAttribute('data-target')));
-		});
-		
-		// --- SCORE CALCULATOR LOGIC ---
+		// ==========================================
+		//  OTHER EVENT LISTENERS AND DEFINITIONS
+		// ==========================================
 		const calcState = {
-			winType: 'discard', // 'discard' or 'zimo'
-			concealed: 'open',  // 'open' or 'concealed'
+			winType: 'discard',
+			concealed: 'open',
 			counters: { base: 3, dealer: 0, expgang: 0, congang: 0 },
 			chips: new Set()
 		};
 		
-		// Handle Segmented Controls
 		document.querySelectorAll('.segment-group').forEach(group => {
 			group.querySelectorAll('.segment-btn').forEach(btn => {
 				btn.addEventListener('click', (e) => {
-					// Remove active from siblings
 					group.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
 					btn.classList.add('active');
 					
-					// Update state
 					if(group.id === 'seg-win-type') calcState.winType = btn.dataset.val;
 					if(group.id === 'seg-concealed') calcState.concealed = btn.dataset.val;
 					
@@ -1554,19 +1457,6 @@
 			});
 		});
 		
-		// Handle Counters
-		function updateCounter(type, change, max = 99) {
-			let newVal = calcState.counters[type] + change;
-			if (newVal < 0) newVal = 0;
-			if (newVal > max) newVal = max;
-			
-			calcState.counters[type] = newVal;
-			document.getElementById(`val-${type}`).innerText = newVal;
-			
-			calculateScore();
-		}
-		
-		// Handle Smart Chips
 		document.querySelectorAll('.smart-chip').forEach(chip => {
 			chip.addEventListener('click', () => {
 				const id = chip.dataset.id;
@@ -1583,18 +1473,86 @@
 			});
 		});
 		
-		// Main Calculation Engine
+        // ==========================================
+		// CENTRAL NAVIGATION ROUTER
+		// ==========================================
+		function navigateTo(targetTab) {
+			const navItems = document.querySelectorAll('.nav-item');
+			const pages = document.querySelectorAll('.page');
+			const highlightWrapper = document.getElementById('highlight-wrapper');
+			const specialTabs = ['intro', 'tilecheatsheet', 'rotationcheatsheet', 'scoringcheatsheet', 'scorecalc'];
+		
+			pages.forEach(page => page.classList.remove('active-page'));
+			navItems.forEach(nav => {
+				nav.classList.remove('active');
+				const img = nav.querySelector('img');
+				const tabName = nav.getAttribute('data-tab');
+				img.src = `icons/${tabName}.png`; 
+			});
+		
+			if (specialTabs.includes(targetTab)) {
+				highlightWrapper.style.opacity = '0';
+			} else {
+				let targetIndex = -1;
+				navItems.forEach((nav, index) => {
+					if (nav.getAttribute('data-tab') === targetTab) {
+						targetIndex = index;
+						nav.classList.add('active');
+						const activeImg = nav.querySelector('img');
+						activeImg.src = `icons/${targetTab}2.png`; // Swap to colored icon
+					}
+				});
+				
+				if (targetIndex !== -1) {
+					highlightWrapper.style.opacity = '1';
+					highlightWrapper.style.transform = `translateX(${targetIndex * 100}%)`;
+				}
+			}
+		
+			const targetElement = document.getElementById(targetTab);
+			if (targetElement) {
+				targetElement.classList.add('active-page');
+				document.querySelector('main').scrollTop = 0;
+			}
+		}
+		
+		// ==========================================
+		// BULK IMAGE RENDER
+		// ==========================================
+		document.querySelectorAll('[data-render-tiles]').forEach(container => {
+			const assetPrefix = container.getAttribute('data-render-tiles');
+			const totalCount = parseInt(container.getAttribute('data-count'), 10);
+			
+			let htmlFragment = '';
+			for (let i = 1; i <= totalCount; i++) {
+				htmlFragment += `<img src="tiles/${assetPrefix}${i}.png" alt="${assetPrefix} tile ${i}">`;
+			}
+			container.innerHTML = htmlFragment;
+		});
+		
+		// ==========================================
+		// FUNCTIONS
+		// ==========================================
+		function updateCounter(type, change, max = 99) {
+			let newVal = calcState.counters[type] + change;
+			if (newVal < 0) newVal = 0;
+			if (newVal > max) newVal = max;
+			
+			calcState.counters[type] = newVal;
+			document.getElementById(`val-${type}`).innerText = newVal;
+			
+			calculateScore();
+		}
+		
 		function calculateScore() {
 			let totalTai = 0;
 			let breakdown = [];
 		
-			// 1. Base Points
 			if (calcState.counters.base > 0) {
 				totalTai += calcState.counters.base;
 				breakdown.push(`Base: ${calcState.counters.base}`);
 			}
 		
-			// 2. Win Type & Concealed Logic (The tricky combinations)
 			if (calcState.winType === 'zimo' && calcState.concealed === 'concealed') {
 				totalTai += 3;
 				breakdown.push(`Fully Concealed Zì mō: 3`);
@@ -1609,13 +1567,11 @@
 				}
 			}
 		
-			// 3. Dealer Bonus Formula (2n - 1)
 			let dealerBonus = 0;
 			if (calcState.counters.dealer > 0) {
 				dealerBonus = (2 * calcState.counters.dealer) - 1;
 			}
 		
-			// 4. Counters
 			if (calcState.counters.expgang > 0) {
 				totalTai += calcState.counters.expgang;
 				breakdown.push(`Exposed Gàngs (x${calcState.counters.expgang}): ${calcState.counters.expgang}`);
@@ -1626,10 +1582,8 @@
 				breakdown.push(`Concealed Gàngs (x${calcState.counters.congang}): ${congangPoints}`);
 			}
 		
-			// 5. Smart Chips Mutually Exclusive Logic
 			enforceExclusivity();
 		
-			// No Honors vs No Flowers combo logic
 			if (calcState.chips.has('nohonors') && calcState.chips.has('noflowers')) {
 				totalTai += 3;
 				breakdown.push(`No Honors OR Flowers: 3`);
@@ -1638,7 +1592,6 @@
 				if (calcState.chips.has('noflowers')) { totalTai += 1; breakdown.push(`No Flowers: 1`); }
 			}
 		
-			// Process remaining standard chips
 			const specialExclusions = ['nohonors', 'noflowers']; 
 			document.querySelectorAll('.smart-chip').forEach(chip => {
 				const id = chip.dataset.id;
@@ -1649,16 +1602,13 @@
 				}
 			});
 		
-			// Update UI
 			document.getElementById('calc-total').innerText = totalTai;
 			document.getElementById('calc-breakdown').innerText = breakdown.length > 0 ? breakdown.join('\n') : 'No conditions met.';
 			
-			// Sync to Record Tab
 			recordState.tai = totalTai;
 			const recordTaiVal = document.getElementById('record-tai-val');
 			recordTaiVal.innerText = totalTai;
 
-			// Update Dealer Adjusted UI
 			const dealerAdjustedEl = document.getElementById('calc-dealer-adjusted');
 			if (calcState.counters.dealer > 0) {
 				dealerAdjustedEl.innerText = `(Dealer pays/earns ${totalTai + dealerBonus} tai)`;
@@ -1668,118 +1618,90 @@
 			}
 		}
 		
-		// Disable impossible combinations dynamically
+		// Collapsible Section
+		const toggleRareBtn = document.getElementById('toggle-rare-hands');
+		const rareContent = document.getElementById('rare-hands-content');
+		const rareToggleIcon = document.getElementById('rare-toggle-icon');
+		
+		toggleRareBtn.addEventListener('click', () => {
+			const isCurrentlyOpen = rareContent.style.display === 'block';
+			rareContent.style.display = isCurrentlyOpen ? 'none' : 'block';
+			rareToggleIcon.style.transform = isCurrentlyOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+		});
+		
+		const exclusivityMap = {
+			// Format Conflicts
+			'straighthu': ['matchingwind', 'ponponhu', 'little3winds', 'big3winds', 'little4winds', 'big4winds', 'little3dragons', 'big3dragons'],
+			'ponponhu': ['straighthu', 'fullstraightopen', 'fullstraightclosed'],
+			'fullstraightopen': ['fullstraightclosed', 'ponponhu'],
+			'fullstraightclosed': ['fullstraightopen', 'ponponhu', 'allrevealed'],
+			'halfflush': ['fullflush'],
+			'fullflush': ['halfflush', 'matchingwind', 'little3winds', 'big3winds', 'little4winds', 'big4winds', 'little3dragons', 'big3dragons'],
+		
+			// Honor Conflicts
+			'nohonors': ['matchingwind', 'little3winds', 'big3winds', 'little4winds', 'big4winds', 'little3dragons', 'big3dragons'],
+			'matchingwind': ['nohonors'],
+			'little3winds': ['straighthu', 'nohonors', 'big3winds', 'little4winds', 'big4winds', 'little3dragons'],
+			'big3winds': ['straighthu', 'nohonors', 'little3winds', 'little4winds', 'big4winds', 'big3dragons', 'fullstraightopen', 'fullstraightclosed'],
+			'little4winds': ['straighthu', 'nohonors', 'little3winds', 'big3winds', 'big4winds', 'little3dragons', 'big3dragons', 'fullstraightopen', 'fullstraightclosed'],
+			'big4winds': ['straighthu', 'nohonors', 'little3winds', 'big3winds', 'little4winds', 'little3dragons', 'big3dragons', 'fullstraightopen', 'fullstraightclosed'],
+			'little3dragons': ['straighthu', 'nohonors', 'big3dragons', 'little3winds', 'little4winds', 'big4winds'],
+			'big3dragons': ['straighthu', 'nohonors', 'little3dragons', 'big3winds', 'little4winds', 'big4winds', 'fullstraightopen', 'fullstraightclosed'],
+		
+			// Flower Conflicts
+			'noflowers': ['matchingflower', 'matchingseason', 'allflowers'],
+			'matchingflower': ['noflowers'],
+			'matchingseason': ['noflowers'],
+			'allflowers': ['noflowers'],
+		
+			// Action & Timing Conflicts
+			'lasttiledraw': ['lasttilediscard', 'robgang', 'heavenhand', 'earthhand'],
+			'lasttilediscard': ['lasttiledraw', 'robgang', 'heavenhand', 'earthhand'],
+			'robgang': ['lasttiledraw', 'lasttilediscard', 'heavenhand', 'earthhand'],
+			'win5discards': ['win10discards', 'heavenhand', 'earthhand', 'lasttiledraw', 'lasttilediscard'],
+			'win10discards': ['win5discards', 'heavenhand', 'earthhand', 'lasttiledraw', 'lasttilediscard'],
+			'heavenhand': ['win5discards', 'win10discards', 'earthhand', 'lasttilediscard', 'lasttiledraw', 'robgang'],
+			'earthhand': ['win5discards', 'win10discards', 'heavenhand', 'lasttilediscard', 'lasttiledraw', 'robgang']
+		};
+
 		function enforceExclusivity() {
-			const chipPonPon = document.querySelector('.smart-chip[data-id="ponponhu"]');
-			const chipStraight = document.querySelector('.smart-chip[data-id="straighthu"]');
-			const chipHalfFlush = document.querySelector('.smart-chip[data-id="halfflush"]');
-			const chipFullFlush = document.querySelector('.smart-chip[data-id="fullflush"]');
-			const chipNoHonors = document.querySelector('.smart-chip[data-id="nohonors"]');
-			const chipMatchingWind = document.querySelector('.smart-chip[data-id="matchingwind"]');
-			const chipNoFlowers = document.querySelector('.smart-chip[data-id="noflowers"]');
-			const chipMatchingFlower = document.querySelector('.smart-chip[data-id="matchingflower"]');
-			const chipMatchingSeason = document.querySelector('.smart-chip[data-id="matchingseason"]');
-			
-			// Pon Pon Hu vs Straight Hu
-			if (calcState.chips.has('ponponhu')) {
-				chipStraight.classList.add('disabled');
-				calcState.chips.delete('straighthu'); // Force remove if it was selected
-				chipStraight.classList.remove('active');
-			} else {
-				chipStraight.classList.remove('disabled');
-			}
+			let toDisable = new Set();
 		
-			if (calcState.chips.has('straighthu')) {
-				chipPonPon.classList.add('disabled');
-			} else {
-				chipPonPon.classList.remove('disabled');
-			}
-		
-			// Half Flush vs Full Flush
-			if (calcState.chips.has('fullflush')) {
-				chipHalfFlush.classList.add('disabled');
-				calcState.chips.delete('halfflush');
-				chipHalfFlush.classList.remove('active');
-			} else {
-				chipHalfFlush.classList.remove('disabled');
-			}
-		
-			if (calcState.chips.has('halfflush')) {
-				chipFullFlush.classList.add('disabled');
-			} else {
-				chipFullFlush.classList.remove('disabled');
-			}
-		
-			// --- NO HONORS VS MATCHING WIND ---
-			if (calcState.chips.has('nohonors')) {
-				if (chipMatchingWind) {
-					chipMatchingWind.classList.add('disabled');
-					calcState.chips.delete('matchingwind');
-					chipMatchingWind.classList.remove('active');
+			calcState.chips.forEach(activeId => {
+				if (exclusivityMap[activeId]) {
+					exclusivityMap[activeId].forEach(conflictId => toDisable.add(conflictId));
 				}
-			} else {
-				if (chipMatchingWind) chipMatchingWind.classList.remove('disabled');
-			}
+			});
 		
-			if (calcState.chips.has('matchingwind')) {
-				if (chipNoHonors) {
-					chipNoHonors.classList.add('disabled');
-					calcState.chips.delete('nohonors');
-					chipNoHonors.classList.remove('active');
-				}
-			} else {
-				// Only re-enable if it shouldn't be disabled by something else
-				if (chipNoHonors) chipNoHonors.classList.remove('disabled');
-			}
-			
-			// --- NO FLOWERS VS MATCHING FLOWER / SEASON ---
-			if (calcState.chips.has('noflowers')) {
-				if (chipMatchingFlower) {
-					chipMatchingFlower.classList.add('disabled');
-					calcState.chips.delete('matchingflower');
-					chipMatchingFlower.classList.remove('active');
-				}
-				if (chipMatchingSeason) {
-					chipMatchingSeason.classList.add('disabled');
-					calcState.chips.delete('matchingseason');
-					chipMatchingSeason.classList.remove('active');
-				}
-			} else {
-				if (chipMatchingFlower) chipMatchingFlower.classList.remove('disabled');
-				if (chipMatchingSeason) chipMatchingSeason.classList.remove('disabled');
-			}
+			document.querySelectorAll('.smart-chip').forEach(chip => {
+				const id = chip.dataset.id;
 		
-			// If either Matching Flower OR Season is active, disable No Flowers
-			if (calcState.chips.has('matchingflower') || calcState.chips.has('matchingseason')) {
-				if (chipNoFlowers) {
-					chipNoFlowers.classList.add('disabled');
-					calcState.chips.delete('noflowers');
-					chipNoFlowers.classList.remove('active');
+				if (toDisable.has(id)) {
+					chip.classList.add('disabled');
+					
+					if (calcState.chips.has(id)) {
+						calcState.chips.delete(id);
+						chip.classList.remove('active');
+					}
+				} else {
+					chip.classList.remove('disabled');
 				}
-			} else {
-				if (chipNoFlowers) chipNoFlowers.classList.remove('disabled');
-			}
-			
-			
+			});
 		}
 		
-		// Reset button functionality
 		function resetCalculator() {
 			calcState.winType = 'discard';
 			calcState.concealed = 'open';
 			calcState.counters = { base: 3, dealer: 0, expgang: 0, congang: 0 };
 			calcState.chips.clear();
 		
-			// Reset Segments
 			document.getElementById('seg-win-type').children[0].click();
 			document.getElementById('seg-concealed').children[0].click();
 		
-			// Reset Counters
 			Object.keys(calcState.counters).forEach(key => {
 				document.getElementById(`val-${key}`).innerText = calcState.counters[key];
 			});
 		
-			// Reset Chips
 			document.querySelectorAll('.smart-chip').forEach(chip => {
 				chip.classList.remove('active', 'disabled');
 			});
@@ -1793,8 +1715,8 @@
 		const recordState = {
 			players: [],
 			currentDealer: 0,
-			dealerStreak: 0, // Tracks consecutive dealer wins
-			roundIndex: 0, // 0=East, 1=South, 2=West, 3=North
+			dealerStreak: 0,
+			roundIndex: 0,
 			handIndex: 1,
 			tai: 3,
 			payees: new Set(),
@@ -1807,15 +1729,13 @@
 		
 		// 1. Start Game Initialization
 		document.getElementById('start-game-btn').addEventListener('click', () => {
-			// Grab names and default to P1/P2/P3/P4 if left blank
 			const p1 = document.getElementById('p1-name').value.trim() || "P1";
 			const p2 = document.getElementById('p2-name').value.trim() || "P2";
 			const p3 = document.getElementById('p3-name').value.trim() || "P3";
 			const p4 = document.getElementById('p4-name').value.trim() || "P4";
 		
-			// Hard reset the game state
 			recordState.players = [p1, p2, p3, p4];
-			recordState.totals = [0, 0, 0, 0]; // Start everyone at 0
+			recordState.totals = [0, 0, 0, 0];
 			recordState.logs = [];
 			recordState.roundIndex = 0;
 			recordState.handIndex = 1;
@@ -1825,33 +1745,28 @@
 			recordState.payees.clear();
 			recordState.payer = null;
 		
-			// Build the UI
 			buildGameplayUI();
 			updateGameStatus();
 			renderScoreboard();
 			updateDynamicDealerLabel();
+			saveGameState();
 		
-			// Configure Visibility of all Divs
 			document.getElementById('record-setup').style.display = 'none';
 			document.getElementById('record-gameplay').style.display = 'block';
-			
 			document.getElementById('gameplay-controls').style.display = 'block';
 			document.getElementById('game-over-ui').style.display = 'none';
 			document.getElementById('reseat-ui').style.display = 'none';
 			document.getElementById('scoreboard-timestamp').style.display = 'none';
 		
-			// Reset the "End Game" button back to red (in case it was blue from a finished game)
 			const endBtn = document.getElementById('end-game-btn');
 			endBtn.innerHTML = '<span>End Game<br>& Reset</span><img src="icons/reset2.png" alt="Reset" class="btn-icon">';
 			endBtn.style.backgroundColor = 'var(--mahjong-red)';
 		
-			// Reset the Tai tracker visually to 3
 			document.getElementById('record-tai-val').innerText = '3';
 		});
 		
 		// 2. Build the Dynamic Forms
 		function buildGameplayUI() {
-			// Build Payees (Smart Chips)
 			const payeeContainer = document.getElementById('record-payees');
 			payeeContainer.innerHTML = '';
 			recordState.players.forEach((p, i) => {
@@ -1872,7 +1787,6 @@
 				payeeContainer.appendChild(chip);
 			});
 		
-			// Build Payers
 			const payerContainer = document.getElementById('record-payers');
 			payerContainer.innerHTML = `<div class="smart-chip" data-val="all">Zì mō</div>`;
 			recordState.players.forEach((p, i) => {
@@ -1889,10 +1803,9 @@
 				});
 			});
 			
-			// Setup Scoreboard Headers
 			const headers = document.getElementById('scoreboard-headers');
-			headers.innerHTML = `<th style="width: 1%; white-space: nowrap; padding: 10px 8px;">Hand</th>`;
-			recordState.players.forEach(p => headers.innerHTML += `<th style="min-width: 60px;">${p}</th>`);
+			headers.innerHTML = `<th style="width: 1%; white-space: nowrap; padding: 10px 8px; border-bottom: 2px solid var(--text-primary);">Hand</th>`;
+			recordState.players.forEach(p => headers.innerHTML += `<th style="min-width: 60px; border-bottom: 2px solid var(--text-primary);">${p}</th>`);
 		}
 		
 		// 3. Update Dynamic Dealer Label
@@ -1911,19 +1824,15 @@
 			}
 		
 			if (isDealerWinner) {
-				// Dealer wins: gets T+Bonus from each loser
 				let earned = t + dealerBonus;
 				label.innerText = `Dealer earns ${earned} tai${isZimo ? ' from each player' : ''}`;
 			} else if (isDealerPayer) {
-				// Dealer discarded: pays T+Bonus to each winner
 				let paid = numWinners * (t + dealerBonus);
 				label.innerText = `Dealer pays ${paid} tai`;
 			} else if (isZimo && !isDealerWinner) {
-				// Non-Dealer Zimo: Dealer pays T+Bonus, others pay T
 				let paid = t + dealerBonus;
 				label.innerText = `Dealer pays ${paid} tai`;
 			} else {
-				// Standard discard and Dealer is not involved
 				label.innerText = ''; 
 			}
 		}
@@ -1969,7 +1878,6 @@
 			const rName = roundNames[recordState.roundIndex] || 'Extra';
 			const dealerName = recordState.players[recordState.currentDealer];
 			
-			// Calculate the total number of consecutive hands this dealer has played
 			let streakText = '';
 			if (recordState.dealerStreak > 0) {
 				const totalTimes = recordState.dealerStreak + 1;
@@ -1999,8 +1907,7 @@
 			const dealerBonus = (2 * recordState.dealerStreak) + 1;
 			let changes = [0, 0, 0, 0];
 		
-			// Dealer Bonus
-			if (recordState.payer === 'all') { // Zimo
+			if (recordState.payer === 'all') {
 				recordState.players.forEach((_, i) => {
 					if (!recordState.payees.has(i)) {
 						let amountToPay = t;
@@ -2013,7 +1920,7 @@
 						changes[winnerIdx] += amountToPay;
 					}
 				});
-			} else { // Standard Discard
+			} else {
 				const payerIdx = parseInt(recordState.payer);
 				recordState.payees.forEach(payeeIdx => {
 					let amount = t;
@@ -2025,7 +1932,6 @@
 				});
 			}
 		
-			// Log the event
 			const rName = roundNames[recordState.roundIndex] ? roundNames[recordState.roundIndex].charAt(0) : 'E';
 			const logEntry = {
 				game: `${rName}-${recordState.handIndex}`,
@@ -2040,7 +1946,6 @@
 			recordState.logs.push(logEntry);
 			changes.forEach((c, i) => recordState.totals[i] += c);
 		
-			// Dealer Progression Logic
 			if (recordState.payees.has(recordState.currentDealer)) {
 				recordState.dealerStreak++;
 			} else {
@@ -2056,14 +1961,12 @@
 				}
 			}
 		
-			// Game over check
 			if (recordState.roundIndex > 3) {
 				renderScoreboard();
 				triggerGameOver();
 				return;
 			}
 		
-			// Reset Form for next hand
 			recordState.tai = 3;
 			document.getElementById('record-tai-val').innerText = '3';
 			recordState.payees.clear();
@@ -2075,9 +1978,29 @@
 			updateGameStatus();
 			renderScoreboard();
 			resetCalculator();
+			saveGameState();
 		});
 		
-		// --- UNDO LAST HAND LOGIC ---
+		function saveGameState() {
+			localStorage.setItem('mahjong_app_state', JSON.stringify(recordState));
+		}
+		
+		function loadGameState() {
+			const savedData = localStorage.getItem('mahjong_app_state');
+			if (savedData) {
+				try {
+					recordState = JSON.parse(savedData);
+					if (typeof updateTable === 'function') updateTable();
+					if (typeof updateLogUI === 'function') updateLogUI();
+				} catch (e) {
+					console.error("Failed parsing restored state data: ", e);
+				}
+			}
+		}
+		
+		// ==========================================
+		// UNDO LAST HAND LOGIC
+		// ==========================================
 		document.getElementById('undo-score-btn').addEventListener('click', () => {
 			if (recordState.logs.length === 0) {
 				alert("No hands to undo.");
@@ -2111,22 +2034,22 @@
 				updateGameStatus();
 				renderScoreboard();
 				updateDynamicDealerLabel();
+				saveGameState();
 			}
 		});
 		
-		// --- NEW GAME OVER LOGIC ---
+		// ==========================================
+		// GAME OVER LOGIC
+		// ==========================================
 		function triggerGameOver() {
-			// Hide controls, show game over UI
 			document.getElementById('gameplay-controls').style.display = 'none';
 			document.getElementById('game-over-ui').style.display = 'block';
 		
-			// Format today's date and show the timestamp header
 			const today = new Date();
 			const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
 			document.getElementById('scoreboard-date').innerText = `Game played on ${formattedDate}`;
 			document.getElementById('scoreboard-timestamp').style.display = 'block';
 		
-			// Find the winner(s)
 			const maxScore = Math.max(...recordState.totals);
 			const winners = [];
 			recordState.totals.forEach((score, index) => {
@@ -2136,13 +2059,14 @@
 			const winnerText = winners.join(' & ') + (winners.length > 1 ? ' Tie for the Win!' : ' Wins!');
 			document.getElementById('winner-announcement').innerText = winnerText;
 		
-			// Transform the reset button
 			const endBtn = document.getElementById('end-game-btn');
 			endBtn.innerHTML = '<span>Start<br>New Game</span><img src="icons/reset2.png" alt="Reset" class="btn-icon">';
 			endBtn.style.backgroundColor = 'var(--mahjong-blue)';
 		}
 		
-		// --- EXPORT BUTTONS LOGIC ---
+		// ==========================================
+		// EXPORT BUTTONS LOGIC
+		// ==========================================
 		document.getElementById('copy-table-btn').addEventListener('click', () => {
 			let text = "Hand\t" + recordState.players.join("\t") + "\n";
 			recordState.logs.forEach(log => {
@@ -2163,7 +2087,6 @@
 			const tableElement = document.getElementById('capture-area'); 
 			const btn = document.getElementById('save-image-btn');
 			
-			// Change to "Saving..." but keep the formatting and icon
 			btn.innerText = "Saving...";
 			
 			const previousScrollY = window.scrollY;
@@ -2180,10 +2103,8 @@
 				link.href = canvas.toDataURL('image/png');
 				link.click();
 				
-				// Change to "Saved!" with the formatting and icon
 				btn.innerText = "Saved!";
 				
-				// Restore the original button state after 2 seconds
 				setTimeout(() => {
 					btn.innerHTML = '<strong>Save Image<br>of Scoreboard</strong>&nbsp;<img src="icons/save2.png" alt="Save" class="btn-icon">';
 				}, 2000);
@@ -2195,34 +2116,32 @@
 			});
 		});
 		
-		// 6. Draw the Table
 		function renderScoreboard() {
 			const tbody = document.getElementById('scoreboard-body');
 			const tfoot = document.getElementById('scoreboard-footer');
 			
 			tbody.innerHTML = '';
 			recordState.logs.forEach(log => {
-				let row = `<tr><td class="scoreboard-row-header" style="font-weight: bold; background: #f9f9f9; border-right: 1px solid #eee;">${log.game}</td>`;
+				let row = `<tr><td class="scoreboard-row-header" style="font-weight: bold; background: var(--bg-table); border-right: 2px solid var(--text-primary);">${log.game}</td>`;
 				log.changes.forEach(c => {
-					if (c > 0) row += `<td style="color: var(--mahjong-green) !important; font-weight: bold;">+${c}</td>`;
-					else if (c < 0) row += `<td style="color: var(--mahjong-red) !important;">${c}</td>`;
-					else row += `<td style="color: #bbb;">0</td>`;
+					if (c > 0) row += `<td style="color: var(--mahjong-green) !important; border-top: 1px solid var(--text-primary); border-bottom: 1px solid var(--text-primary); font-weight: bold;">+${c}</td>`;
+					else if (c < 0) row += `<td style="color: var(--mahjong-red) !important; border-top: 1px solid var(--text-primary); border-bottom: 1px solid var(--text-primary);">${c}</td>`;
+					else row += `<td style="border-top: 1px solid var(--text-primary); border-bottom: 1px solid var(--text-primary);">0</td>`;
 				});
 				row += `</tr>`;
 				tbody.innerHTML += row;
 			});
 		
-			let footerRow = `<tr><td style="padding: 10px 4px; border-right: 1px solid #ccc;">TOTAL</td>`;
+			let footerRow = `<tr><td style="padding: 10px 4px; font-weight: bold; border-top: 1px solid var(--text-primary);">TOTAL</td>`;
 			recordState.totals.forEach(t => {
-				if (t > 0) footerRow += `<td style="color: var(--mahjong-green) !important; padding: 10px 4px;">+${t}</td>`;
-				else if (t < 0) footerRow += `<td style="color: var(--mahjong-red) !important; padding: 10px 4px;">${t}</td>`;
-				else footerRow += `<td style="padding: 10px 4px; color: #777;">0</td>`;
+				if (t > 0) footerRow += `<td style="color: var(--mahjong-green) !important; font-weight: bold; padding: 10px 4px;">+${t}</td>`;
+				else if (t < 0) footerRow += `<td style="color: var(--mahjong-red) !important; font-weight: bold; padding: 10px 4px;">${t}</td>`;
+				else footerRow += `<td style="padding: 10px 4px; font-weight: bold; border-top: 2px solid var(--text-primary);">0</td>`;
 			});
 			footerRow += `</tr>`;
 			tfoot.innerHTML = footerRow;
 		}
 		
-		// 7. End Game Reset
 		document.getElementById('end-game-btn').addEventListener('click', () => {
 			const isGameOver = document.getElementById('game-over-ui').style.display === 'block';
 			
@@ -2233,7 +2152,6 @@
 			}
 		});
 		
-		// 8. Seating Order Logic
 		document.getElementById('change-seating-btn').addEventListener('click', () => {
 			const reseatUI = document.getElementById('reseat-ui');
 			const seatingGroups = document.getElementById('seating-groups');
@@ -2247,7 +2165,6 @@
 					'<span class="text-gray">北 North</span>'
 				];
 				
-				// Generate a row of buttons for each seat
 				seatNames.forEach((seatName, seatIdx) => {
 					let html = `<div style="font-size: 13px; font-weight: bold; margin-bottom: 2px;">${seatName}</div>`;
 					html += `<div class="segment-group" id="seat-group-${seatIdx}">`;
@@ -2259,18 +2176,18 @@
 					seatingGroups.innerHTML += html;
 				});
 		
-				// Add tap logic to the newly generated buttons
-				document.querySelectorAll('[id^="seat-group-"]').forEach(group => {
-					group.querySelectorAll('.segment-btn').forEach(btn => {
-						btn.addEventListener('click', (e) => {
+				const reseatUI = document.getElementById('reseat-ui');
+				reseatUI.addEventListener('click', (e) => {
+					if (e.target.classList.contains('segment-btn')) {
+						const group = e.target.closest('.segment-group'); 
+						if (group) {
 							group.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
 							e.target.classList.add('active');
-						});
-					});
+						}
+					}
 				});
 		
 				reseatUI.style.display = 'block';
-				// 'block: center' forces the div to the middle of the screen, bypassing your sticky header
 				reseatUI.scrollIntoView({ behavior: 'smooth', block: 'center' });
 			} else {
 				reseatUI.style.display = 'none';
@@ -2310,6 +2227,7 @@
 			updateGameStatus();
 			renderScoreboard();
 			updateDynamicDealerLabel();
+			saveGameState();
 		});
 
     </script>
