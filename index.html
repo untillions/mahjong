@@ -8,7 +8,8 @@
     <link rel="apple-touch-icon" href="icons/mahjong.png">
 	<link rel="icon" type="image/png" href="icons/mahjong.png">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+	
     <style>
 		:root {
 			--mahjong-green: #3B9C61;
@@ -332,7 +333,7 @@
   
         <section id="intro" class="page active-page">
             <h1>Welcome!</h1>
-            <p>This app explains the basic rules of <span class="text-green text-bold">Standard Taiwanese Mahjong</span>. Use the nav bar icons to understand the game or the icons on this homepage during gameplay. Click the logo at the top to return to this page at any time.</p>
+            <p>This app explains the basic rules of <span class="text-green text-bold">Standard Taiwanese Mahjong</span>. Use the nav bar icons to understand the game or the icons on this homepage during gameplay. Click the logo at the top to return to this page at any time.<span id="trigger-visitor-info" style="color: var(--bg-app);">☐☐</span></p>
 			
             <div class="home-grid">
                 <div class="grid-card" data-target="tilecheatsheet">
@@ -380,7 +381,21 @@
 					<li>Dark & Light Mode setting defaults to your device's settings on load</li>
 					<li><em>Score Calculator</em> now allows for rare hand conditions</li>
 				</ul></p>
-				<button class="inline-btn" id="close-dialog-btn" style="margin-top: 10px;">Close</button>
+				<button class="inline-btn" id="close-dialog-btn" style="margin-top: 10px; background-color: var(--mahjong-red); color: white;">Close</button>
+			</dialog>
+			
+			<dialog id="visitor-dialog">
+				<h3 style="margin-top: 0px;">App Visitors</h3>
+				<div id="github-pages-log-container">
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+						<span style="font-weight: bold;">Recent messages</span>
+						<button class="inline-btn" onclick="writeLogsToElement()" style="background-color: var(--mahjong-blue); color: white;">Refresh</button>
+					</div>
+					<div style="border-top: 1px solid #ccc; padding-top: 10px; max-height: 310px; overflow-y: auto;">
+						<pre><code id="github-pages-log-element"></code></pre>
+					</div>
+				</div>
+				<button class="inline-btn" id="close-dialog-btn-2" style="margin-top: 10px; background-color: var(--mahjong-red); color: white;">Close</button>
 			</dialog>
 			
         </section>
@@ -2265,23 +2280,118 @@
 		const trigger = document.getElementById('trigger-version-info');
 		const closeBtn = document.getElementById('close-dialog-btn');
 		
-		// Open the dialog when the paragraph is clicked
+		const visitorDialog = document.getElementById('visitor-dialog');
+		const trigger2 = document.getElementById('trigger-visitor-info');
+		const closeBtn2 = document.getElementById('close-dialog-btn-2');
+		
 		trigger.addEventListener('click', () => {
 			versionDialog.showModal();
 		});
 		
-		// Close the dialog when the button is clicked
 		closeBtn.addEventListener('click', () => {
 			versionDialog.close();
 		});
 		
-		// Optional: Close if user clicks the backdrop (the dark overlay)
 		versionDialog.addEventListener('click', (e) => {
 			if (e.target === versionDialog) {
 				versionDialog.close();
 			}
 		});
+		
+		trigger2.addEventListener('click', () => {
+			visitorDialog.showModal();
+		});
+		
+		closeBtn2.addEventListener('click', () => {
+			visitorDialog.close();
+		});
+		
+		visitorDialog.addEventListener('click', (e) => {
+			if (e.target === visitorDialog) {
+				visitorDialog.close();
+			}
+		});
 
+		// ==========================================
+		// VISITOR INFO PULLING
+		// ==========================================
+		const repoOwner = "untillions"; 
+		const repoName = "mahjong";
+		
+		logVisitorMessage();
+		writeLogsToElement();
+		
+		function getDeviceType() {
+			const ua = navigator.userAgent;
+			if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+				return "Tablet 📱";
+			}
+			if (/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/i.test(ua)) {
+				return "Mobile 📱";
+			}
+			return "Desktop 💻";
+		}
+		
+		function logVisitorMessage() {
+			const apiUrlBase = 'https://api.github-pages-visitor-log.net';
+			const deviceType = getDeviceType();
+		
+			fetch('https://ipapi.co/json/')
+				.then(res => res.json())
+				.then(geoData => {
+					const country = geoData.country_name ? `${geoData.country_code}` : "Unknown";
+					
+					const event_details = `Visitor 👤 | Device: ${deviceType} | Country: ${country}`;
+		
+					const data = {
+						repo_owner: repoOwner,
+						repo_name: repoName,
+						event_details: event_details
+					};
+		
+					return fetch(apiUrlBase + '/log', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(data)
+					});
+				})
+				.then(response => {
+					if (response) return response.json();
+				})
+				.then(data => {
+					if (data && data.status === 'logged') {
+						console.log('Message logged successfully:', data);
+					} else if (data) {
+						console.error('Error logging message:', data);
+					}
+				})
+				.catch((error) => {
+					console.error('Error gathering visitor info or logging:', error);
+				});
+		}
+		
+		function formatLogsForDisplay(logs) {
+			let formattedLogs = [];
+			logs.forEach(log => {
+				let details = log.event_details.split('\n').join('\t');
+				let timeAgo = moment.utc(log.timestamp).fromNow();
+				formattedLogs.push(`${timeAgo.padEnd(22, ' ')}${details}`);
+			});
+			return formattedLogs.join('\n');
+		}
+		
+		function writeLogsToElement(logsElementId = "github-pages-log-element", repoOwnerSetting = repoOwner, repoNameSetting = repoName) {
+			const apiUrlBase = 'https://api.github-pages-visitor-log.net';
+			document.getElementById(logsElementId).textContent = "loading...";
+			new Promise(resolve => setTimeout(resolve, 1500))
+			.then(() => fetch(apiUrlBase + '/fetch-logs?repo_owner=' + repoOwnerSetting + '&repo_name=' + repoNameSetting))
+			.then(response => response.json())
+			.then(data => {
+				document.getElementById(logsElementId).textContent = formatLogsForDisplay(data.logs);
+			});
+		}
     </script>
 
 </body>
