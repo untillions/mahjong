@@ -48,7 +48,7 @@
 
         body { 
 			background-color: var(--bg-app); color: var(--text-primary); height: 100vh;
-			display: flex; flex-direction: column; overflow: hidden; 
+			max-width: 600px; display: flex; flex-direction: column; overflow: hidden; 
 		}
 		
 		/* Specialized UI */
@@ -391,7 +391,7 @@
 						<span style="font-weight: bold;">Recent messages</span>
 						<button class="inline-btn" onclick="writeLogsToElement()" style="background-color: var(--mahjong-blue); color: white;">Refresh</button>
 					</div>
-					<div style="border-top: 1px solid #ccc; padding-top: 10px; max-height: 310px; overflow-y: auto;">
+					<div style="border-top: 1px solid #ccc; padding-top: 10px; font-size: 10px; max-height: 310px; overflow-y: auto;">
 						<pre><code id="github-pages-log-element"></code></pre>
 					</div>
 				</div>
@@ -2339,9 +2339,16 @@
 			fetch('https://ipapi.co/json/')
 				.then(res => res.json())
 				.then(geoData => {
-					const country = geoData.country_name ? `${geoData.country_code}` : "Unknown";
+					let locationDetails = "";
+		
+					if (geoData.country_code === "US") {
+						const stateInfo = geoData.region_code ? ` - ${geoData.region_code}` : "";
+						locationDetails = `USA${stateInfo}`;
+					} else {
+						locationDetails = geoData.country_name ? `${geoData.country_code}` : "Unknown";
+					}
 					
-					const event_details = `Visitor 👤 | Device: ${deviceType} | Country: ${country}`;
+					const event_details = `👤 | Device: ${deviceType} | Location: ${locationDetails}`;
 		
 					const data = {
 						repo_owner: repoOwner,
@@ -2376,8 +2383,16 @@
 			let formattedLogs = [];
 			logs.forEach(log => {
 				let details = log.event_details.split('\n').join('\t');
+				
+				if (details.includes("Visitor 👤 | ")) {
+					details = details.replace("Visitor 👤 | ", "👤 | ");
+				}
+				else if (details.includes("Visitor 👤")) {
+					details = details.replace("Visitor 👤", "👤");
+				}
+		
 				let timeAgo = moment.utc(log.timestamp).fromNow();
-				formattedLogs.push(`${timeAgo.padEnd(22, ' ')}${details}`);
+				formattedLogs.push(`${details} | Visited: ${timeAgo}`);
 			});
 			return formattedLogs.join('\n');
 		}
