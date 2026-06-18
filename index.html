@@ -852,7 +852,8 @@
 					</tbody>
 				</table>
 			</div>
-				
+			
+			<h2>Tai Conditions</h2>
 			<h3>Regular Win Conditions</h3>
 			<p>
 				<div class="table-wrapper">
@@ -1021,21 +1022,21 @@
 							<div style="font-size: 10px; color: #888; text-transform: uppercase; font-weight: bold; margin-bottom: 6px;">Base</div>
 							<div id="display-base-val" style="font-size: 18px; font-weight: bold;">0</div>
 						</div>
-						<div style="font-weight: bold; color: #aaa;">+</div>
-						<div style="flex: 2; display: flex; flex-direction: column; align-items: center;">
+						<div style="font-weight: bold; color: #aaa;  margin-top: 16px;">+</div>
+						<div style="flex: 2.25; display: flex; flex-direction: column; align-items: center;">
 							<div style="font-size: 10px; color: #888; text-transform: uppercase; font-weight: bold; margin-bottom: 6px;">Tai Earned</div>
 							<div class="counter-controls" style="gap: 8px;">
 								<div class="counter-btn" onclick="updateRecordTai(-1)" style="width: 24px; height: 24px; font-size: 16px;">-</div>
-								<div class="counter-val" id="record-tai-val" style="color: var(--mahjong-green); font-size: 16px; width: 16px;">0</div>
+								<div class="counter-val" id="record-tai-val" style="color: var(--mahjong-green); font-size: 18px; width: 18px;">0</div>
 								<div class="counter-btn" onclick="updateRecordTai(1)" style="width: 24px; height: 24px; font-size: 16px;">+</div>
 							</div>
 						</div>
-						<div style="font-weight: bold; color: #aaa;">×</div>
+						<div style="font-weight: bold; color: #aaa; margin-top: 16px;">×</div>
 						<div style="flex: 1.5;">
 							<div style="font-size: 10px; color: #888; text-transform: uppercase; font-weight: bold; margin-bottom: 6px;">Multiplier</div>
 							<div id="display-tai-val" style="font-size: 18px; font-weight: bold;">1</div>
 						</div>
-						<div style="font-weight: bold; color: #aaa;">=</div>
+						<div style="font-weight: bold; color: #aaa; margin-top: 16px;">=</div>
 						<div style="flex: 1;">
 							<div style="font-size: 10px; color: #888; text-transform: uppercase; font-weight: bold; margin-bottom: 6px;">Total</div>
 							<div id="display-total-val" style="font-size: 18px; font-weight: bold; color: var(--mahjong-blue);">0</div>
@@ -1338,14 +1339,14 @@
 					<div style="flex: 1; display: flex; flex-direction: column; gap: 4px; border-right: 1px solid rgba(255, 255, 255, 0.4); padding-right: 12px;">
 						<div class="receipt-total">
 							Total: <span id="calc-total">0</span> Tai
-							<span id="calc-dealer-adjusted" style="font-style: italic; color: var(--mahjong-red); font-size: 14px; font-weight: bold; opacity: 0.9; display: none;"></span>
+							<span id="calc-dealer-adjusted" style="font-style: italic; background-color: var(--bg-app); border-radius: 5px; margin: 3px 0 0 -3px; padding: 3px 6px; width: fit-content; color: var(--mahjong-red); font-size: 14px; font-weight: bold; display: none;"></span>
 						</div>
 						<div class="receipt-breakdown" id="calc-breakdown">No conditions met.</div>
 					</div>
 					
 					<div style="flex: 1; padding-left: 12px;">
-						<p style="margin: 0; font-size: 12px; ">Remember, <span style="color: black; font-weight: bold;">tai</span> is just part of the total points calculation:</p>
-						<p style="margin: 6px 0; text-align: center; font-weight: bold; font-size: 12px;"><em>base</em> + <em>(<span style="color: black;">tai</span> × multiplier)</em></p>
+						<p style="margin: 0; font-size: 12px; color: white;">Remember, <span style="color: black; font-weight: bold;">tai</span> is just part of the total points calculation:</p>
+						<p style="margin: 6px 0; text-align: center; font-weight: bold; font-size: 12px; color: white;"><em>base</em> + <em>(<span style="color: black;">tai</span> × multiplier)</em></p>
 					</div>
 				</div>
 			</div>
@@ -1411,8 +1412,8 @@
 			</div>
 			
 			<div class="calc-section-title" id="toggle-rare-hands" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; margin-bottom: 20px; color: var(--text-primary);">
-				<span>Rare Hand Conditions</span>
-				<span id="rare-toggle-icon" style="font-size: 12px; transition: transform 0.2s;">▼</span>
+				<span class="text-blue">Rare Hand Conditions</span>
+				<span id="rare-toggle-icon" style="font-size: 12px; color: var(--mahjong-blue); transition: transform 0.2s;">▼</span>
 			</div>
 			
 			<div id="rare-hands-content">
@@ -1452,10 +1453,6 @@
                 <button class="inline-btn" data-to="scoring">
 					<span>More on&nbsp;<br>Scoring&nbsp;</span>
 					<img src="icons/scoring2.png" alt="Scoring" class="btn-icon">
-				</button>
-                <button class="inline-btn" data-to="record">
-					<span>Record&nbsp;<br>a Hand&nbsp;</span>
-					<img src="icons/record2.png" alt="Record" class="btn-icon">
 				</button>
 				<button class="inline-btn" data-to="intro">
 					<span>⏎&nbsp;Return<br>to Home</span>
