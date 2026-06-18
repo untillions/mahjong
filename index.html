@@ -179,13 +179,25 @@
         .green-div { padding: 6px; font-size: 15px; margin-bottom: 10px; }
         .green-div-sm { padding: 10px; font-size: 13px; margin-bottom: 12px; }
         dialog { 
-			margin: auto; width: 90%; max-width: 400px; max-height: 80vh; 
-			overflow-y: auto; display: flex; flex-direction: column;
-			padding: 20px; border-radius: 8px; border: 1px solid #ccc;
+			margin: auto; width: 90%; max-width: 400px; max-height: 80vh; min-height: 60vh;
+			display: flex; flex-direction: column;
+			border-radius: 8px; border: 1px solid #ccc;
 			background-color: var(--bg-app); color: var(--text-primary);
+			padding: 0; overflow: hidden;
 		}
 		dialog:not([open]) { display: none; }
 		dialog::backdrop { background: var(--bg-app); opacity: 0.5; }
+
+		.dialog-content {
+			padding: 20px;
+			overflow-y: auto;
+			flex: 1;
+		}
+		.dialog-footer {
+			padding: 12px 20px 20px 20px;
+			background-color: var(--bg-app);
+			border-top: 1px solid var(--border-color);
+		}
         
         /* Table Styling */
         .table-wrapper {
@@ -371,22 +383,35 @@
 			</div>
 
             <p style="margin-top: 24px; font-size: 12px; color: #777; text-align: center;">Icons by <em>Freepik</em> on <a href="https://www.flaticon.com/authors/freepik" title="Flaticon" style="color: #777;">Flaticon</a></p>
-			<p id="trigger-version-info" class= "text-italic text-center text-blue" style="cursor: pointer; font-size: 12px; color: #777;">Version 1.2.4</p>
+			<p id="trigger-version-info" class= "text-italic text-center text-blue" style="cursor: pointer; font-size: 12px; color: #777;">Version 1.2.5</p>
 			
 			<dialog id="version-dialog">
-				<h3 style="margin-top: 0px;">App Version Info</h3>
-				<p>Version: <strong>1.2.4</strong></p>
-				<p>Last Updated: <strong>June 14, 2026</strong></p>
-				<p>Latest Updates:
-				<ul style="margin-left: 20px; font-size: 10pt;">
-					<li>"Undo Last Hand" button added to <em>Record</em> tab</li>
-					<li>"Reassign Seating" automatically appears after each round in <em>Record</em> tab</li>
-					<li><em>Score Calculator</em> syncs automatically to <em>Record</em> tab</li>
-					<li><em>Record</em> tab buttons rearranged for a more natural flow</li>
-					<li>Dark & Light Mode setting defaults to your device's settings on load</li>
-					<li><em>Score Calculator</em> now allows for rare hand conditions</li>
-				</ul></p>
-				<button class="inline-btn" id="close-dialog-btn" style="margin-top: 10px; background-color: var(--mahjong-red); color: white;">Close</button>
+				<div class="dialog-content">
+					<h3 style="margin-top: 0px;">App Version Info</h3>
+					<p>Version: <strong>1.2.5</strong></p>
+					<p>Last Updated: <strong>June 18, 2026</strong></p>
+					<p><span class="text-blue text-bold">Version 1.2.5 Updates:</span>
+					<ul style="margin-left: 20px; font-size: 10pt;">
+						<li>Bug fixes</li>
+						<li>Rewrite of <em>Scoring</em> tab to include better formula: base + tai × multiplier (new scoring values still TBD)</li>
+						<li><em>Score Calculator</em> now clearly represents "tai" apart from "base"</li>
+						<li><em>Record</em> tab UI rearranged once more to clearly show the points calculation</li>
+						<li><em>Record</em> game setup now allows user to input starting dealer (not only defaulting to East) and the relative value of base to tai</li>
+					</ul></p>
+					<p><span class="text-blue text-bold">Version 1.2.4 Updates:</span>
+					<ul style="margin-left: 20px; font-size: 10pt;">
+						<li>"Undo Last Hand" button added to <em>Record</em> tab</li>
+						<li>"Reassign Seating" automatically appears after each round in <em>Record</em> tab</li>
+						<li><em>Score Calculator</em> syncs automatically to <em>Record</em> tab</li>
+						<li><em>Record</em> tab buttons rearranged for a more natural flow</li>
+						<li>Dark & Light Mode setting defaults to your device's settings on load</li>
+						<li><em>Score Calculator</em> now allows for rare hand conditions</li>
+					</ul></p>
+				</div>
+				
+				<div class="dialog-footer">
+					<button class="inline-btn" id="close-dialog-btn" style="width: 100%; background-color: var(--mahjong-red); color: white;">Close</button>
+				</div>
 			</dialog>
 			
         </section>
@@ -2374,6 +2399,7 @@
 		
 		trigger.addEventListener('click', () => {
 			versionDialog.showModal();
+			document.querySelector('.dialog-content').scrollTop = 0; 
 		});
 		
 		closeBtn.addEventListener('click', () => {
