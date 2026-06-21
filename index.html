@@ -48,7 +48,7 @@
 
         body { 
 			background-color: var(--bg-app); color: var(--text-primary); height: 100vh;
-			display: flex; flex-direction: column; overflow: hidden;
+			display: flex; flex-direction: column; overflow: hidden; margin-bottom: 80px;
 		}
 		
 		main {
@@ -218,7 +218,8 @@
 
         /* Tile Displays */
         .tile-row { display: flex; gap: 2px; margin-bottom: 8px; width: 100%; }
-        .tile-row img { flex: 1; width: 10%; max-width: 40px; height: auto; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        .tile-row img { width: 100%; height: auto; display: block; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        .tile-item { flex: 1; max-width: 40px; text-align: center; }
         .inline-tile { height: 40px; vertical-align: middle; margin: 0 4px; border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
         .suit-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
         .zh-char { font-size: 1.25em; vertical-align: middle; font-weight: 500; }
@@ -260,7 +261,11 @@
 
 
 		/* Segmented Controls */
-		.segment-group { display: flex; background: var(--border-color); border-radius: 24px; padding: 2px; margin-bottom: 4px; }
+		.segment-group { 
+			display: flex; background: var(--border-color); border-radius: 24px; padding: 2px; margin-bottom: 4px;
+			overflow-y: hidden; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+			}
+		.segment-group::-webkit-scrollbar { display: none; }
 		.segment-btn {
 			flex: 1; text-align: center; padding: 10px 6px; font-size: 12px; font-weight: 600; color: #555;
 			background: transparent; border: 1px solid transparent; border-radius: 20px; cursor: pointer;
@@ -269,6 +274,10 @@
 		.segment-btn.active {
 			background: #e8f5e9; border: 1px solid var(--mahjong-green); color: var(--mahjong-green);
 			font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+		}
+		.conflict {
+			border: 1px solid var(--mahjong-red) !important; color: var(--mahjong-red) !important;
+			background-color: #fff0f0; 
 		}
 		
 		
@@ -383,13 +392,19 @@
 			</div>
 
             <p style="margin-top: 24px; font-size: 12px; color: #777; text-align: center;">Icons by <em>Freepik</em> on <a href="https://www.flaticon.com/authors/freepik" title="Flaticon" style="color: #777;">Flaticon</a></p>
-			<p id="trigger-version-info" class= "text-italic text-center text-blue" style="cursor: pointer; font-size: 12px; color: #777;">Version 1.2.5</p>
+			<p id="trigger-version-info" class= "text-italic text-center text-blue" style="cursor: pointer; font-size: 12px; color: #777;">Version 1.2.6</p>
 			
 			<dialog id="version-dialog">
 				<div class="dialog-content">
 					<h3 style="margin-top: 0px;">App Version Info</h3>
-					<p>Version: <strong>1.2.5</strong></p>
-					<p>Last Updated: <strong>June 18, 2026</strong></p>
+					<p>Version: <strong>1.2.6</strong></p>
+					<p>Last Updated: <strong>June 21, 2026</strong></p>
+					<p><span class="text-blue text-bold">Version 1.2.6 Updates:</span>
+					<ul style="margin-left: 20px; font-size: 10pt;">
+						<li>More small tweaks and edits in <em>Setup</em>, <em>Gameplay</em>, and <em>Scoring</em> tabs</li>
+						<li><em>Record</em> tab can now warn the user in special cases with players like duplicate names, long names, or reseating the same player in two seats</li>
+						<li>Bug fixes including where restarting round or reseting calculator wasn’t clearing everything correctly</li>
+					</ul></p>
 					<p><span class="text-blue text-bold">Version 1.2.5 Updates:</span>
 					<ul style="margin-left: 20px; font-size: 10pt;">
 						<li>Bug fixes</li>
@@ -645,6 +660,7 @@
 				<p>A traditional game of Mahjong is 4 <strong>rounds</strong> with 4 <strong>hands</strong> in each round. Rounds follow the order of the winds (as does gameplay) in the following sequence:</p>
 				<p class="text-center text-bold text-red" style="margin-top: 8px;">East &rarr; South &rarr; West &rarr; North</p>
 				<div class="tile-row" data-render-tiles="wind" data-count="4" style="align-items: center; justify-content: center; gap: 20px;"></div>
+				<p class="text-center text-bold text-blue" style="margin-top: 10px;">Dōng&nbsp;  &rarr;  &nbsp;Nán&nbsp;&nbsp; &rarr;  &nbsp;&nbsp;Xī&nbsp;&nbsp;  &rarr;  &nbsp;&nbsp;&nbsp;Běi&nbsp;&nbsp;</p>
 				
 			<h3>Order of Play</h3>
 				<p>To begin, choose a side of the table to be "East". Players draw one of the 4 wind tiles and arrange themselves around the table based on the <strong>counterclockwise order</strong> of winds; so the "east" player is seated first, with "south" to their right, "west" to the right of "south", and "north" to the right of "west" around the table.</p>
@@ -679,14 +695,14 @@
 				
 			<h3>Replacements</h3>
 				<p>Players arrange their hands with the tiles stood up facing them. Players sort the tiles by suit in order 1-9 and put the honors together.</p>
-				<p>If any flower or season tiles have been drawn, these are played face up on the table in front of the player&rsquo;s rack, and players take one replacement tile at a time from the <strong>tail</strong> of the wall (in turn counterclockwise) until all players have 16 non-flower, non-season tiles in their hand. If a player draws a flower or season tile from the tail, this player will still have a replacement to draw (in turn with the other players). When drawing single tiles from the wall, always take the top tile from the end stack first, then the bottom tile.</p>
-				<p><strong>Example:</strong> The East, West, and North players are showing flowers and seasons. These players will draw replacement tiles one-at-a-time from the tail to match the number of flowers or seasons removed from their hand in this order: East player, West Player, North Player, West Player, North Player.</p>
+				<p>If any flower or season tiles have been drawn, these are played face up on the table in front of the player&rsquo;s rack, and players take one replacement tile at a time from the <strong>tail</strong> of the wall (in turn counterclockwise from the dealer's postion) until all players have 16 non-flower, non-season tiles in their hand. If a player draws a flower or season tile from the tail, this player will still have a replacement to draw (in turn with the other players). When drawing single tiles from the wall, always take the top tile from the end stack first, then the bottom tile.</p>
+				<p><strong>Example:</strong> The East, West, and North players are showing flowers and seasons. These players will draw replacement tiles one-at-a-time from the tail to match the number of flowers or seasons removed from their hand. Since the East player is the dealer, players will draw tiles in this order: East player, West Player, North Player, West Player, North Player.</p>
 				<img class="setup-image" src="images/setup7.png" alt="Replacements Example">
 								
 			<h3>Setting Up Later Hands</h3>
 				<p>After each <strong>hand</strong>, if the dealer declares h&uacute;, the starting position does not move. This player rolls the dice again for their second, third, or more times as dealer.</p>
 				<p>For any <strong>hand</strong> that the dealer did not h&uacute;, the starting position in the next hand passes to the next player counterclockwise. This player then rolls the dice, indicates which wall will be broken, and the player on that side of the wall will break again and begin the dealing of the tiles. Once all players have been dealer in a round, it is time to move to the next round.</p>
-				<p>At the beginning of each consecutive <strong>round</strong>, the East player becomes dealer again.</p>       
+				<p>At the beginning of each consecutive <strong>round</strong>, the East player will once again roll to determine the dealer.</p>
        
             <div class="action-row">
                 <button class="inline-btn" data-to="intro">
@@ -702,8 +718,7 @@
             <h1>Gameplay</h1>
 				
 			<h2>The Goal</h2>
-				<p>In a game of 16 tiles, be the first to create a hand of 5 sets and/or sequences of 3 (called <strong>melds</strong>) and 1 pair. This requires 17 tiles total to win.</p>
-				<p><span class="note-highlight"><strong>Note:</strong> Another variation uses 13 dealt tiles and one less meld.</span></p>
+				<p>In a game of 16 tiles, be the first to create a hand of 5 sets and/or sequences of 3 (called <strong>melds</strong>) and 1 pair. This requires 17 tiles total to win (meaning the hand is only completed using a final draw from the wall or claiming another player’s discarded tile).</p>
 				
 			<h2>Melds</h2>
 				<p>In a hand of 16 tiles, players are aiming to create 5 melds (<strong>sets</strong> or <strong>sequences</strong>) and 1 <strong>pair</strong>.</p>
@@ -720,7 +735,7 @@
 					<img src="tiles/tong9.png" alt="9 Circle" class="tile-md">
 					<img src="tiles/tong9.png" alt="9 Circle" class="tile-md">
 				</div>
-				<p>Sets are three of the same tile.</p>
+				<p><strong>Sets</strong> are three of the same tile.</p>
 				
 			<h3>Sequences</h3>
 				<div class="tile-row" style="margin-bottom: 12px; justify-content: flex-start;">
@@ -734,14 +749,14 @@
 					<img src="tiles/tiao2.png" alt="2 Bamboo" class="tile-md">
 					<img src="tiles/tiao3.png" alt="3 Bamboo" class="tile-md">
 				</div>
-				<p>Sequences are three sequential tiles in numerical order (suited tiles only).</p>
+				<p><strong>Sequences</strong> are three sequential tiles in numerical order (suited tiles only).</p>
 				
 			<h3>Pairs</h3>
 				<div class="tile-row" style="margin-bottom: 12px; justify-content: flex-start;">
 					<img src="tiles/wind2.png" alt="South Wind" class="tile-md">
 					<img src="tiles/wind2.png" alt="South Wind" class="tile-md">
 				</div>
-				<p>Pairs are two of the same tile. A pair could become a set if a third identical tile is drawn or claimed, or it can remain a pair to fulfill the winning hand condition.</p>
+				<p><strong>Pairs</strong> are two of the same tile. A pair could become a set if a third identical tile is drawn or claimed, or it can remain a pair to fulfill the winning hand condition.</p>
 				
 			<h2>Drawing and Discarding</h2>
 				<p>A typical turn consists of two steps:</p>
@@ -756,30 +771,30 @@
 				<p>There are three ways to claim tiles that other players discard, bypassing the standard wall draw.</p>
 				
 			<h3>Chī <span class="zh-char">吃</span></h3>
-				<p>If a player discards a tile that could complete a sequence in the next player’s hand (counterclockwise), that player can claim it instead of drawing from the wall.</p>
-				<p>To do so, the next player must simply announce “Chī”, reveal the two matching sequence tiles from their hand, and place all three tiles face-up in front of them. This player then discards a tile as usual, and play continues to the person on their right.</p>
+				<p>If a player discards a tile that could complete a <strong>sequence</strong> in the next player’s hand (counterclockwise), that player can claim it instead of drawing from the wall.</p>
+				<p>To do so, the next player must simply announce “Chī”, reveal the two corresponding sequence tiles from their hand, and place all three tiles face-up in front of them. This player then discards a tile as usual, and play continues to the person on their right.</p>
 				<p><span class="note-highlight"><strong>Note:</strong> Players can only chī from the player sitting directly before them in the standard turn rotation.</span></p>
 				
 			<h3>Pèng <span class="zh-char">碰</span></h3>
-				<p>If any player discards a tile that could complete a set of 3 in another player’s hand, that player can claim it—even if it is not currently their turn in the rotation.</p>
+				<p>If any player discards a tile that could complete a <strong>set</strong> in another player’s hand, that player can claim it immediately, regardless of turn order.</p>
 				<p>To do so, the player must announce “Pèng”, reveal the two identical tiles from their hand, and place all three tiles face-up in front of them. This player then discards a tile as usual, and play continues to the right of this player (regardless of how many players may have been "skipped" between the original player who discarded and the player who declared pèng).</p>
 				
 			<h3>Gàng <span class="zh-char">槓</span></h3>
-				<p>If any player discards a tile that could complete a set of 4 in another player’s hand, that player can claim it immediately, regardless of turn order.</p>
+				<p>If any player discards a tile that could promote a <strong>set</strong> to a group of 4 tiles in another player’s hand, that player can claim it immediately, regardless of turn order.</p>
 				<p>To do so, the player must announce “Gàng”, reveal the three identical tiles from their hand, and place all four tiles face-up in front of them. This is known as an <strong>open gàng</strong>. Because an extra tile is locked up in a set of four, the player must draw a replacement tile from the <strong>tail</strong> of the wall before discarding a tile as usual. Play then continues to the person on their right.</p>
 				
 			<h3>Special Gàng Conditions</h3>
-				<p>The standard claim results in an open gàng. However, a <strong>closed gàng</strong> can also be declared directly from a player's hidden hand.</p>
-				<p>If a player draws the fourth tile of a set already in their hand, they have two options:</p>
+				<p>The standard claim from another player's discarded tile results in an <strong>open gàng</strong>. However, a <strong>closed gàng</strong> can also be declared if a player draws the fourth tile from the wall for a set already completed in their hand.</p>
+				<p>If this happens, the player has two options:</p>
 				<ol style="margin-left: 24px; margin-bottom: 12px; font-size: 15px; line-height: 1.5;">
-					<li><strong>Declare it as a closed gàng:</strong> The player places all four tiles face-down in front of them (sometimes flipping the two outer tiles face-up to show the set identity). They draw a replacement tile from the tail of the wall, discard a tile, and play continues to their right. Declaring a closed gàng safely increases the hand's score if they achieve hú.</li>
-					<li><strong>Use it in a sequence:</strong> Keep the tile hidden and use it as part of a separate consecutive sequence (suited tiles only). This requires no declaration, keeps a player's strategy secret, and helps the player move closer to a generic win.</li>
+					<li><strong>Declare it as a closed gàng:</strong> The player places all four tiles face-down in front of them. They draw a replacement tile from the tail of the wall, discard a tile, and play continues to their right. Declaring a closed gàng increases the hand's score if they achieve hú and keeps the identity of the gàng secret to other players.</li>
+					<li><strong>Use it in a sequence:</strong> Keep the set as it was and use the fourth tile to complete a separate sequence (suited tiles only). This requires no declaration, keeps a player's strategy secret, and helps the player move closer to a generic win.</li>
 				</ol>
 				<p>Additionally, if a player already has an exposed pèng face-up on the table and they draw the fourth matching tile themselves, they can add it to the meld to upgrade it to an open gàng. They must then draw a replacement tile from the tail and discard.</p>
 				<p><span class="note-highlight"><strong>Note:</strong> Players are never allowed to use a tile discarded by another player to upgrade an existing face-up pèng.</span></p>
 				
 			<h3>Hú <span class="zh-char">胡</span></h3>
-				<p>When a player is exactly one tile away from winning (a state known as <strong>tenpai</strong>), they gain the ability to claim a discarded tile from <em>any</em> player to complete their hand—whether it finishes a sequence, a set, or their final pair. This is the only scenario where a pair can be completed using a discarded tile.</p>
+				<p>When a player is exactly one tile away from winning (a state known as <strong>tingpai</strong>), they gain the ability to claim a discarded tile from <em>any</em> player to complete their hand — whether it finishes a sequence, a set, or their final pair. This is the only scenario where a pair can be completed using a discarded tile.</p>
 				
 			<h3>Multiple Claims</h3>
 				<p>If two or more players attempt to claim the exact same discarded tile simultaneously, priority is given based on the following hierarchy:</p>
@@ -958,10 +973,10 @@
 				<p style="font-size: 13px; margin-bottom: 16px;">Enter player names in starting seating order.</p>
 				
 				<div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
-					<label class="player-label"><span class="text-red">東 East:</span> <input type="text" id="p1-name" placeholder="P1" class="player-input" style="width: 70%; font-weight: normal;"></label>
-					<label class="player-label"><span class="text-blue">南 South:</span> <input type="text" id="p2-name" placeholder="P2" class="player-input" style="width: 70%; font-weight: normal;"></label>
-					<label class="player-label"><span class="text-green">西 West:</span> <input type="text" id="p3-name" placeholder="P3" class="player-input" style="width: 70%; font-weight: normal;"></label>
-					<label class="player-label"><span class="text-gray">北 North:</span> <input type="text" id="p4-name" placeholder="P4" class="player-input" style="width: 70%; font-weight: normal;"></label>
+					<label class="player-label"><span class="text-red">東 East:</span> <input type="text" id="p1-name" placeholder="P1" class="player-input" style="width: 70%; font-weight: normal;" maxlength="10"></label>
+					<label class="player-label"><span class="text-blue">南 South:</span> <input type="text" id="p2-name" placeholder="P2" class="player-input" style="width: 70%; font-weight: normal;" maxlength="10"></label>
+					<label class="player-label"><span class="text-green">西 West:</span> <input type="text" id="p3-name" placeholder="P3" class="player-input" style="width: 70%; font-weight: normal;" maxlength="10"></label>
+					<label class="player-label"><span class="text-gray">北 North:</span> <input type="text" id="p4-name" placeholder="P4" class="player-input" style="width: 70%; font-weight: normal;" maxlength="10"></label>
 				</div>
 				<div class="calc-section-title" style="margin-top: 8px;">First Dealer</div>
 				<div class="chip-grid" id="setup-dealer-chips" style="margin-bottom: 16px;">
@@ -1000,17 +1015,6 @@
 						<span style="font-size: 12px; color: #555; font-weight: normal;">Dealer: <strong id="current-dealer-name">P1</strong></span>
 					</div>
 		
-					<div id="reseat-ui">
-						<h3 style="font-size: 14px; margin: 0 0 6px 0; color: var(--mahjong-blue);">Reassign Seating</h3>
-						<p style="font-size: 12px; color: #666; margin-bottom: 12px;">Tap to assign players to their new seats. If seats are unchanged, click "Save & Continue".</p>
-						<div id="seating-groups" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
-						<div style="display: flex; justify-content: center; width: 100%;">
-							<button class="inline-btn" id="save-seating-btn" style="width: auto; background-color: var(--mahjong-green); color: white; border: none;">
-								<span>Save & <br>Continue </span><img src="icons/save2.png" alt="Save" class="btn-icon">
-							</button>
-						</div>
-					</div>
-					
 					<div class="calc-section-title" style="margin-top: 8px;">Who Won?</div>
 					<div class="chip-grid" id="record-payees" style="margin-bottom: 12px;"></div>
 		
@@ -1061,12 +1065,30 @@
 						<button class="inline-btn" id="change-seating-btn">
 							<span>Change <br>Seating </span><img src="icons/change2.png" alt="Change" class="btn-icon">
 						</button>
-						<button class="inline-btn" id="end-game-btn" style="background-color: var(--mahjong-red); color: white;">
+						<button class="inline-btn end-game-trigger" style="background-color: var(--mahjong-red); color: white;">
 							<span>End Game<br>& Reset</span>
 							<img src="icons/reset2.png" alt="Reset" class="btn-icon">
 						</button>
 					</div>
 	
+				</div>
+				
+				<div id="reseat-ui">
+					<h3 style="font-size: 14px; margin: 0 0 6px 0; color: var(--mahjong-blue);">Reassign Seating</h3>
+					<p style="font-size: 12px; color: #666; margin-bottom: 12px;">Tap to assign players to their new seats. If seats are unchanged, click "Save & Continue".</p>
+					<div id="seating-groups" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px;"></div>
+					<div class="calc-section-title" style="margin-top: 16px; margin-bottom: 8px;">New Dealer</div>
+					<div class="chip-grid" id="reseat-dealer-chips" style="margin-bottom: 16px;">
+						<div class="smart-chip active" data-idx="0" id="reseat-chip-0"></div>
+						<div class="smart-chip" data-idx="1" id="reseat-chip-1"></div>
+						<div class="smart-chip" data-idx="2" id="reseat-chip-2"></div>
+						<div class="smart-chip" data-idx="3" id="reseat-chip-3"></div>
+					</div>
+					<div style="display: flex; justify-content: center; width: 100%;">
+						<button class="inline-btn" id="save-seating-btn" style="width: auto; background-color: var(--mahjong-green); color: white; border: none;">
+							<span>Save & <br>Continue </span><img src="icons/save2.png" alt="Save" class="btn-icon">
+						</button>
+					</div>
 				</div>
 		
 				<div id="game-over-ui" style="display: none; text-align: center; margin-bottom: 24px;">
@@ -1075,14 +1097,20 @@
 						<span style="font-size: 14px; margin-top: 4px; margin-bottom: 0; color: #555;">Game Over</span>
 					</div>
 					
-					<div style="display: flex; gap: 12px; justify-content: center;">
-						<button class="inline-btn" id="copy-table-btn" style="flex: 1; font-weight: bold; font-size: 12px; padding: 10px;">
+					<div style="display: flex; gap: 12px; margin-bottom: 12px; justify-content: center;">
+						<button class="inline-btn" id="copy-table-btn">
 							<span>Copy Table<br>of Scoreboard</span>
 							<img src="icons/copy2.png" alt="Copy" class="btn-icon">
 						</button>
-						<button class="inline-btn" id="save-image-btn" style="flex: 1; font-weight: bold; font-size: 12px; padding: 10px;">
+						<button class="inline-btn" id="save-image-btn">
 							<span>Save Image<br>of Scoreboard</span>
 							<img src="icons/save2.png" alt="Save" class="btn-icon">
+						</button>
+					</div>
+					<div style="display: flex; gap: 12px; margin-bottom: 12px; justify-content: center;">
+						<button class="inline-btn end-game-trigger" style="background-color: var(--mahjong-blue); color: white;">
+							<span>Start<br>New Game</span>
+							<img src="icons/reset2.png" alt="Reset" class="btn-icon">
 						</button>
 					</div>
 				</div>
@@ -1133,16 +1161,16 @@
             <div class="tile-row" data-render-tiles="wan" data-count="9" style="margin-bottom: 6px;"></div>
 
             <div class="tile-row" style="margin-bottom: 12px; font-size: 12px; font-weight: bold;">
-                <div style="flex: 1; text-align: center;">1</div>
-                <div style="flex: 1; text-align: center;">2</div>
-                <div style="flex: 1; text-align: center;">3</div>
-                <div style="flex: 1; text-align: center;">4</div>
-                <div style="flex: 1; text-align: center;">5</div>
-                <div style="flex: 1; text-align: center;">6</div>
-                <div style="flex: 1; text-align: center;">7</div>
-                <div style="flex: 1; text-align: center;">8</div>
-                <div style="flex: 1; text-align: center;">9</div>
-            </div>
+				<div class="tile-item">1</div>
+				<div class="tile-item">2</div>
+				<div class="tile-item">3</div>
+				<div class="tile-item">4</div>
+				<div class="tile-item">5</div>
+				<div class="tile-item">6</div>
+				<div class="tile-item">7</div>
+				<div class="tile-item">8</div>
+				<div class="tile-item">9</div>
+			</div>
 
             <h2 class="h2-condensed">The Honors</h2>
             
@@ -1189,7 +1217,7 @@
                 <div style="flex: 1;">
                     <div class="suit-title">Flowers</div>
                     <div class="tile-row" style="gap: 2px;">
-                        <img src="tiles/flower1.png" alt="Plum" cclass="tile-sm">
+                        <img src="tiles/flower1.png" alt="Plum" class="tile-sm">
                         <img src="tiles/flower2.png" alt="Orchid" class="tile-sm">
                         <img src="tiles/flower3.png" alt="Chrysanthemum" class="tile-sm">
                         <img src="tiles/flower4.png" alt="Bamboo" class="tile-sm">
@@ -1339,7 +1367,7 @@
 					<div style="flex: 1; display: flex; flex-direction: column; gap: 4px; border-right: 1px solid rgba(255, 255, 255, 0.4); padding-right: 12px;">
 						<div class="receipt-total">
 							Total: <span id="calc-total">0</span> Tai
-							<span id="calc-dealer-adjusted" style="font-style: italic; background-color: var(--bg-app); border-radius: 5px; margin: 3px 0 0 -3px; padding: 3px 6px; width: fit-content; color: var(--mahjong-red); font-size: 14px; font-weight: bold; display: none;"></span>
+							<span id="calc-dealer-adjusted" style="background-color: var(--bg-app); border-radius: 5px; margin: 3px 0 0 -3px; padding: 3px 6px; width: fit-content; color: var(--mahjong-red); font-size: 14px; font-weight: bold; display: none;"></span>
 						</div>
 						<div class="receipt-breakdown" id="calc-breakdown">No conditions met.</div>
 					</div>
@@ -1546,7 +1574,7 @@
 		const calcState = {
 			winType: 'discard',
 			concealed: 'open',
-			counters: { base: 3, dealer: 0, expgang: 0, congang: 0 },
+			counters: { dealer: 0, expgang: 0, congang: 0 },
 			chips: new Set()
 		};
 		
@@ -1632,7 +1660,11 @@
 			
 			let htmlFragment = '';
 			for (let i = 1; i <= totalCount; i++) {
-				htmlFragment += `<img src="tiles/${assetPrefix}${i}.png" alt="${assetPrefix} tile ${i}">`;
+				// Wrap the image in the 'tile-item' div to maintain the fixed width
+				htmlFragment += `
+					<div class="tile-item">
+						<img src="tiles/${assetPrefix}${i}.png" alt="${assetPrefix} tile ${i}">
+					</div>`;
 			}
 			container.innerHTML = htmlFragment;
 		});
@@ -1805,7 +1837,7 @@
 		function resetCalculator() {
 			calcState.winType = 'discard';
 			calcState.concealed = 'open';
-			calcState.counters = { base: 3, dealer: 0, expgang: 0, congang: 0 };
+			calcState.counters = { dealer: 0, expgang: 0, congang: 0 };
 			calcState.chips.clear();
 		
 			document.getElementById('seg-win-type').children[0].click();
@@ -1839,18 +1871,53 @@
 		};
 		
 		const roundNames = ['東', '南', '西', '北'];
-		
 
         let initialDealerIndex = 0; // Defaults to East
+        let reseatDealerIndex = 0;
 
         // Live update the chips as names are typed
         ['p1-name', 'p2-name', 'p3-name', 'p4-name'].forEach((id, index) => {
-            const input = document.getElementById(id);
-            const chip = document.getElementById(`setup-chip-${index}`);
-            input.addEventListener('input', (e) => {
-                chip.innerText = e.target.value.trim() || `P${index + 1}`;
-            });
-        });
+			const input = document.getElementById(id);
+			const chip = document.getElementById(`setup-chip-${index}`);
+		
+			input.addEventListener('input', (e) => {
+				chip.innerText = e.target.value.trim() || `P${index + 1}`;
+		
+				const allChips = document.querySelectorAll('[id^="setup-chip-"]');
+				const currentNames = Array.from(allChips).map(c => c.innerText.trim());
+				const nameCounts = {};
+				currentNames.forEach(name => {
+					nameCounts[name] = (nameCounts[name] || 0) + 1;
+				});
+		
+				let hasConflict = false;
+				
+				allChips.forEach((c, idx) => {
+					const name = c.innerText.trim();
+					const inp = document.getElementById(`p${idx + 1}-name`);
+					const chip = document.getElementById(`setup-chip-${idx}`);
+					
+					if (nameCounts[name] > 1) {
+						inp.classList.add('text-red');
+						inp.style.borderColor = 'var(--mahjong-red)';
+						
+						chip.classList.add('conflict'); 
+						
+						hasConflict = true;
+					} else {
+						inp.classList.remove('text-red');
+						inp.style.borderColor = 'var(--border-color)';
+						chip.classList.remove('conflict');
+					}
+				});
+		
+				// 5. Toggle the Start button
+				const startBtn = document.getElementById('start-game-btn');
+				startBtn.disabled = hasConflict;
+				startBtn.style.opacity = hasConflict ? "0.5" : "1";
+				startBtn.style.cursor = hasConflict ? "not-allowed" : "pointer";
+			});
+		});
 
         // Handle dealer selection click
         document.querySelectorAll('#setup-dealer-chips .smart-chip').forEach(chip => {
@@ -1860,6 +1927,14 @@
                 initialDealerIndex = parseInt(e.target.dataset.idx);
             });
         });
+        
+        document.querySelectorAll('#reseat-dealer-chips .smart-chip').forEach(chip => {
+			chip.addEventListener('click', (e) => {
+				document.querySelectorAll('#reseat-dealer-chips .smart-chip').forEach(c => c.classList.remove('active'));
+				e.target.classList.add('active');
+				reseatDealerIndex = parseInt(e.target.dataset.idx);
+			});
+		});
         
 		// 1. Start Game Initialization
 		document.getElementById('start-game-btn').addEventListener('click', () => {
@@ -1900,10 +1975,6 @@
 			document.getElementById('game-over-ui').style.display = 'none';
 			document.getElementById('reseat-ui').style.display = 'none';
 			document.getElementById('scoreboard-timestamp').style.display = 'none';
-		
-			const endBtn = document.getElementById('end-game-btn');
-			endBtn.innerHTML = '<span>End Game<br>& Reset</span><img src="icons/reset2.png" alt="Reset" class="btn-icon">';
-			endBtn.style.backgroundColor = 'var(--mahjong-red)';
 		
 			document.getElementById('record-tai-val').innerText = '0';
 		});
@@ -2117,15 +2188,14 @@
 				if (recordState.handIndex > 4) {
 					recordState.handIndex = 1;
 					recordState.roundIndex++;
+					if (recordState.roundIndex > 3) {
+						renderScoreboard();
+						triggerGameOver();
+						return;
+					}
 					const reassignBtn = document.getElementById('change-seating-btn');
 					reassignBtn.click();
 				}
-			}
-		
-			if (recordState.roundIndex > 3) {
-				renderScoreboard();
-				triggerGameOver();
-				return;
 			}
 		
 			recordState.tai = 0;
@@ -2222,10 +2292,6 @@
 		
 			const winnerText = winners.join(' & ') + (winners.length > 1 ? ' Tie for the Win!' : ' Wins!');
 			document.getElementById('winner-announcement').innerText = winnerText;
-		
-			const endBtn = document.getElementById('end-game-btn');
-			endBtn.innerHTML = '<span>Start<br>New Game</span><img src="icons/reset2.png" alt="Reset" class="btn-icon">';
-			endBtn.style.backgroundColor = 'var(--mahjong-blue)';
 		}
 		
 		// ==========================================
@@ -2306,20 +2372,26 @@
 			tfoot.innerHTML = footerRow;
 		}
 		
-		document.getElementById('end-game-btn').addEventListener('click', () => {
-			const isGameOver = document.getElementById('game-over-ui').style.display === 'block';
-			
-			// Skip the confirm dialog if the game is already over
-			if(isGameOver || confirm("Are you sure you want to end this game? All records will be erased.")) {
+		document.querySelectorAll('.end-game-trigger').forEach(button => {
+			button.addEventListener('click', handleEndGame);
+		});
+		
+		function handleEndGame() {		
+			if (confirm("Are you sure you want to end this game? All records will be erased.")) {
 				document.getElementById('record-gameplay').style.display = 'none';
 				document.getElementById('record-setup').style.display = 'block';
+				
+				document.querySelectorAll('#setup-dealer-chips .smart-chip').forEach(c => c.classList.remove('active'));
+				document.getElementById('setup-chip-0').classList.add('active');
+				document.getElementById('setup-base-val').innerText = "3";
+				document.getElementById('setup-tai-val').innerText = "1";
 			}
-		});
+		}
 		
 		document.getElementById('change-seating-btn').addEventListener('click', () => {
 			const reseatUI = document.getElementById('reseat-ui');
 			const seatingGroups = document.getElementById('seating-groups');
-			
+						
 			if (reseatUI.style.display === 'none') {
 				seatingGroups.innerHTML = '';
 				const seatNames = [
@@ -2334,27 +2406,68 @@
 					html += `<div class="segment-group" id="seat-group-${seatIdx}">`;
 					recordState.players.forEach((p, pIdx) => {
 						const isActive = pIdx === seatIdx ? 'active' : '';
-						html += `<div class="segment-btn ${isActive}" data-pidx="${pIdx}">${p}</div>`;
+						html += `<div class="segment-btn ${isActive}" data-pidx="${pIdx}" style="padding: 6px 6px;">${p}</div>`;
 					});
 					html += `</div>`;
 					seatingGroups.innerHTML += html;
 				});
-		
-				const reseatUI = document.getElementById('reseat-ui');
-				reseatUI.addEventListener('click', (e) => {
-					if (e.target.classList.contains('segment-btn')) {
-						const group = e.target.closest('.segment-group'); 
-						if (group) {
-							group.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
-							e.target.classList.add('active');
-						}
-					}
-				});
-		
+				
+				document.getElementById('reseat-chip-0').innerText = recordState.players[0];
+				document.getElementById('reseat-chip-1').innerText = recordState.players[1];
+				document.getElementById('reseat-chip-2').innerText = recordState.players[2];
+				document.getElementById('reseat-chip-3').innerText = recordState.players[3];
+						
 				reseatUI.style.display = 'block';
+				document.getElementById('gameplay-controls').style.display = 'none';
 				reseatUI.scrollIntoView({ behavior: 'smooth', block: 'center' });
 			} else {
 				reseatUI.style.display = 'none';
+
+			}
+		});
+		
+		document.getElementById('reseat-ui').addEventListener('click', (e) => {
+			if (e.target.classList.contains('segment-btn')) {
+				const group = e.target.closest('.segment-group'); 
+				if (group) {
+					group.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
+					e.target.classList.add('active');
+					
+					const seatIdx = group.id.replace('seat-group-', '');
+					const dealerChip = document.getElementById(`reseat-chip-${seatIdx}`);
+					if (dealerChip) {
+						dealerChip.innerText = e.target.innerText;
+					}
+				}
+				
+				const allButtons = document.querySelectorAll('.segment-btn');
+				const nameCount = {};
+		
+				allButtons.forEach(btn => btn.classList.remove('conflict'));
+				document.querySelectorAll('.smart-chip').forEach(chip => chip.classList.remove('conflict'));
+		
+				allButtons.forEach(btn => {
+					if (btn.classList.contains('active')) {
+						const name = btn.innerText;
+						nameCount[name] = (nameCount[name] || 0) + 1;
+					}
+				});
+		
+				allButtons.forEach(btn => {
+					if (btn.classList.contains('active') && nameCount[btn.innerText] > 1) {
+						btn.classList.add('conflict');
+						
+						// Also mark the corresponding dealer chip
+						const seatIdx = btn.closest('.segment-group').id.replace('seat-group-', '');
+						document.getElementById(`reseat-chip-${seatIdx}`).classList.add('conflict');
+					}
+				});
+				
+				const saveBtn = document.getElementById('save-seating-btn');
+				const hasConflicts = document.querySelectorAll('.conflict').length > 0;
+				saveBtn.disabled = hasConflicts;
+				saveBtn.style.opacity = hasConflicts ? "0.5" : "1";
+				saveBtn.style.cursor = hasConflicts ? "not-allowed" : "pointer";
 			}
 		});
 		
@@ -2368,25 +2481,28 @@
 				}
 			});
 		
-			const unique = new Set(newIndices);
-			if (unique.size !== 4) {
-				alert("Each player must be assigned to exactly one seat. You have duplicates.");
-				return;
-			}
-		
-			const newPlayers = newIndices.map(oldIdx => recordState.players[oldIdx]);
-			const newTotals = newIndices.map(oldIdx => recordState.totals[oldIdx]);
+			const seatPlayers = newIndices.map(oldIdx => recordState.players[oldIdx]);
+			const seatTotals = newIndices.map(oldIdx => recordState.totals[oldIdx]);
 			
 			recordState.logs.forEach(log => {
-				log.changes = newIndices.map(oldIdx => log.changes[oldIdx]);
+				log.tempChanges = newIndices.map(oldIdx => log.changes[oldIdx]);
 			});
 			
-			recordState.players = newPlayers;
-			recordState.totals = newTotals;
-			recordState.currentDealer = recordState.handIndex - 1; 
+			recordState.players = seatPlayers.slice(reseatDealerIndex).concat(seatPlayers.slice(0, reseatDealerIndex));
+			recordState.totals = seatTotals.slice(reseatDealerIndex).concat(seatTotals.slice(0, reseatDealerIndex));
+			
+			recordState.logs.forEach(log => {
+				log.changes = log.tempChanges.slice(reseatDealerIndex).concat(log.tempChanges.slice(0, reseatDealerIndex));
+				delete log.tempChanges;
+			});
+			
+			recordState.currentDealer = 0; 
 			recordState.dealerStreak = 0;
+			recordState.payees.clear();
+			recordState.payer = null;
 
 			document.getElementById('reseat-ui').style.display = 'none';
+			document.getElementById('gameplay-controls').style.display = 'block';
 			buildGameplayUI();
 			updateGameStatus();
 			renderScoreboard();
